@@ -224,24 +224,7 @@ small,
 	display: flex;
 	min-height: 100vh;
 }
-.sidebar {
-	width: 248px;
-	flex-shrink: 0;
-	position: sticky;
-	top: 0;
-	height: 100vh;
-	background: white;
-	border-right: 1px solid #f0edf0;
-	box-shadow: 5px 0 18px #10142b04;
-	display: flex;
-	flex-direction: column;
-	padding: 28px 18px 20px;
-	z-index: 40;
-}
-.sidebar.mini {
-	width: 76px;
-	padding-inline: 12px;
-}
+
 .brand-lockup {
 	display: flex;
 	align-items: center;
@@ -272,72 +255,7 @@ small,
 	font-size: 24px;
 	font-weight: 800;
 }
-.sidebar-caption {
-	margin: 35px 12px 12px;
-	font-size: 10px;
-	color: #8a8b96;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-}
-.nav-list {
-	display: grid;
-	gap: 6px;
-}
-.nav-item {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	padding: 12px 14px;
-	min-height: 46px;
-	border-radius: 10px;
-	font-size: 13px;
-	font-weight: 500;
-	color: #676775;
-}
-.nav-item:hover {
-	background: var(--canvas);
-}
-.nav-item.active {
-	color: var(--brand);
-	background: var(--soft);
-	font-weight: 700;
-}
-.sidebar-bottom {
-	margin-top: auto;
-	padding-top: 24px;
-	border-top: 1px solid var(--line);
-	display: grid;
-	gap: 12px;
-}
-.account {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	min-width: 0;
-}
-.account strong {
-	display: block;
-	font-size: 12px;
-	overflow-wrap: anywhere;
-}
-.account small {
-	font-size: 10px;
-	color: var(--muted);
-}
-.mini .brand-word,
-.mini .nav-label,
-.mini .sidebar-caption,
-.mini .account-copy,
-.mini .logout-label {
-	display: none;
-}
-.mini .nav-item {
-	justify-content: center;
-	padding: 12px;
-}
-.mini .sidebar-bottom .button {
-	padding: 10px;
-}
+
 .app-main {
 	min-width: 0;
 	flex: 1;
@@ -1156,10 +1074,7 @@ td small {
 	.workspace {
 		padding: 8px 24px 30px;
 	}
-	.sidebar {
-		width: 220px;
-		padding-inline: 12px;
-	}
+
 	.login-hero {
 		gap: 32px;
 	}
@@ -1178,29 +1093,7 @@ td small {
 	body {
 		font-size: 13px;
 	}
-	.sidebar {
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 260px !important;
-		padding: 24px 18px !important;
-		display: none;
-		box-shadow: 12px 0 60px #10142b15;
-	}
-	.sidebar.open {
-		display: flex;
-	}
-	.sidebar.mini .brand-word,
-	.sidebar.mini .nav-label,
-	.sidebar.mini .sidebar-caption,
-	.sidebar.mini .account-copy,
-	.sidebar.mini .logout-label {
-		display: initial;
-	}
-	.sidebar.mini .nav-item {
-		justify-content: flex-start;
-		padding: 12px 14px;
-	}
+
 	.drawer-scrim.open {
 		display: block;
 		position: fixed;

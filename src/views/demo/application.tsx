@@ -15,7 +15,8 @@ import {
 	Panel,
 	formatDate,
 } from "@/views/components/ui";
-import { activeNavigation, navigation } from "./navigation";
+import { activeNavigation } from "./navigation";
+import { SidebarContent } from "./sidebar";
 import { demoViews } from "./registry";
 import "./team";
 import "./work";
@@ -30,7 +31,6 @@ import "./revision";
 import "./reschedule";
 import "./cancellation";
 import "./participant-home";
-import { Brand } from "@/views/components/brand";
 import { participantHomeData } from "@/controllers/demo/home-controller";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
@@ -120,7 +120,6 @@ export function DemoApplication() {
 	const active = activeNavigation(actor.role, pathname);
 	const isParticipantHome = actor.role === "participant" && pathname === home;
 	const homeData = isParticipantHome ? participantHomeData(state, actor) : null;
-	const roleNavigation = navigation[actor.role];
 	const inbox = state.notifications.filter(
 		/** Membatasi notifikasi pada pemilik sesi lokal. */
 		function ownedNotification(item) {
@@ -147,30 +146,6 @@ export function DemoApplication() {
 			},
 		);
 	const View = match?.[1];
-	/** Menyajikan menu yang sama pada sidebar desktop dan drawer mobile. */
-	function navigationLinks() {
-		return (
-			<nav aria-label="Menu utama" className="nav-list">
-				{roleNavigation.map(
-					/** Menampilkan satu tautan dengan penanda halaman aktif dan label saat ringkas. */
-					function navigationLink(item) {
-						return (
-							<Link
-								key={item.href}
-								href={item.href}
-								className={`nav-item ${active.href === item.href ? "active" : ""}`}
-								aria-current={active.href === item.href ? "page" : undefined}
-								title={item.label}
-							>
-								<Icon name={item.icon} />
-								<span className="nav-label">{item.label}</span>
-							</Link>
-						);
-					},
-				)}
-			</nav>
-		);
-	}
 	return (
 		<div
 			className={`app-shell ${actor.role === "participant" ? "participant-shell" : ""} ${isParticipantHome ? "home-shell" : ""}`}
@@ -179,54 +154,16 @@ export function DemoApplication() {
 				Lewati ke konten
 			</a>
 			<aside
-				className={`sidebar ${collapsed ? "mini" : ""}`}
+				className={`app-sidebar ${collapsed ? "is-collapsed" : ""}`}
 				aria-label="Navigasi desktop"
 			>
-				<Link href={home} className="brand-lockup" aria-label="ADIKARA Home">
-					<Brand compact={collapsed} />
-				</Link>
-				<p className="sidebar-caption">
-					{actor.role === "participant"
-						? "Area Peserta"
-						: actor.role === "mentor"
-							? "Area Mentor"
-							: "Administrator"}
-				</p>
-				{navigationLinks()}
-				<div className="sidebar-bottom">
-					<button
-						className="nav-item"
-						type="button"
-						onClick={toggleCollapse}
-						aria-label={collapsed ? "Perluas sidebar" : "Ringkas sidebar"}
-						aria-expanded={!collapsed}
-					>
-						<Icon name="collapse" />
-						<span className="nav-label">Ringkas menu</span>
-					</button>
-					<button
-						className="nav-item"
-						type="button"
-						onClick={logout}
-						title="Keluar"
-					>
-						<Icon name="logout" />
-						<span className="nav-label">Keluar</span>
-					</button>
-					<div className="account">
-						<Avatar name={actor.name} size="small" />
-						<span className="account-copy">
-							{actor.name}
-							<small>
-								{actor.role === "participant"
-									? "Peserta"
-									: actor.role === "mentor"
-										? "Mentor"
-										: "Administrator"}
-							</small>
-						</span>
-					</div>
-				</div>
+				<SidebarContent
+					actor={actor}
+					pathname={pathname}
+					collapsed={collapsed}
+					onToggle={toggleCollapse}
+					onLogout={logout}
+				/>
 			</aside>
 			<div className="app-main">
 				<header className="topbar">
@@ -328,11 +265,13 @@ export function DemoApplication() {
 				onClose={closeDrawer}
 				className="navigation-drawer"
 			>
-				<Brand />
-				{navigationLinks()}
-				<Button variant="neutral" onClick={logout}>
-					Keluar
-				</Button>
+				<SidebarContent
+					actor={actor}
+					pathname={pathname}
+					mobile
+					onToggle={closeDrawer}
+					onLogout={logout}
+				/>
 			</Modal>
 			<Modal
 				open={notifications}
