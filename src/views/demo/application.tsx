@@ -24,6 +24,7 @@ import "./schedules";
 import "./mentor-profile";
 import "./catalog";
 import "./request-submit";
+import "./requests";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {
