@@ -29,6 +29,9 @@ import "./review";
 import "./revision";
 import "./reschedule";
 import "./cancellation";
+import "./participant-home";
+import { Brand } from "@/views/components/brand";
+import { participantHomeData } from "@/controllers/demo/home-controller";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {
@@ -115,6 +118,9 @@ export function DemoApplication() {
 			</main>
 		);
 	const active = activeNavigation(actor.role, pathname);
+	const isParticipantHome = actor.role === "participant" && pathname === home;
+	const homeData = isParticipantHome ? participantHomeData(state, actor) : null;
+	const roleNavigation = navigation[actor.role];
 	const inbox = state.notifications.filter(
 		/** Membatasi notifikasi pada pemilik sesi lokal. */
 		function ownedNotification(item) {
@@ -145,7 +151,7 @@ export function DemoApplication() {
 	function navigationLinks() {
 		return (
 			<nav aria-label="Menu utama" className="nav-list">
-				{navigation[actor!.role].map(
+				{roleNavigation.map(
 					/** Menampilkan satu tautan dengan penanda halaman aktif dan label saat ringkas. */
 					function navigationLink(item) {
 						return (
@@ -157,7 +163,7 @@ export function DemoApplication() {
 								title={item.label}
 							>
 								<Icon name={item.icon} />
-								<span>{item.label}</span>
+								<span className="nav-label">{item.label}</span>
 							</Link>
 						);
 					},
@@ -166,7 +172,9 @@ export function DemoApplication() {
 		);
 	}
 	return (
-		<div className="app-shell">
+		<div
+			className={`app-shell ${actor.role === "participant" ? "participant-shell" : ""} ${isParticipantHome ? "home-shell" : ""}`}
+		>
 			<a className="skip-link" href="#konten">
 				Lewati ke konten
 			</a>
@@ -175,11 +183,15 @@ export function DemoApplication() {
 				aria-label="Navigasi desktop"
 			>
 				<Link href={home} className="brand-lockup" aria-label="ADIKARA Home">
-					<span className="brand-mark">A</span>
-					<span>
-						ADIKARA<small>MENTORING 2026</small>
-					</span>
+					<Brand compact={collapsed} />
 				</Link>
+				<p className="sidebar-caption">
+					{actor.role === "participant"
+						? "Area Peserta"
+						: actor.role === "mentor"
+							? "Area Mentor"
+							: "Administrator"}
+				</p>
 				{navigationLinks()}
 				<div className="sidebar-bottom">
 					<button
@@ -190,7 +202,7 @@ export function DemoApplication() {
 						aria-expanded={!collapsed}
 					>
 						<Icon name="collapse" />
-						<span>Ringkas menu</span>
+						<span className="nav-label">Ringkas menu</span>
 					</button>
 					<button
 						className="nav-item"
@@ -199,11 +211,11 @@ export function DemoApplication() {
 						title="Keluar"
 					>
 						<Icon name="logout" />
-						<span>Keluar</span>
+						<span className="nav-label">Keluar</span>
 					</button>
 					<div className="account">
 						<Avatar name={actor.name} size="small" />
-						<span>
+						<span className="account-copy">
 							{actor.name}
 							<small>
 								{actor.role === "participant"
@@ -228,24 +240,42 @@ export function DemoApplication() {
 						>
 							<Icon name="menu" />
 						</button>
-						<strong>{active.label}</strong>
+						{homeData ? (
+							<>
+								<div className="home-desktop-greeting">
+									<h1>Halo, {actor.name.split(" ")[0]}.</h1>
+									<p>Home · {homeData.greeting}</p>
+								</div>
+								<strong className="home-mobile-title">Home</strong>
+							</>
+						) : (
+							<strong>{active.label}</strong>
+						)}
 					</div>
 					<div className="header-actions">
-						<span className="muted">24–25 Oktober 2026</span>
+						<span
+							className="demo-indicator"
+							title="Mode demo lokal · data contoh · Google belum terhubung"
+						>
+							Demo lokal
+						</span>
 						<button
 							type="button"
-							className="icon-button"
+							className={`icon-button ${isParticipantHome ? "home-notifications" : ""}`}
 							onClick={openNotifications}
 							aria-label={`Notifikasi, ${unread} belum dibaca`}
 						>
 							<Icon name="bell" />
+							{isParticipantHome && (
+								<span className="notification-label">Notifikasi</span>
+							)}
 							{unread > 0 && <span>{unread}</span>}
 						</button>
 						<Avatar name={actor.name} size="small" />
 					</div>
 				</header>
 				<main className="workspace stack" id="konten">
-					<DemoBanner />
+					{!isParticipantHome && <DemoBanner />}
 					{state.recovery && (
 						<p className="notice warning" role="status">
 							{state.recovery}
@@ -285,9 +315,20 @@ export function DemoApplication() {
 							Reset data demo
 						</button>
 					</div>
+					{isParticipantHome && (
+						<div className="home-demo-disclosure">
+							<DemoBanner />
+						</div>
+					)}
 				</main>
 			</div>
-			<Modal open={drawer} title="Menu ADIKARA" onClose={closeDrawer}>
+			<Modal
+				open={drawer}
+				title={actor.role === "participant" ? "Area Peserta" : "Menu ADIKARA"}
+				onClose={closeDrawer}
+				className="navigation-drawer"
+			>
+				<Brand />
 				{navigationLinks()}
 				<Button variant="neutral" onClick={logout}>
 					Keluar

@@ -203,8 +203,8 @@ export function ResourcePanel({ links }: { links: ResourceLink[] }) {
 				<span className="eyebrow">Bekal untuk langkah berikutnya</span>
 				<h2>Link Penting</h2>
 				<p>
-					Temukan panduan dan bahan yang kamu butuhkan untuk menyiapkan karya
-					ADIKARA 2026.
+					Semua bekal untuk mempersiapkan karya terbaikmu. Baca panduan dan
+					lengkapi dokumen sebelum mentoring.
 				</p>
 			</div>
 			<div className="resource-links">
@@ -213,6 +213,20 @@ export function ResourcePanel({ links }: { links: ResourceLink[] }) {
 						/** Menjalankan langkah activeLink sesuai tanggung jawab modul ini. */
 						function activeLink(link) {
 							return link.active;
+						},
+					)
+					.sort(
+						/** Mengikuti urutan panel resource pada desain LOGIN dan Home V2. */
+						function resourcePriority(first, second) {
+							const order = [
+								"Template Proposal",
+								"Guidebook ADIKARA 2026",
+								"Twibbon & Caption",
+								"Pendaftaran",
+							];
+							const a = order.indexOf(first.title);
+							const b = order.indexOf(second.title);
+							return (a < 0 ? 99 : a) - (b < 0 ? 99 : b);
 						},
 					)
 					.map(
@@ -271,11 +285,13 @@ export function Modal({
 	title,
 	children,
 	onClose,
+	className = "",
 }: {
 	open: boolean;
 	title: string;
 	children: ReactNode;
 	onClose: () => void;
+	className?: string;
 }) {
 	const ref = useRef<HTMLDialogElement>(null);
 	const headingId = useId();
@@ -291,7 +307,7 @@ export function Modal({
 	);
 	return (
 		<dialog
-			className="dialog"
+			className={`dialog ${className}`}
 			ref={ref}
 			aria-labelledby={headingId}
 			onCancel={onClose}

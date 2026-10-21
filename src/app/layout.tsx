@@ -1,6 +1,7 @@
 // TODO: Jaga dokumentasi, pemisahan tanggung jawab dan pengujian modul ini saat perilakunya berubah.
 import type { Metadata } from "next";
 import "@/views/styles/globals.css";
+import "@/views/styles/reference.css";
 
 export const metadata: Metadata = {
 	title: "Mentoring ADIKARA 2026",

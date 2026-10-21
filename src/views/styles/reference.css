@@ -1,0 +1,621 @@
+/* TODO: Validasi perubahan visual terhadap frame Home V2 dan LOGIN, bukan tata letak perkiraan. */
+@font-face {
+	font-family: "Google Sans";
+	src: url("/api/demo-assets/font") format("woff2");
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+}
+.official-brand {
+	width: 218px;
+	height: 48px;
+	object-fit: contain;
+	object-position: left center;
+}
+.sidebar .official-brand {
+	width: 208px;
+	max-width: 100%;
+	height: 48px;
+}
+.sidebar.mini .official-brand {
+	width: 28px;
+	height: 44px;
+}
+.demo-indicator {
+	font-size: 10px;
+	color: #866428;
+	border: 1px solid #eadfc9;
+	padding: 3px 7px;
+	border-radius: 6px;
+	white-space: nowrap;
+}
+.participant-shell {
+	--line: #d5d5d5;
+	--muted: #666;
+}
+.participant-shell .sidebar {
+	padding: 28px 20px 24px;
+	box-shadow: none;
+	border-right-color: #f3f3f3;
+}
+.participant-shell .sidebar-caption {
+	margin: 28px 0 22px;
+	color: #666;
+	font-size: 14px;
+	text-transform: none;
+	letter-spacing: 0;
+}
+.participant-shell .nav-list {
+	gap: 8px;
+}
+.participant-shell .nav-item {
+	color: var(--ink);
+	min-height: 50px;
+	border: 1px solid transparent;
+	border-radius: 14px;
+	font-size: 14px;
+	padding: 12px;
+}
+.participant-shell .nav-item.active {
+	color: var(--brand);
+	background: #fff1f2;
+	border-color: #ffbac0;
+}
+.participant-shell .nav-item .icon {
+	width: 18px;
+	height: 18px;
+}
+.participant-shell .sidebar-bottom {
+	gap: 12px;
+	border-top-color: #e4e4e4;
+}
+.participant-shell .account {
+	order: -1;
+}
+.participant-shell .sidebar-bottom > button {
+	background: transparent;
+	border: 0;
+	width: 100%;
+	text-align: left;
+	color: #666;
+	font-size: 12px;
+	min-height: 36px;
+}
+.participant-shell .avatar {
+	color: var(--brand);
+	background: #fff1f2;
+}
+.participant-shell .avatar.large {
+	border: 0;
+	width: 72px;
+	height: 72px;
+}
+.participant-shell .avatar.small {
+	width: 32px;
+	height: 32px;
+}
+.participant-shell .button {
+	min-height: 50px;
+	border-width: 1.5px;
+	font-size: 14px;
+}
+.participant-shell .button.small {
+	min-height: 38px;
+	font-size: 12px;
+}
+.home-shell .app-main {
+	position: relative;
+	isolation: isolate;
+}
+.home-shell .app-main::before {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 240px;
+	background: url("/api/demo-assets/pattern") center top / 720px auto;
+	opacity: 0.055;
+	pointer-events: none;
+	mask-image: linear-gradient(#000 60%, transparent);
+}
+.home-shell .topbar {
+	padding: 36px 40px 24px;
+	align-items: flex-start;
+	min-height: 130px;
+}
+.home-desktop-greeting h1 {
+	font-size: 32px;
+	line-height: 1.3;
+	letter-spacing: -0.5px;
+	font-weight: 700;
+}
+.home-desktop-greeting p {
+	margin-top: 8px;
+	font-size: 14px;
+	color: #666;
+}
+.home-shell .header-actions {
+	padding-top: 12px;
+	gap: 20px;
+}
+.home-shell .home-notifications {
+	border-radius: 999px;
+	width: auto;
+	padding: 0 14px;
+	gap: 8px;
+	min-height: 42px;
+	font-size: 12px;
+}
+.home-shell .home-notifications > span:last-child:not(.notification-label) {
+	font-size: 10px;
+	color: var(--brand);
+}
+.home-shell .workspace {
+	padding: 0 40px 24px;
+	max-width: none;
+}
+.home-mobile-title,
+.home-mobile-greeting,
+.home-event-info {
+	display: none;
+}
+.participant-home {
+	display: grid;
+	gap: 24px;
+}
+.participant-home .panel {
+	border-color: #d5d5d5;
+	border-radius: 26px;
+	padding: 24px;
+}
+.participant-home .panel-title {
+	font-size: 24px;
+	line-height: 1.3;
+}
+.participant-home .panel-header {
+	margin-bottom: 24px;
+	align-items: center;
+}
+.participant-home .panel-title .icon {
+	width: 22px;
+	height: 22px;
+}
+.participant-home .home-mentoring {
+	padding: 28px;
+	border: 1px solid transparent;
+	background:
+		linear-gradient(white, white) padding-box,
+		linear-gradient(120deg, #ffc090, #ffe894 50%, #ff7778) border-box;
+}
+.home-mentoring .panel-header {
+	margin-bottom: 24px;
+}
+.home-session-row {
+	display: flex;
+	gap: 30px;
+	justify-content: space-between;
+	align-items: center;
+}
+.home-work-title {
+	font-size: 25px;
+	line-height: 1.35;
+	letter-spacing: -0.3px;
+}
+.home-session-row .avatar {
+	width: 52px;
+	height: 52px;
+	font-size: 14px;
+}
+.home-session-row strong {
+	font-size: 16px;
+}
+.home-meta {
+	display: block;
+	color: #666;
+	font-size: 13px;
+	margin-top: 3px;
+}
+.participant-home .schedule-summary {
+	background: #fafafa;
+	border-radius: 16px;
+	padding: 18px;
+	min-width: 274px;
+}
+.participant-home .schedule-summary strong {
+	font-size: 18px;
+	margin: 6px 0;
+}
+.participant-home .schedule-summary b {
+	font-size: 20px;
+}
+.participant-home .schedule-summary small {
+	font-size: 13px;
+	color: #666;
+}
+.participant-home .schedule-summary .home-confirmed {
+	color: #087344;
+	font-weight: 600;
+}
+.home-state-note {
+	color: #666;
+	font-size: 14px;
+}
+.participant-home .actions {
+	margin-top: 0;
+}
+.home-empty-content {
+	display: grid;
+	gap: 18px;
+	padding: 12px 0 4px;
+}
+.home-empty-content p {
+	max-width: 650px;
+	color: #666;
+}
+.home-summary-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+	align-items: start;
+}
+.home-summary-grid .panel {
+	min-height: 330px;
+}
+.home-summary-grid h2:not(.panel-title) {
+	font-size: 24px;
+}
+.home-summary-grid h3 {
+	font-size: 21px;
+	line-height: 1.4;
+}
+.home-summary-grid p {
+	font-size: 14px;
+	color: #666;
+	line-height: 1.6;
+}
+.home-member-list {
+	display: grid;
+	gap: 14px;
+	margin: 4px 0;
+	font-size: 14px;
+}
+.home-member-list small {
+	color: #666;
+}
+.home-attention {
+	color: #c9070f;
+	font-size: 12px;
+	font-weight: 600;
+}
+.home-materials {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: #666;
+	font-size: 13px;
+}
+.home-materials .icon {
+	width: 16px;
+	height: 16px;
+}
+.home-mentor-section {
+	padding-top: 6px;
+}
+.home-mentor-section .section-heading {
+	margin: 0 0 18px;
+}
+.home-mentor-section h2 {
+	font-size: 24px;
+}
+.home-mentor-section .text-link {
+	font-size: 14px;
+}
+.home-section-copy {
+	color: #666;
+	font-size: 16px;
+	margin-bottom: 16px;
+}
+.home-mentor-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+}
+.participant-home .mentor-card {
+	padding: 20px 18px 28px;
+	min-height: 320px;
+	border: 1px solid #d5d5d5;
+	border-radius: 26px;
+	gap: 16px;
+}
+.participant-home .mentor-card h3 {
+	font-size: 18px;
+	line-height: 1.4;
+}
+.participant-home .mentor-card p {
+	font-size: 14px;
+}
+.participant-home .mentor-card .button {
+	align-self: stretch;
+}
+.participant-home .mentor-card .tag {
+	color: var(--brand);
+	background: #fff1f2;
+	border-radius: 999px;
+	padding: 6px 12px;
+	font-size: 13px;
+}
+.participant-home .discord-panel {
+	border: 1px solid #d5d5d5;
+	padding: 20px;
+	border-radius: 26px;
+}
+.participant-home .discord-panel h2 {
+	font-size: 22px;
+}
+.participant-home .discord-panel p {
+	color: #666;
+	font-size: 14px;
+}
+.participant-home .discord-panel > .row > .icon {
+	width: 26px;
+	height: 26px;
+	color: var(--brand);
+	margin-right: 4px;
+}
+.participant-home .discord-panel .button {
+	flex-shrink: 0;
+}
+.participant-home .resource-panel {
+	border-radius: 26px;
+	padding: 40px;
+	min-height: 310px;
+	grid-template-columns: 1fr 1fr;
+	gap: 50px;
+	align-items: center;
+	background:
+		#c9070f url("/api/demo-assets/resource") center / 100% 100% no-repeat;
+}
+.participant-home .resource-panel .eyebrow {
+	display: none;
+}
+.participant-home .resource-panel h2 {
+	font-size: 36px;
+	line-height: 1.2;
+	margin-bottom: 20px;
+}
+.participant-home .resource-panel p {
+	font-size: 16px;
+	line-height: 1.5;
+	max-width: 470px;
+	color: white;
+}
+.participant-home .resource-link {
+	font-size: 14px;
+	border-radius: 12px;
+	background: transparent;
+	min-height: 48px;
+	padding: 10px 14px;
+}
+.home-shell .footer-note {
+	font-size: 12px;
+	color: #666;
+}
+.home-demo-disclosure .demo-banner {
+	border: 1px solid #eadfc9;
+	border-radius: 8px;
+	background: #fffaf2;
+}
+.navigation-drawer {
+	margin: 0;
+	max-height: 100dvh;
+	height: 100dvh;
+	width: min(340px, 88vw);
+	max-width: 88vw;
+	border: 0;
+	border-radius: 0;
+	padding: 24px 20px;
+}
+.navigation-drawer .official-brand {
+	margin-bottom: 28px;
+}
+.navigation-drawer .nav-list {
+	margin-bottom: 32px;
+}
+@media (max-width: 1100px) {
+	.home-shell .topbar {
+		padding-inline: 28px;
+	}
+	.home-shell .workspace {
+		padding-inline: 28px;
+	}
+	.home-session-row {
+		align-items: flex-start;
+	}
+	.participant-home .schedule-summary {
+		min-width: 215px;
+	}
+	.home-mentor-grid {
+		gap: 16px;
+	}
+	.participant-home .resource-panel {
+		gap: 24px;
+		padding: 32px;
+	}
+}
+@media (max-width: 760px) {
+	.participant-shell .sidebar {
+		display: none;
+	}
+	.home-shell .topbar {
+		padding: 18px 20px;
+		min-height: 76px;
+		align-items: center;
+		border-bottom: 1px solid #eee;
+	}
+	.home-shell .header-actions {
+		padding: 0;
+		gap: 12px;
+	}
+	.home-shell .topbar .demo-indicator {
+		display: none;
+	}
+	.home-shell .header-actions .home-notifications {
+		min-width: 38px;
+		min-height: 38px;
+		padding: 0 8px;
+		border: 0;
+		background: transparent;
+	}
+	.home-shell .home-notifications .notification-label {
+		display: none;
+	}
+	.home-desktop-greeting {
+		display: none;
+	}
+	.home-mobile-title {
+		display: block;
+	}
+	.home-shell .workspace {
+		padding: 24px 20px;
+	}
+	.home-shell .app-main::before {
+		height: 330px;
+	}
+	.home-mobile-greeting {
+		display: grid;
+		gap: 10px;
+	}
+	.home-mobile-greeting h1 {
+		font-size: 28px;
+		line-height: 1.25;
+	}
+	.home-mobile-greeting p {
+		color: #666;
+		font-size: 14px;
+	}
+	.home-event-info {
+		display: grid;
+		gap: 4px;
+		padding: 18px 20px;
+		border-radius: 18px;
+		background: #fff1f2;
+		color: var(--ink);
+		font-size: 14px;
+	}
+	.home-event-info small {
+		color: #666;
+	}
+	.participant-home {
+		gap: 20px;
+	}
+	.participant-home .panel {
+		padding: 20px;
+		border-radius: 22px;
+	}
+	.participant-home .panel-title {
+		font-size: 21px;
+	}
+	.home-mentoring .panel-header {
+		align-items: flex-start;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
+	.home-session-row {
+		flex-direction: column;
+		gap: 20px;
+		align-items: stretch;
+	}
+	.home-work-title {
+		font-size: 22px;
+	}
+	.participant-home .schedule-summary {
+		min-width: 0;
+		width: 100%;
+	}
+	.home-summary-grid {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+	.home-summary-grid .panel {
+		min-height: 0;
+	}
+	.home-summary-grid h3 {
+		font-size: 19px;
+	}
+	.home-mentor-section .section-heading {
+		align-items: flex-start;
+		gap: 10px;
+	}
+	.home-mentor-section h2 {
+		font-size: 21px;
+	}
+	.home-mentor-section .text-link {
+		font-size: 12px;
+		padding: 4px 0;
+	}
+	.home-section-copy {
+		font-size: 14px;
+	}
+	.home-mentor-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 12px;
+	}
+	.home-mentor-grid .mentor-card:nth-child(n + 3) {
+		display: none;
+	}
+	.participant-home .mentor-card {
+		min-height: 300px;
+		padding: 18px 10px;
+		border-radius: 20px;
+		gap: 12px;
+	}
+	.participant-home .mentor-card h3 {
+		font-size: 14px;
+	}
+	.participant-home .mentor-card p {
+		font-size: 12px;
+	}
+	.participant-home .mentor-card .button {
+		min-height: 42px;
+		padding-inline: 8px;
+		font-size: 12px;
+	}
+	.participant-home .mentor-card .tag {
+		font-size: 11px;
+	}
+	.participant-home .discord-panel {
+		padding: 20px;
+		border-radius: 22px;
+		align-items: flex-start;
+		flex-direction: column;
+	}
+	.participant-home .discord-panel h2 {
+		font-size: 19px;
+	}
+	.participant-home .discord-panel p {
+		font-size: 13px;
+	}
+	.participant-home .resource-panel {
+		grid-template-columns: 1fr;
+		min-height: 0;
+		padding: 32px 24px;
+		gap: 26px;
+		border-radius: 22px;
+		background-size: auto 100%;
+	}
+	.participant-home .resource-panel h2 {
+		font-size: 30px;
+		margin-bottom: 14px;
+	}
+	.participant-home .resource-panel p {
+		font-size: 14px;
+	}
+	.home-shell .footer-note {
+		align-items: flex-start;
+		gap: 10px;
+		flex-direction: column;
+	}
+}
