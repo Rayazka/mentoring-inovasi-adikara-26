@@ -2,6 +2,7 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { createDemoSeed } from "@/models/demo/seed";
+import { teamCommand } from "./team-controller";
 import {
 	getDemoSnapshot,
 	getServerDemoSnapshot,
@@ -16,7 +17,10 @@ import {
 	type CommandPayload,
 } from "./session-controller";
 
-const handlers: Record<string, CommandHandler> = { session: sessionCommand };
+const handlers: Record<string, CommandHandler> = {
+	session: sessionCommand,
+	team: teamCommand,
+};
 
 /** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */
 export function registerDemoController(
