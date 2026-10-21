@@ -1,3 +1,5 @@
+# TODO: Keep local rules, source materials and credentials out of the public repository.
+AGENTS.md
 node_modules/
 .npm-cache/
 .next/

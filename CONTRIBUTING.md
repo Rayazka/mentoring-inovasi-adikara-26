@@ -1,4 +1,13 @@
+<!-- TODO: Keep contribution guidance aligned with the current demo scope and production gates. -->
 # Development by issues
+
+## Aturan implementasi saat ini
+
+- Gunakan MVC: model untuk data/invariant, controller untuk use case/validasi/otorisasi, view untuk presentasi; route Next.js menjadi adapter tipis.
+- Kerjakan satu issue, verifikasi, commit dan push sebelum memulai issue berikutnya.
+- Beri header komentar TODO pada file kode dan komentar tujuan di atas setiap fungsi. Format tanpa dukungan komentar, seperti JSON/generated/binary, harus tetap valid; catatan pemeliharaannya berada di dokumentasi pendamping.
+- Tahap saat ini memakai data dummy dan login demo tanpa Google. Jangan menutup pekerjaan integrasi OAuth/RLS/database hanya berdasarkan demo lokal.
+- Aturan lokal rinci berada di AGENTS.md yang sengaja diabaikan Git. PRD/desain/foto/aset tetap privat.
 
 1. Pilih issue implementasi yang dependensi serta keputusan produknya sudah diselesaikan. Epic adalah pelacak kelompok pekerjaan, bukan satu PR besar.
 2. Tulis komentar singkat tentang lingkup yang akan dikerjakan. Gunakan branch `feat/<nomor>-<ringkasan>`, `fix/<nomor>-<ringkasan>`, atau `docs/<nomor>-<ringkasan>`.
