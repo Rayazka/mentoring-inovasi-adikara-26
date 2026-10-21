@@ -6,6 +6,7 @@ import { teamCommand } from "./team-controller";
 import { workCommand } from "./work-controller";
 import { documentCommand } from "./document-controller";
 import { driveCommand } from "./drive-controller";
+import { mentorCommand } from "./mentor-controller";
 import {
 	getDemoSnapshot,
 	getServerDemoSnapshot,
@@ -26,6 +27,7 @@ const handlers: Record<string, CommandHandler> = {
 	work: workCommand,
 	document: documentCommand,
 	drive: driveCommand,
+	mentor: mentorCommand,
 };
 
 /** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */
