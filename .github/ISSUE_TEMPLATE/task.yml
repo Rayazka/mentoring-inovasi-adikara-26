@@ -1,0 +1,34 @@
+name: Development task
+description: Pekerjaan dengan lingkup, dependensi, dan bukti penerimaan yang jelas
+title: "[TASK] "
+labels: ["type:task"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Masalah dan hasil yang diharapkan
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Cakupan dan referensi PRD/desain
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Gunakan checklist hasil yang dapat diverifikasi
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependensi dan keputusan yang masih dibutuhkan
+  - type: textarea
+    id: verification
+    attributes:
+      label: Rencana pengujian
+    validations:
+      required: true

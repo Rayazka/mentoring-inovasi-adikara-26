@@ -1,0 +1,18 @@
+node_modules/
+.npm-cache/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+.env*
+!.env.example
+tmp/
+*.log
+# Public repository: code and issue workflow only. Keep source materials local.
+/assets/
+/docs/*
+!/docs/GitHub Backlog.md
+!/docs/github/
+/docs/github/*
+!/docs/github/issue-map.json
+*.local
