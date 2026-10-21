@@ -28,6 +28,7 @@ export interface Work {
 	updatedAt: string;
 }
 export interface Mentor {
+	photo?: string;
 	id: string;
 	name: string;
 	title: string;

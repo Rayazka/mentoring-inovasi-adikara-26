@@ -16,8 +16,10 @@ import { registerDemoView } from "./registry";
 
 /** Menyajikan editor jam default serta pembentukan dan penyuntingan slot per mentor. */
 export function SchedulesPage({ controller }: { controller: DemoController }) {
-	const { state, dispatch } = controller;
-	const [mentorId, setMentorId] = useState(state?.mentors[0]?.id ?? "");
+	const { state, actor, dispatch } = controller;
+	const isAdmin = actor?.role === "admin";
+	const [selectedMentorId, setMentorId] = useState(state?.mentors[0]?.id ?? "");
+	const mentorId = isAdmin ? selectedMentorId : (actor?.mentorId ?? "");
 	const [date, setDate] = useState(state?.settings.dates[0] ?? "2026-10-24");
 	const [editing, setEditing] = useState<string | null>(null);
 	const [generating, setGenerating] = useState(false);
@@ -123,92 +125,98 @@ export function SchedulesPage({ controller }: { controller: DemoController }) {
 		<>
 			<div className="section-heading">
 				<div>
-					<span className="eyebrow">ADMINISTRASI</span>
-					<h1>Kelola Jadwal</h1>
+					<span className="eyebrow">
+						{isAdmin ? "ADMINISTRASI" : "RUANG MENTOR"}
+					</span>
+					<h1>{isAdmin ? "Kelola Jadwal" : "Ketersediaan Jadwal"}</h1>
 					<p>
 						Atur jam operasional dan ketersediaan setiap mentor. Semua waktu
 						menggunakan WIB.
 					</p>
 				</div>
 			</div>
-			<Panel title="Jam operasional default" icon="clock">
-				<form className="stack" onSubmit={settings}>
-					<div className="form-grid">
-						<label className="field">
-							Mulai
-							<input
-								name="start"
-								type="time"
-								required
-								defaultValue={state.settings.start}
-							/>
-						</label>
-						<label className="field">
-							Berakhir
-							<input
-								name="end"
-								type="time"
-								required
-								defaultValue={state.settings.end}
-							/>
-						</label>
-						<label className="field">
-							Sesi (menit)
-							<input
-								name="sessionMinutes"
-								type="number"
-								required
-								min={1}
-								max={180}
-								defaultValue={state.settings.sessionMinutes}
-							/>
-						</label>
-						<label className="field">
-							Jeda (menit)
-							<input
-								name="bufferMinutes"
-								type="number"
-								required
-								min={0}
-								max={60}
-								defaultValue={state.settings.bufferMinutes}
-							/>
-						</label>
-					</div>
-					<div className="row spread wrap">
-						<p className="helper">
-							Default awal 18.30–22.00 · 15 menit sesi + 5 menit jeda. Perubahan
-							tidak memindahkan booking lama.
-						</p>
-						<Button type="submit">Simpan pengaturan</Button>
-					</div>
-				</form>
-			</Panel>
+			{isAdmin && (
+				<Panel title="Jam operasional default" icon="clock">
+					<form className="stack" onSubmit={settings}>
+						<div className="form-grid">
+							<label className="field">
+								Mulai
+								<input
+									name="start"
+									type="time"
+									required
+									defaultValue={state.settings.start}
+								/>
+							</label>
+							<label className="field">
+								Berakhir
+								<input
+									name="end"
+									type="time"
+									required
+									defaultValue={state.settings.end}
+								/>
+							</label>
+							<label className="field">
+								Sesi (menit)
+								<input
+									name="sessionMinutes"
+									type="number"
+									required
+									min={1}
+									max={180}
+									defaultValue={state.settings.sessionMinutes}
+								/>
+							</label>
+							<label className="field">
+								Jeda (menit)
+								<input
+									name="bufferMinutes"
+									type="number"
+									required
+									min={0}
+									max={60}
+									defaultValue={state.settings.bufferMinutes}
+								/>
+							</label>
+						</div>
+						<div className="row spread wrap">
+							<p className="helper">
+								Default awal 18.30–22.00 · 15 menit sesi + 5 menit jeda.
+								Perubahan tidak memindahkan booking lama.
+							</p>
+							<Button type="submit">Simpan pengaturan</Button>
+						</div>
+					</form>
+				</Panel>
+			)}
 			<Panel title="Jadwal per mentor" icon="calendar">
 				<div className="stack">
 					<div className="filters">
-						<label className="field">
-							Mentor
-							<select value={mentorId} onChange={changeMentor}>
-								{state.mentors
-									.filter(
-										/** Menyembunyikan mentor yang sudah diarsipkan dari editor jadwal. */
-										function schedulable(item) {
-											return !item.archived;
-										},
-									)
-									.map(
-										/** Menampilkan pilihan profil mentor yang masih dapat dikelola. */
-										function mentorOption(item) {
-											return (
-												<option key={item.id} value={item.id}>
-													{item.name}
-												</option>
-											);
-										},
-									)}
-							</select>
-						</label>
+						{isAdmin && (
+							<label className="field">
+								Mentor
+								<select value={mentorId} onChange={changeMentor}>
+									{state.mentors
+										.filter(
+											/** Menyembunyikan mentor yang sudah diarsipkan dari editor jadwal. */
+											function schedulable(item) {
+												return !item.archived;
+											},
+										)
+										.map(
+											/** Menampilkan pilihan profil mentor yang masih dapat dikelola. */
+											function mentorOption(item) {
+												return (
+													<option key={item.id} value={item.id}>
+														{item.name}
+													</option>
+												);
+											},
+										)}
+								</select>
+							</label>
+						)}
 						<label className="field">
 							Tanggal
 							<select value={date} onChange={changeDate}>
@@ -406,3 +414,4 @@ export function SchedulesPage({ controller }: { controller: DemoController }) {
 	);
 }
 registerDemoView("/admin/jadwal", SchedulesPage);
+registerDemoView("/mentor/jadwal", SchedulesPage);

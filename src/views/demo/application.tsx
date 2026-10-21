@@ -21,6 +21,7 @@ import "./team";
 import "./work";
 import "./admin-mentors";
 import "./schedules";
+import "./mentor-profile";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {

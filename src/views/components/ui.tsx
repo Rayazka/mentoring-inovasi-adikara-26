@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
 	useEffect,
 	useId,
@@ -58,15 +59,33 @@ export function Icon({ name }: { name: IconName }) {
 export function Avatar({
 	name,
 	size = "",
+	photo,
 }: {
 	name: string;
 	size?: "" | "small" | "large";
+	photo?: string;
 }) {
 	const parts = name.trim().split(/\s+/);
 	const initials = `${parts[0]?.[0] ?? "?"}${parts.length > 1 ? parts[parts.length - 1][0] : ""}`;
 	return (
 		<span className={`avatar ${size}`} role="img" aria-label={name}>
-			{initials}
+			{photo ? (
+				<Image
+					src={photo}
+					alt=""
+					width={112}
+					height={112}
+					unoptimized
+					style={{
+						width: "100%",
+						height: "100%",
+						objectFit: "cover",
+						borderRadius: "50%",
+					}}
+				/>
+			) : (
+				initials
+			)}
 		</span>
 	);
 }
@@ -225,7 +244,7 @@ export function ResourcePanel({ links }: { links: ResourceLink[] }) {
 export function MentorCard({ mentor }: { mentor: Mentor }) {
 	return (
 		<article className="mentor-card">
-			<Avatar name={mentor.name} size="large" />
+			<Avatar name={mentor.name} size="large" photo={mentor.photo} />
 			<div className="mentor-copy">
 				<h3>{mentor.name}</h3>
 				<p>{mentor.title}</p>

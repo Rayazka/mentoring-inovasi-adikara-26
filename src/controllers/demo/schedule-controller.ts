@@ -6,7 +6,14 @@ import {
 	slotIsBooked,
 	slotsOverlap,
 } from "@/models/demo/slot-policy";
-import { audit, notify, requestEvent, requireAdmin } from "./context";
+import {
+	audit,
+	notify,
+	requestEvent,
+	requireAdmin,
+	requireActor,
+} from "./context";
+import { mentorForUser } from "@/models/demo/mentor-policy";
 import { textValue, type CommandPayload } from "./session-controller";
 
 /** Mengarahkan pengajuan ke revisi saat slot yang diminta dinonaktifkan tanpa mengubah booking terkonfirmasi. */
@@ -46,8 +53,9 @@ export function scheduleCommand(
 	action: string,
 	payload: CommandPayload,
 ) {
-	requireAdmin(state);
+	const actor = requireActor(state);
 	if (action === "schedule.settings") {
+		requireAdmin(state);
 		const settings = {
 			start: textValue(payload, "start"),
 			end: textValue(payload, "end"),
@@ -66,6 +74,8 @@ export function scheduleCommand(
 		return "Pengaturan default disimpan. Terapkan melalui pembentukan slot per mentor; booking lama tetap terlindungi.";
 	}
 	const mentorId = textValue(payload, "mentorId");
+	if (actor.role !== "admin" && mentorForUser(state, actor.id)?.id !== mentorId)
+		throw new Error("Kamu hanya dapat mengelola jadwal mentor milikmu.");
 	const mentor = state.mentors.find(
 		/** Memilih profil mentor yang dikelola administrator. */
 		function schedulingMentor(item) {
