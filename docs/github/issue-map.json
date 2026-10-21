@@ -1,0 +1,682 @@
+{
+  "repository": "Rayazka/mentoring-inovasi-adikara-26",
+  "issues": {
+    "ROADMAP": {
+      "number": 1,
+      "id": 5957601654,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/1",
+      "title": "[ROADMAP] Development Mentoring ADIKARA 2026 — dev by issues"
+    },
+    "EPIC-D0": {
+      "number": 2,
+      "id": 5957602183,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/2",
+      "title": "[EPIC D0] Penyelarasan produk dan desain"
+    },
+    "EPIC-D1": {
+      "number": 3,
+      "id": 5957602756,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/3",
+      "title": "[EPIC D1] Supabase dan Google authentication"
+    },
+    "EPIC-D2": {
+      "number": 4,
+      "id": 5957603386,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/4",
+      "title": "[EPIC D2] Design system dan application shell"
+    },
+    "EPIC-D3": {
+      "number": 5,
+      "id": 5957603958,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/5",
+      "title": "[EPIC D3] Tim dan keanggotaan"
+    },
+    "EPIC-D4": {
+      "number": 6,
+      "id": 5957604586,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/6",
+      "title": "[EPIC D4] Identitas Karya dan dokumen privat"
+    },
+    "EPIC-D5": {
+      "number": 7,
+      "id": 5957605142,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/7",
+      "title": "[EPIC D5] Mentor CRUD dan jadwal"
+    },
+    "EPIC-D6": {
+      "number": 8,
+      "id": 5957605744,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/8",
+      "title": "[EPIC D6] Pengajuan dan keputusan mentor"
+    },
+    "EPIC-D7": {
+      "number": 9,
+      "id": 5957606423,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/9",
+      "title": "[EPIC D7] Revisi dan lifecycle sesi"
+    },
+    "EPIC-D8": {
+      "number": 10,
+      "id": 5957607012,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/10",
+      "title": "[EPIC D8] Dashboard dan operasional"
+    },
+    "EPIC-D9": {
+      "number": 11,
+      "id": 5957607546,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/11",
+      "title": "[EPIC D9] QA dan penerimaan"
+    },
+    "EPIC-D10": {
+      "number": 12,
+      "id": 5957608099,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/12",
+      "title": "[EPIC D10] Deployment dan dukungan acara"
+    },
+    "EPIC-FUTURE": {
+      "number": 13,
+      "id": 5957608676,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/13",
+      "title": "[EPIC FUTURE] Pengembangan lanjutan"
+    },
+    "DEC-01": {
+      "number": 14,
+      "id": 5957609257,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/14",
+      "title": "[DEC-01] Tetapkan keanggotaan, approval join, dan hak ketua/anggota"
+    },
+    "DEC-02": {
+      "number": 15,
+      "id": 5957609909,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/15",
+      "title": "[DEC-02] Tetapkan kelengkapan karya dan kebijakan upload"
+    },
+    "DEC-03": {
+      "number": 16,
+      "id": 5957610448,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/16",
+      "title": "[DEC-03] Tetapkan akses dokumen setelah relasi berakhir dan akses admin"
+    },
+    "DEC-04": {
+      "number": 17,
+      "id": 5957611101,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/17",
+      "title": "[DEC-04] Tetapkan batas pengajuan, sesi total, dan benturan jadwal tim"
+    },
+    "DEC-05": {
+      "number": 18,
+      "id": 5957611647,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/18",
+      "title": "[DEC-05] Pastikan arti H-1 dan jalur pembatalan darurat"
+    },
+    "DEC-06": {
+      "number": 19,
+      "id": 5957612210,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/19",
+      "title": "[DEC-06] Tetapkan eligibility peserta, profil minimum, dan model role"
+    },
+    "DEC-07": {
+      "number": 20,
+      "id": 5957612782,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/20",
+      "title": "[DEC-07] Validasi data mentor, ejaan, foto dan jadwal aktual"
+    },
+    "DEC-08": {
+      "number": 21,
+      "id": 5957613378,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/21",
+      "title": "[DEC-08] Tetapkan visibilitas Discord dan sumber daya publik"
+    },
+    "DES-01": {
+      "number": 22,
+      "id": 5957613995,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/22",
+      "title": "[DES-01] Kunci matriks route, frame V2, dan state implementasi"
+    },
+    "DES-02": {
+      "number": 23,
+      "id": 5957614593,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/23",
+      "title": "[DES-02] Selesaikan gap frame admin dan copy booking yang tidak konsisten"
+    },
+    "DES-03": {
+      "number": 24,
+      "id": 5957615103,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/24",
+      "title": "[DES-03] Lengkapi kontrak responsif, aksesibilitas dan state lintas halaman"
+    },
+    "AUTH-01": {
+      "number": 25,
+      "id": 5957615729,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/25",
+      "title": "[AUTH-01] Siapkan Supabase development/staging dan alur migrasi yang dapat diulang"
+    },
+    "AUTH-02": {
+      "number": 26,
+      "id": 5957616350,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/26",
+      "title": "[AUTH-02] Uji dan tuntaskan Google OAuth, callback, refresh dan logout"
+    },
+    "AUTH-03": {
+      "number": 27,
+      "id": 5957616891,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/27",
+      "title": "[AUTH-03] Tuntaskan otorisasi role dan bootstrap admin yang terverifikasi"
+    },
+    "UI-01": {
+      "number": 28,
+      "id": 5957617506,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/28",
+      "title": "[UI-01] Implementasikan token desain, font dan aset resmi"
+    },
+    "UI-02": {
+      "number": 29,
+      "id": 5957618118,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/29",
+      "title": "[UI-02] Bangun komponen interaktif reusable dan kartu mentor rata tengah"
+    },
+    "UI-03": {
+      "number": 30,
+      "id": 5957618772,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/30",
+      "title": "[UI-03] Bangun shell peserta, mentor dan admin dengan sidebar responsif"
+    },
+    "UI-04": {
+      "number": 31,
+      "id": 5957619424,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/31",
+      "title": "[UI-04] Implementasikan halaman login dan Link Penting sesuai desain final"
+    },
+    "TEAM-01": {
+      "number": 32,
+      "id": 5957620038,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/32",
+      "title": "[TEAM-01] Bangun skema dan transaksi tim, anggota serta permintaan join"
+    },
+    "TEAM-02": {
+      "number": 33,
+      "id": 5957620699,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/33",
+      "title": "[TEAM-02] Implementasikan buat, cari dan ajukan bergabung dengan tim"
+    },
+    "TEAM-03": {
+      "number": 34,
+      "id": 5957621340,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/34",
+      "title": "[TEAM-03] Implementasikan tab anggota dan review permintaan bergabung oleh ketua"
+    },
+    "TEAM-04": {
+      "number": 35,
+      "id": 5957621937,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/35",
+      "title": "[TEAM-04] Implementasikan keluar tim dan pemindahan ketua tanpa kehilangan riwayat"
+    },
+    "WORK-01": {
+      "number": 36,
+      "id": 5957622683,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/36",
+      "title": "[WORK-01] Implementasikan Identitas Karya: judul, deskripsi, draf dan kelengkapan"
+    },
+    "FILE-01": {
+      "number": 37,
+      "id": 5957623420,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/37",
+      "title": "[FILE-01] Siapkan Storage privat, metadata dokumen dan kebijakan akses"
+    },
+    "FILE-02": {
+      "number": 38,
+      "id": 5957624091,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/38",
+      "title": "[FILE-02] Implementasikan upload, daftar, hapus dan pemulihan file gagal"
+    },
+    "FILE-03": {
+      "number": 39,
+      "id": 5957624789,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/39",
+      "title": "[FILE-03] Implementasikan link Drive dan pelaporan bahan tidak dapat diakses"
+    },
+    "MENTOR-01": {
+      "number": 40,
+      "id": 5957625529,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/40",
+      "title": "[MENTOR-01] Bangun model mentor independen dari akun dan kontak privat"
+    },
+    "MENTOR-02": {
+      "number": 41,
+      "id": 5957626255,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/41",
+      "title": "[MENTOR-02] Impor sembilan mentor dan pemetaan foto secara idempoten"
+    },
+    "MENTOR-03": {
+      "number": 42,
+      "id": 5957626929,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/42",
+      "title": "[MENTOR-03] Implementasikan admin CRUD mentor, detail dan pengarsipan aman"
+    },
+    "SLOT-01": {
+      "number": 43,
+      "id": 5957627677,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/43",
+      "title": "[SLOT-01] Persistensikan settings dan slot dengan constraint waktu termasuk buffer"
+    },
+    "SLOT-02": {
+      "number": 44,
+      "id": 5957628296,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/44",
+      "title": "[SLOT-02] Implementasikan admin editor jam operasional dan jadwal per mentor"
+    },
+    "MENTOR-04": {
+      "number": 45,
+      "id": 5957628891,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/45",
+      "title": "[MENTOR-04] Implementasikan profil mandiri mentor dan editor ketersediaan"
+    },
+    "BOOK-01": {
+      "number": 46,
+      "id": 5957629581,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/46",
+      "title": "[BOOK-01] Implementasikan katalog, detail mentor dan pemilihan jadwal nyata"
+    },
+    "REQ-01": {
+      "number": 47,
+      "id": 5957630214,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/47",
+      "title": "[REQ-01] Bangun skema request, snapshot karya dan state machine pengajuan"
+    },
+    "REQ-02": {
+      "number": 48,
+      "id": 5957630830,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/48",
+      "title": "[REQ-02] Implementasikan review dan submit pengajuan dengan idempotensi"
+    },
+    "REQ-03": {
+      "number": 49,
+      "id": 5957631487,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/49",
+      "title": "[REQ-03] Implementasikan daftar aktif, riwayat dan detail pengajuan peserta"
+    },
+    "REQ-04": {
+      "number": 50,
+      "id": 5957632102,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/50",
+      "title": "[REQ-04] Implementasikan review mentor dan keputusan dengan approval slot atomik"
+    },
+    "LIFE-01": {
+      "number": 51,
+      "id": 5957632735,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/51",
+      "title": "[LIFE-01] Implementasikan revisi karya/dokumen dan kirim ulang pengajuan"
+    },
+    "LIFE-02": {
+      "number": 52,
+      "id": 5957633446,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/52",
+      "title": "[LIFE-02] Implementasikan usulan dan konfirmasi perubahan jadwal sesi"
+    },
+    "LIFE-03": {
+      "number": 53,
+      "id": 5957634068,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/53",
+      "title": "[LIFE-03] Implementasikan pembatalan peserta dan pembatalan darurat admin"
+    },
+    "LIFE-04": {
+      "number": 54,
+      "id": 5957634761,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/54",
+      "title": "[LIFE-04] Implementasikan sesi selesai dan pencabutan akses pasca-relasi"
+    },
+    "HOME-01": {
+      "number": 55,
+      "id": 5957635316,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/55",
+      "title": "[HOME-01] Integrasikan Home peserta V2 beserta seluruh kondisi dan deep link"
+    },
+    "HOME-02": {
+      "number": 56,
+      "id": 5957635881,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/56",
+      "title": "[HOME-02] Integrasikan Home mentor dengan sesi, antrean tindakan dan aktivitas"
+    },
+    "ADMIN-01": {
+      "number": 57,
+      "id": 5957636452,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/57",
+      "title": "[ADMIN-01] Implementasikan dashboard admin dan monitoring operasional"
+    },
+    "ADMIN-02": {
+      "number": 58,
+      "id": 5957636976,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/58",
+      "title": "[ADMIN-02] Implementasikan pengaturan Link Penting dan Discord"
+    },
+    "ADMIN-03": {
+      "number": 59,
+      "id": 5957637628,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/59",
+      "title": "[ADMIN-03] Implementasikan akun/peran dan audit administratif"
+    },
+    "NOTIF-01": {
+      "number": 60,
+      "id": 5957638342,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/60",
+      "title": "[NOTIF-01] Implementasikan notifikasi transaksional dan refresh data berotorisasi"
+    },
+    "QA-01": {
+      "number": 61,
+      "id": 5957638968,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/61",
+      "title": "[QA-01] Jalankan matriks RLS, Storage dan otorisasi seluruh role"
+    },
+    "QA-02": {
+      "number": 62,
+      "id": 5957639693,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/62",
+      "title": "[QA-02] Uji transaksi bersamaan, idempotensi dan pemulihan kegagalan"
+    },
+    "QA-03": {
+      "number": 63,
+      "id": 5957640254,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/63",
+      "title": "[QA-03] Bangun E2E alur inti lintas peserta, mentor dan admin"
+    },
+    "QA-04": {
+      "number": 64,
+      "id": 5957641069,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/64",
+      "title": "[QA-04] Validasi visual, aksesibilitas dan ketahanan aplikasi"
+    },
+    "REL-01": {
+      "number": 65,
+      "id": 5957641846,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/65",
+      "title": "[REL-01] Siapkan CI dan staging dengan database/data uji terpisah"
+    },
+    "REL-02": {
+      "number": 66,
+      "id": 5957642545,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/66",
+      "title": "[REL-02] Siapkan data produksi, migrasi dan deployment dengan rollback"
+    },
+    "REL-03": {
+      "number": 67,
+      "id": 5957643246,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/67",
+      "title": "[REL-03] Tulis runbook panitia dan prosedur dukungan acara"
+    },
+    "REL-04": {
+      "number": 68,
+      "id": 5957643864,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/68",
+      "title": "[REL-04] Lakukan UAT dan putuskan kesiapan rilis acara"
+    },
+    "FUT-01": {
+      "number": 69,
+      "id": 5957644539,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/69",
+      "title": "[FUT-01] Rancang pengingat email atau Discord sebelum sesi"
+    },
+    "FUT-02": {
+      "number": 70,
+      "id": 5957645123,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/70",
+      "title": "[FUT-02] Tambahkan unduh kalender sesi yang terkonfirmasi"
+    },
+    "FUT-03": {
+      "number": 71,
+      "id": 5957645717,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/71",
+      "title": "[FUT-03] Rancang feedback peserta dan catatan hasil mentoring"
+    },
+    "FUT-04": {
+      "number": 72,
+      "id": 5957646369,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/72",
+      "title": "[FUT-04] Rancang auto-expire pengajuan yang tidak direspons"
+    },
+    "FUT-05": {
+      "number": 73,
+      "id": 5957647013,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/73",
+      "title": "[FUT-05] Rancang analitik dan ekspor operasional yang menjaga privasi"
+    },
+    "FUT-06": {
+      "number": 74,
+      "id": 5957647674,
+      "url": "https://github.com/Rayazka/mentoring-inovasi-adikara-26/issues/74",
+      "title": "[FUT-06] Evaluasi undangan tim via kode dan multi-role switcher"
+    }
+  },
+  "milestones": {
+    "D0": 1,
+    "D1": 2,
+    "D2": 3,
+    "D3": 4,
+    "D4": 5,
+    "D5": 6,
+    "D6": 7,
+    "D7": 8,
+    "D8": 9,
+    "D9": 10,
+    "D10": 11,
+    "FUTURE": 12
+  },
+  "parents": [
+    "ROADMAP>EPIC-D0",
+    "ROADMAP>EPIC-D1",
+    "ROADMAP>EPIC-D2",
+    "ROADMAP>EPIC-D3",
+    "ROADMAP>EPIC-D4",
+    "ROADMAP>EPIC-D5",
+    "ROADMAP>EPIC-D6",
+    "ROADMAP>EPIC-D7",
+    "ROADMAP>EPIC-D8",
+    "ROADMAP>EPIC-D9",
+    "ROADMAP>EPIC-D10",
+    "ROADMAP>EPIC-FUTURE",
+    "EPIC-D3>DEC-01",
+    "EPIC-D4>DEC-02",
+    "EPIC-D4>DEC-03",
+    "EPIC-D6>DEC-04",
+    "EPIC-D7>DEC-05",
+    "EPIC-D1>DEC-06",
+    "EPIC-D5>DEC-07",
+    "EPIC-D2>DEC-08",
+    "EPIC-D0>DES-01",
+    "EPIC-D0>DES-02",
+    "EPIC-D0>DES-03",
+    "EPIC-D1>AUTH-01",
+    "EPIC-D1>AUTH-02",
+    "EPIC-D1>AUTH-03",
+    "EPIC-D2>UI-01",
+    "EPIC-D2>UI-02",
+    "EPIC-D2>UI-03",
+    "EPIC-D2>UI-04",
+    "EPIC-D3>TEAM-01",
+    "EPIC-D3>TEAM-02",
+    "EPIC-D3>TEAM-03",
+    "EPIC-D3>TEAM-04",
+    "EPIC-D4>WORK-01",
+    "EPIC-D4>FILE-01",
+    "EPIC-D4>FILE-02",
+    "EPIC-D4>FILE-03",
+    "EPIC-D5>MENTOR-01",
+    "EPIC-D5>MENTOR-02",
+    "EPIC-D5>MENTOR-03",
+    "EPIC-D5>SLOT-01",
+    "EPIC-D5>SLOT-02",
+    "EPIC-D5>MENTOR-04",
+    "EPIC-D6>BOOK-01",
+    "EPIC-D6>REQ-01",
+    "EPIC-D6>REQ-02",
+    "EPIC-D6>REQ-03",
+    "EPIC-D6>REQ-04",
+    "EPIC-D7>LIFE-01",
+    "EPIC-D7>LIFE-02",
+    "EPIC-D7>LIFE-03",
+    "EPIC-D7>LIFE-04",
+    "EPIC-D8>HOME-01",
+    "EPIC-D8>HOME-02",
+    "EPIC-D8>ADMIN-01",
+    "EPIC-D8>ADMIN-02",
+    "EPIC-D8>ADMIN-03",
+    "EPIC-D8>NOTIF-01",
+    "EPIC-D9>QA-01",
+    "EPIC-D9>QA-02",
+    "EPIC-D9>QA-03",
+    "EPIC-D9>QA-04",
+    "EPIC-D10>REL-01",
+    "EPIC-D10>REL-02",
+    "EPIC-D10>REL-03",
+    "EPIC-D10>REL-04",
+    "EPIC-FUTURE>FUT-01",
+    "EPIC-FUTURE>FUT-02",
+    "EPIC-FUTURE>FUT-03",
+    "EPIC-FUTURE>FUT-04",
+    "EPIC-FUTURE>FUT-05",
+    "EPIC-FUTURE>FUT-06"
+  ],
+  "dependencies": [
+    "DES-02<DES-01",
+    "DES-03<DES-01",
+    "AUTH-02<AUTH-01",
+    "AUTH-03<AUTH-02",
+    "AUTH-03<DEC-06",
+    "UI-01<DES-01",
+    "UI-02<UI-01",
+    "UI-02<DES-03",
+    "UI-03<UI-02",
+    "UI-03<AUTH-03",
+    "UI-04<UI-02",
+    "UI-04<AUTH-02",
+    "UI-04<DEC-08",
+    "TEAM-01<AUTH-03",
+    "TEAM-01<DEC-01",
+    "TEAM-02<TEAM-01",
+    "TEAM-02<UI-03",
+    "TEAM-03<TEAM-02",
+    "TEAM-04<TEAM-03",
+    "TEAM-04<DEC-01",
+    "WORK-01<TEAM-01",
+    "WORK-01<UI-03",
+    "WORK-01<DEC-01",
+    "WORK-01<DEC-02",
+    "FILE-01<WORK-01",
+    "FILE-01<DEC-02",
+    "FILE-01<DEC-03",
+    "FILE-02<FILE-01",
+    "FILE-02<UI-02",
+    "FILE-03<WORK-01",
+    "FILE-03<FILE-01",
+    "MENTOR-01<AUTH-03",
+    "MENTOR-01<DEC-06",
+    "MENTOR-02<MENTOR-01",
+    "MENTOR-02<DEC-07",
+    "MENTOR-03<MENTOR-02",
+    "MENTOR-03<UI-03",
+    "MENTOR-03<DES-02",
+    "SLOT-01<MENTOR-01",
+    "SLOT-01<AUTH-01",
+    "SLOT-01<DEC-07",
+    "SLOT-02<SLOT-01",
+    "SLOT-02<UI-03",
+    "MENTOR-04<MENTOR-02",
+    "MENTOR-04<SLOT-01",
+    "MENTOR-04<UI-03",
+    "BOOK-01<MENTOR-02",
+    "BOOK-01<SLOT-01",
+    "BOOK-01<UI-03",
+    "REQ-01<WORK-01",
+    "REQ-01<SLOT-01",
+    "REQ-01<DEC-04",
+    "REQ-01<DEC-03",
+    "REQ-02<BOOK-01",
+    "REQ-02<REQ-01",
+    "REQ-02<FILE-02",
+    "REQ-02<FILE-03",
+    "REQ-03<REQ-02",
+    "REQ-03<UI-03",
+    "REQ-04<REQ-01",
+    "REQ-04<REQ-02",
+    "REQ-04<MENTOR-04",
+    "LIFE-01<REQ-03",
+    "LIFE-01<REQ-04",
+    "LIFE-02<LIFE-01",
+    "LIFE-02<SLOT-02",
+    "LIFE-02<DEC-04",
+    "LIFE-02<DEC-05",
+    "LIFE-03<REQ-04",
+    "LIFE-03<DEC-05",
+    "LIFE-04<LIFE-03",
+    "LIFE-04<DEC-03",
+    "HOME-01<REQ-03",
+    "HOME-01<LIFE-01",
+    "HOME-01<TEAM-04",
+    "HOME-01<WORK-01",
+    "HOME-01<UI-04",
+    "HOME-02<REQ-04",
+    "HOME-02<LIFE-04",
+    "HOME-02<UI-03",
+    "ADMIN-01<REQ-04",
+    "ADMIN-01<LIFE-03",
+    "ADMIN-01<MENTOR-03",
+    "ADMIN-01<DES-02",
+    "ADMIN-02<UI-04",
+    "ADMIN-02<AUTH-03",
+    "ADMIN-02<DEC-08",
+    "ADMIN-03<MENTOR-03",
+    "ADMIN-03<SLOT-02",
+    "ADMIN-03<LIFE-03",
+    "ADMIN-03<DES-02",
+    "NOTIF-01<TEAM-03",
+    "NOTIF-01<REQ-04",
+    "NOTIF-01<LIFE-02",
+    "QA-01<ADMIN-03",
+    "QA-01<LIFE-04",
+    "QA-01<FILE-02",
+    "QA-01<NOTIF-01",
+    "QA-02<LIFE-02",
+    "QA-02<LIFE-03",
+    "QA-02<NOTIF-01",
+    "QA-02<FILE-02",
+    "QA-03<HOME-01",
+    "QA-03<HOME-02",
+    "QA-03<ADMIN-01",
+    "QA-03<ADMIN-02",
+    "QA-03<ADMIN-03",
+    "QA-03<NOTIF-01",
+    "QA-04<QA-03",
+    "QA-04<DES-03",
+    "REL-01<AUTH-01",
+    "REL-01<UI-03",
+    "REL-02<REL-01",
+    "REL-02<QA-01",
+    "REL-02<QA-02",
+    "REL-02<QA-03",
+    "REL-02<QA-04",
+    "REL-02<DEC-07",
+    "REL-03<ADMIN-01",
+    "REL-03<ADMIN-03",
+    "REL-03<REL-01",
+    "REL-04<REL-02",
+    "REL-04<REL-03",
+    "FUT-01<REL-04",
+    "FUT-01<NOTIF-01",
+    "FUT-02<REL-04",
+    "FUT-02<LIFE-02",
+    "FUT-03<REL-04",
+    "FUT-03<LIFE-04",
+    "FUT-04<REL-04",
+    "FUT-04<REQ-01",
+    "FUT-05<REL-04",
+    "FUT-05<ADMIN-01",
+    "FUT-06<REL-04",
+    "FUT-06<DEC-01",
+    "FUT-06<DEC-06"
+  ],
+  "trackersFinalized": true,
+  "verified": {
+    "issues": 74,
+    "parents": 73,
+    "dependencies": 136
+  }
+}
