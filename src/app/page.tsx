@@ -1,6 +1,8 @@
 // TODO: Pelihara dokumentasi dan pengujian saat modul ini berubah.
 import { signInWithGoogle } from "./auth/actions";
 import { hasSupabaseConfig } from "@/lib/supabase/env";
+import { isDemoMode } from "@/models/demo/mode";
+import { DemoLogin } from "@/views/demo/login";
 
 // Halaman autentikasi dasar sebelum tampilan demo menggantikannya.
 export default async function Page({
@@ -8,6 +10,7 @@ export default async function Page({
 }: {
 	searchParams: Promise<{ auth?: string }>;
 }) {
+	if (isDemoMode()) return <DemoLogin />;
 	const { auth } = await searchParams;
 	const configured = hasSupabaseConfig();
 	return (
