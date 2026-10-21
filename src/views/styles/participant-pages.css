@@ -255,3 +255,47 @@
 		flex-basis: 65%;
 	}
 }
+
+.work-information,
+.work-documents {
+	scroll-margin-top: 24px;
+}
+.reference-page .work-information .panel {
+	padding: 28px;
+}
+.reference-page .work-information textarea {
+	min-height: 232px;
+}
+.reference-page .work-information .actions {
+	justify-content: flex-start;
+}
+.reference-page .work-documents > .panel {
+	padding: 28px;
+}
+.reference-page .work-documents .panel .panel {
+	padding: 24px 0 0;
+	border: 0;
+	border-radius: 0;
+	border-top: 1px solid #ececef;
+	margin-top: 24px;
+}
+.reference-page .work-documents .panel .panel .panel-title {
+	font-size: 18px;
+}
+.upload-disclosure > summary {
+	width: fit-content;
+	cursor: pointer;
+	list-style: none;
+	margin-bottom: 20px;
+}
+.upload-disclosure > summary::-webkit-details-marker {
+	display: none;
+}
+
+.reference-page .work-information form > .row {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #ececef;
+}

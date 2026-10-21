@@ -76,83 +76,126 @@ function WorkForm({
 	}
 	if (!state) return null;
 	const ready = workIsReady(state, teamId);
+	const team = state.teams.find(
+		/** Mengambil nama tim pemilik identitas karya. */
+		function workOwner(item) {
+			return item.id === teamId;
+		},
+	);
+	const documentCount = state.documents.filter(
+		/** Menghitung seluruh bahan diskusi yang sudah tersimpan. */
+		function workDocument(item) {
+			return item.teamId === teamId;
+		},
+	).length;
 	return (
 		<>
-			<div className="section-heading">
-				<div>
-					<span className="eyebrow">CERITAKAN INOVASIMU</span>
-					<h1>Identitas Karya</h1>
-					<p>
-						Berikan gambaran kepada mentor tentang karya yang sedang timmu
-						kembangkan.
-					</p>
-				</div>
-				<Badge
-					label={ready ? "Informasi lengkap" : "Perlu dilengkapi"}
-					tone={ready ? "success" : "warning"}
-				/>
-			</div>
-			<Panel title="Informasi Karya" icon="file">
-				<form className="stack" onSubmit={save}>
-					<p className="notice">
-						Data ini dimiliki bersama oleh tim dan akan dipakai ulang saat
-						mengajukan mentoring.
-					</p>
-					<label className="field" htmlFor="judul-topik">
-						Judul topik <span aria-hidden="true">*</span>
-						<input
-							id="judul-topik"
-							name="title"
-							value={title}
-							onChange={changeTitle}
-							maxLength={150}
-							required
-							placeholder="Apa judul atau topik karya timmu?"
-						/>
-						<small>{title.length}/150 karakter</small>
-					</label>
-					<label className="field" htmlFor="deskripsi-topik">
-						Deskripsi topik <span aria-hidden="true">*</span>
-						<textarea
-							id="deskripsi-topik"
-							name="description"
-							value={description}
-							onChange={changeDescription}
-							required
-							maxLength={5000}
-							rows={7}
-							placeholder="Ceritakan masalah yang ingin diselesaikan, solusi, target pengguna, perkembangan saat ini, dan hal yang ingin didiskusikan."
-						/>
-						<small>{description.length}/5.000 karakter</small>
-					</label>
-					<div className="row spread wrap">
-						<span className="helper">
-							{dirty
-								? "Ada perubahan yang belum disimpan."
-								: work
-									? `Terakhir disimpan ${formatDate(work.updatedAt, true)}`
-									: "Belum ada identitas karya tersimpan."}
-						</span>
-						<div className="actions">
-							<Button variant="neutral" onClick={draft}>
-								Simpan draf
-							</Button>
-							<Button type="submit">Simpan identitas karya</Button>
-						</div>
+			<nav className="local-navigation" aria-label="Bagian Identitas Karya">
+				<a className="is-active" href="#informasi-karya">
+					Informasi Karya
+				</a>
+				<a href="#dokumen-pendukung">
+					Dokumen Pendukung <span className="count">{documentCount}</span>
+				</a>
+			</nav>
+			<section className="crimson-summary" aria-label="Ringkasan karya">
+				<div className="row spread wrap">
+					<div>
+						<h2>{work?.title || "Identitas karya belum diisi"}</h2>
+						<p>
+							Milik Tim {team?.name} · {team?.category}
+						</p>
 					</div>
-				</form>
-			</Panel>
-			<DocumentsPanel controller={controller} teamId={teamId} />
-			<DrivePanel controller={controller} teamId={teamId} />
-			<Panel title="Langkah berikutnya">
+					<Badge
+						label={ready ? "Judul & deskripsi terisi" : "Perlu dilengkapi"}
+					/>
+				</div>
 				<p>
-					Pastikan gambaran karya sudah jelas sebelum memilih mentor yang sesuai
-					bidangnya.
+					Informasi karya digunakan kembali saat mengajukan mentoring. Kamu
+					tidak perlu menuliskannya ulang untuk setiap sesi.
 				</p>
-				<Link className="button secondary" href="/peserta/mentor">
-					Cari Mentor
-				</Link>
-			</Panel>
+			</section>
+			<div id="informasi-karya" className="work-information">
+				<Panel
+					title="Informasi Karya"
+					actions={
+						<Badge
+							label={
+								dirty ? "Belum disimpan" : work ? "Tersimpan" : "Belum diisi"
+							}
+							tone={dirty ? "warning" : "success"}
+						/>
+					}
+				>
+					<form className="stack" onSubmit={save}>
+						<p className="helper">
+							Judul dan deskripsi wajib diisi agar mentor memahami arah karyamu.
+						</p>
+						<label className="field" htmlFor="judul-topik">
+							<span>
+								Judul topik <span aria-hidden="true">*</span>
+							</span>
+							<input
+								id="judul-topik"
+								name="title"
+								value={title}
+								onChange={changeTitle}
+								maxLength={150}
+								required
+								placeholder="Apa judul atau topik karya timmu?"
+							/>
+							<small>
+								Gunakan judul yang menggambarkan fokus karya tim. ·{" "}
+								{title.length}/150 karakter
+							</small>
+						</label>
+						<label className="field" htmlFor="deskripsi-topik">
+							<span>
+								Deskripsi topik <span aria-hidden="true">*</span>
+							</span>
+							<textarea
+								id="deskripsi-topik"
+								name="description"
+								value={description}
+								onChange={changeDescription}
+								required
+								maxLength={5000}
+								rows={7}
+								placeholder="Ceritakan masalah yang ingin diselesaikan, solusi, target pengguna, perkembangan saat ini, dan hal yang ingin didiskusikan."
+							/>
+							<small>
+								Jelaskan gambaran ide, tujuan, dan masalah yang ingin
+								diselesaikan. · {description.length}/5.000 karakter
+							</small>
+						</label>
+						<div className="row spread wrap">
+							<span className="helper">
+								{dirty
+									? "Ada perubahan yang belum disimpan."
+									: work
+										? `Terakhir disimpan ${formatDate(work.updatedAt, true)}`
+										: "Belum ada identitas karya tersimpan."}
+							</span>
+							<div className="actions">
+								<Button variant="secondary" onClick={draft}>
+									Simpan draf
+								</Button>
+								<Button type="submit">Simpan Perubahan</Button>
+							</div>
+						</div>
+					</form>
+				</Panel>
+			</div>
+			<div id="dokumen-pendukung" className="work-documents">
+				<Panel title="Dokumen Pendukung">
+					<p>
+						{documentCount} bahan diskusi milik tim. Tambahkan file atau tautan
+						Google Drive untuk membantu mentor memahami karya.
+					</p>
+					<DocumentsPanel controller={controller} teamId={teamId} compact />
+					<DrivePanel controller={controller} teamId={teamId} />
+				</Panel>
+			</div>
 		</>
 	);
 }

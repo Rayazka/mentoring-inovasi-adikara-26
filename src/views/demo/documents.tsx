@@ -20,10 +20,12 @@ export function DocumentsPanel({
 	controller,
 	teamId,
 	readonly = false,
+	compact = false,
 }: {
 	controller: DemoController;
 	teamId: string;
 	readonly?: boolean;
+	compact?: boolean;
 }) {
 	const { state } = controller;
 	const [busy, setBusy] = useState(false);
@@ -84,34 +86,40 @@ export function DocumentsPanel({
 			<Panel title="Dokumen Karya" icon="file">
 				<div className="stack">
 					{!readonly && (
-						<form onSubmit={upload} className="stack">
-							<p className="helper">
-								Mode demo: file tersimpan hanya pada browser ini. PDF, DOCX,
-								PPTX, PNG, JPG · maksimal 10 MB/file, 10 file dan 50 MB/tim.
-							</p>
-							<div className="form-grid">
-								<label className="field">
-									Judul dokumen
-									<input
-										name="title"
-										maxLength={150}
-										placeholder="Contoh: Proposal versi 1"
-									/>
-								</label>
-								<label className="field">
-									Pilih file
-									<input
-										name="file"
-										type="file"
-										accept=".pdf,.docx,.pptx,.png,.jpg,.jpeg"
-										required
-									/>
-								</label>
-							</div>
-							<Button type="submit" disabled={busy}>
-								{busy ? "Memproses…" : "Unggah dokumen"}
-							</Button>
-						</form>
+						<details
+							className="upload-disclosure"
+							open={compact ? undefined : true}
+						>
+							<summary className="button secondary">Upload File</summary>
+							<form onSubmit={upload} className="stack">
+								<p className="helper">
+									Mode demo: file tersimpan hanya pada browser ini. PDF, DOCX,
+									PPTX, PNG, JPG · maksimal 10 MB/file, 10 file dan 50 MB/tim.
+								</p>
+								<div className="form-grid">
+									<label className="field">
+										Judul dokumen
+										<input
+											name="title"
+											maxLength={150}
+											placeholder="Contoh: Proposal versi 1"
+										/>
+									</label>
+									<label className="field">
+										Pilih file
+										<input
+											name="file"
+											type="file"
+											accept=".pdf,.docx,.pptx,.png,.jpg,.jpeg"
+											required
+										/>
+									</label>
+								</div>
+								<Button type="submit" disabled={busy}>
+									{busy ? "Memproses…" : "Unggah dokumen"}
+								</Button>
+							</form>
+						</details>
 					)}
 					{message && (
 						<p
