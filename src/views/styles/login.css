@@ -5,15 +5,17 @@
 	background: #fff;
 	color: #10142b;
 }
+.login-introduction,
+.login-resources .resource-panel {
+	scroll-margin-top: 130px;
+}
 .login-header {
-	position: absolute;
+	position: sticky;
 	top: 0;
-	left: 0;
-	right: 0;
 	z-index: 5;
 	padding: 24px 24px 0;
 	max-width: 1440px;
-	margin: auto;
+	margin: 0 auto -110px;
 }
 .login-navbar {
 	height: 86px;
@@ -93,14 +95,16 @@
 }
 .login-hero-pattern {
 	position: absolute;
-	width: 620px;
-	height: 520px;
-	left: calc(50% - 310px);
-	top: -10px;
+	inset: 0;
 	z-index: -2;
-	background:
-		url("/api/demo-assets/login-pattern") center / 100% 100% no-repeat;
 	opacity: 0.065;
+	background-image:
+		url("/api/demo-assets/login-pattern"),
+		url("/api/demo-assets/login-pattern"),
+		url("/api/demo-assets/login-pattern");
+	background-repeat: no-repeat;
+	background-size: 620px 520px;
+	background-position: -214px -13px, 410px -10px, 1043px -23px;
 }
 .login-ornament {
 	position: absolute;
@@ -126,8 +130,9 @@
 	left: 0;
 }
 .login-ornament-right {
-	right: 0;
+	right: -294.72px;
 	transform: scaleX(-1);
+	transform-origin: top left;
 }
 .login-introduction-copy {
 	width: min(800px, 100%);
@@ -347,7 +352,9 @@
 	line-height: 24px;
 	min-height: 48px;
 	background: transparent;
-	border-color: #fff9;
+	border: 0;
+	outline: 1px solid #ffffff99;
+	outline-offset: -0.5px;
 	border-radius: 14px;
 }
 .login-resource-loading {
@@ -362,7 +369,7 @@
 	overflow: hidden;
 	display: grid;
 	grid-template-columns: 350fr 150fr 210fr 300fr;
-	gap: 40px;
+	gap: 90px;
 	padding: 64px 80px;
 	background: #fafafa;
 }
@@ -372,7 +379,7 @@
 	inset: 0;
 	z-index: -1;
 	background:
-		url("/api/demo-assets/login-footer-pattern") center center / 720px 729.295px
+		url("/api/demo-assets/login-footer-pattern") 360px -181.547px / 720px 729.295px
 		repeat-x;
 	opacity: 0.11;
 	pointer-events: none;
@@ -381,6 +388,11 @@
 	display: grid;
 	align-content: start;
 	gap: 20px;
+	padding-bottom: 10.2px;
+}
+.login-footer-about a {
+	display: flex;
+	flex-direction: column;
 }
 .login-footer .login-footer-about p {
 	font-size: 14px;
@@ -530,6 +542,10 @@
 		width: 230px;
 		opacity: 0.55;
 	}
+	.login-hero-pattern {
+		background-image: url("/api/demo-assets/login-pattern");
+		background-position: 50% -13px;
+	}
 	.login-introduction-copy {
 		max-width: 650px;
 	}
@@ -559,6 +575,7 @@
 	}
 	.login-header {
 		padding: 16px 16px 0;
+		margin-bottom: -88px;
 	}
 	.login-navbar {
 		height: 72px;

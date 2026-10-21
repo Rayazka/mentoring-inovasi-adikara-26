@@ -39,7 +39,10 @@ const assets: Record<string, { path: string; type: string }> = {
 		path: "docs/design-assets/00556c372b555bf4.png",
 		type: "image/png",
 	},
-	font: { path: "docs/fonts/100611c878e97c31.woff2", type: "font/woff2" },
+	font: {
+		path: "docs/fonts/adikara.helloprodigi.pro/100611c878e97c31.woff2",
+		type: "font/woff2",
+	},
 	informatics: { path: "assets/informatics-logo.svg", type: "image/svg+xml" },
 	prodigi: { path: "assets/prodigi-logo.webp", type: "image/webp" },
 };

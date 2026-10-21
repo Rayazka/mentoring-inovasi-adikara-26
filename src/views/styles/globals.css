@@ -26,7 +26,7 @@
 	--warning-soft: #fff5dc;
 	--danger: #b42318;
 	--radius: 20px;
-	--font: "Google Sans", Arial, sans-serif;
+	--font: "Google Sans", system-ui, sans-serif;
 }
 * {
 	box-sizing: border-box;
