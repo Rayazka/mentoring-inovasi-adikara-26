@@ -5,6 +5,30 @@ import { isDemoMode } from "@/models/demo/mode";
 
 export const runtime = "nodejs";
 const assets: Record<string, { path: string; type: string }> = {
+	"login-logo": {
+		path: "docs/login-reference-assets/adf15c94ae4792ad.webp",
+		type: "image/webp",
+	},
+	"login-icon": {
+		path: "docs/login-reference-assets/222a4e4582895d7a.png",
+		type: "image/png",
+	},
+	"login-pattern": {
+		path: "docs/login-reference-assets/de17b5cc701bbedc.png",
+		type: "image/png",
+	},
+	"login-footer-pattern": {
+		path: "docs/login-reference-assets/ca49549b647dfa59.png",
+		type: "image/png",
+	},
+	"login-ornament": {
+		path: "docs/login-reference-assets/ornament.svg",
+		type: "image/svg+xml",
+	},
+	"login-blur-ornament": {
+		path: "docs/login-reference-assets/blur-ornament.svg",
+		type: "image/svg+xml",
+	},
 	logo: { path: "assets/adikara-logo.webp", type: "image/webp" },
 	icon: { path: "assets/adikara-icon.svg", type: "image/svg+xml" },
 	resource: {

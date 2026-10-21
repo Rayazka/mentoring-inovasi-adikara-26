@@ -4,7 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 
 /** Menggunakan logo resmi lokal tanpa menggambar ulang atau memublikasikan berkas brand. */
-export function Brand({ compact = false }: { compact?: boolean }) {
+export function Brand({
+	compact = false,
+	source = "logo",
+}: {
+	compact?: boolean;
+	source?: "logo" | "login-logo";
+}) {
 	const [failed, setFailed] = useState(false);
 	/** Mengalihkan tampilan ke teks ketika checkout tidak menyertakan aset privat. */
 	function showFallback() {
@@ -17,7 +23,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
 	) : (
 		<Image
 			className="official-brand"
-			src={compact ? "/api/demo-assets/icon" : "/api/demo-assets/logo"}
+			src={compact ? "/api/demo-assets/icon" : `/api/demo-assets/${source}`}
 			width={compact ? 28 : 218}
 			height={compact ? 42 : 48}
 			alt="ADIKARA 2026 — Lead With Character, Shape The Future."
