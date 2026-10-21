@@ -27,6 +27,7 @@ import "./request-submit";
 import "./requests";
 import "./review";
 import "./revision";
+import "./reschedule";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {
