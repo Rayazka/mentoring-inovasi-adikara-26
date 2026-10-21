@@ -5,6 +5,7 @@ import { createDemoSeed } from "@/models/demo/seed";
 import { teamCommand } from "./team-controller";
 import { workCommand } from "./work-controller";
 import { documentCommand } from "./document-controller";
+import { driveCommand } from "./drive-controller";
 import {
 	getDemoSnapshot,
 	getServerDemoSnapshot,
@@ -24,6 +25,7 @@ const handlers: Record<string, CommandHandler> = {
 	team: teamCommand,
 	work: workCommand,
 	document: documentCommand,
+	drive: driveCommand,
 };
 
 /** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */

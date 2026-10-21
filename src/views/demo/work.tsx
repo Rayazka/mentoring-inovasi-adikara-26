@@ -13,6 +13,7 @@ import {
 } from "@/views/components/ui";
 import { registerDemoView } from "./registry";
 import { DocumentsPanel } from "./documents";
+import { DrivePanel } from "./drive";
 
 /** Memilih karya tim dari sesi aktif sebelum memasang formulir yang mempertahankan input lokal. */
 export function WorkPage({ controller }: { controller: DemoController }) {
@@ -142,6 +143,7 @@ function WorkForm({
 				</form>
 			</Panel>
 			<DocumentsPanel controller={controller} teamId={teamId} />
+			<DrivePanel controller={controller} teamId={teamId} />
 			<Panel title="Langkah berikutnya">
 				<p>
 					Pastikan gambaran karya sudah jelas sebelum memilih mentor yang sesuai
