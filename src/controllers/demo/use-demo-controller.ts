@@ -7,6 +7,7 @@ import { workCommand } from "./work-controller";
 import { documentCommand } from "./document-controller";
 import { driveCommand } from "./drive-controller";
 import { mentorCommand } from "./mentor-controller";
+import { scheduleCommand } from "./schedule-controller";
 import {
 	getDemoSnapshot,
 	getServerDemoSnapshot,
@@ -28,6 +29,7 @@ const handlers: Record<string, CommandHandler> = {
 	document: documentCommand,
 	drive: driveCommand,
 	mentor: mentorCommand,
+	schedule: scheduleCommand,
 };
 
 /** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */

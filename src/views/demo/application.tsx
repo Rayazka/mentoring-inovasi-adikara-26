@@ -20,6 +20,7 @@ import { demoViews } from "./registry";
 import "./team";
 import "./work";
 import "./admin-mentors";
+import "./schedules";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {
