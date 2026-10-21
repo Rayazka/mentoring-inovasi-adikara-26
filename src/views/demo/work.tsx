@@ -12,6 +12,7 @@ import {
 	formatDate,
 } from "@/views/components/ui";
 import { registerDemoView } from "./registry";
+import { DocumentsPanel } from "./documents";
 
 /** Memilih karya tim dari sesi aktif sebelum memasang formulir yang mempertahankan input lokal. */
 export function WorkPage({ controller }: { controller: DemoController }) {
@@ -140,6 +141,7 @@ function WorkForm({
 					</div>
 				</form>
 			</Panel>
+			<DocumentsPanel controller={controller} teamId={teamId} />
 			<Panel title="Langkah berikutnya">
 				<p>
 					Pastikan gambaran karya sudah jelas sebelum memilih mentor yang sesuai
