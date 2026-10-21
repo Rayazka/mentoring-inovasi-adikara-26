@@ -1,4 +1,4 @@
-# TODO: Keep local rules, source materials and credentials out of the public repository.
+# TODO: Jaga agar aturan lokal, sumber privat dan kredensial tidak masuk repo publik.
 AGENTS.md
 node_modules/
 .npm-cache/
@@ -10,7 +10,7 @@ coverage/
 !.env.example
 tmp/
 *.log
-# Public repository: code and issue workflow only. Keep source materials local.
+# Repo publik hanya berisi kode dan alur issues; sumber privat tetap lokal.
 /assets/
 /docs/*
 !/docs/GitHub Backlog.md

@@ -1,25 +1,28 @@
-// TODO: Add Google session integration tests after production authentication is enabled.
+// TODO: Jaga dokumentasi, pemisahan tanggung jawab dan pengujian modul ini saat perilakunya berubah.
 import { describe, expect, it } from "vitest";
 import { createDemoSeed } from "../src/models/demo/seed";
 import { sessionCommand } from "../src/controllers/demo/session-controller";
 
-/** Verify the local-only login flow never fabricates unknown or archived accounts. */
-describe("demo sessions", function sessionSuite() {
-	/** Exercise a valid login and subsequent logout on fictional data. */
-	it("logs in and out without an external provider", function localLogin() {
+/** Menguji bahwa login lokal menolak akun yang tidak dikenal atau diarsipkan. */
+describe("demo sessions" /** Menjalankan langkah sessionSuite sesuai tanggung jawab modul ini. */, function sessionSuite() {
+	/** Menguji masuk dan keluar menggunakan data fiktif. */
+	it("logs in and out without an external provider" /** Menjalankan langkah localLogin sesuai tanggung jawab modul ini. */, function localLogin() {
 		const state = createDemoSeed();
 		sessionCommand(state, "session.login", { userId: "alya" });
 		expect(state.userId).toBe("alya");
 		sessionCommand(state, "session.logout", {});
 		expect(state.userId).toBeNull();
 	});
-	/** Ensure disabled mentor identities do not regain access through the login selector. */
-	it("rejects a disabled mentor", function disabledMentor() {
+	/** Menguji bahwa mentor nonaktif tidak mendapat akses melalui pilihan akun. */
+	it("rejects a disabled mentor" /** Menjalankan langkah disabledMentor sesuai tanggung jawab modul ini. */, function disabledMentor() {
 		const state = createDemoSeed();
 		state.mentors[0].active = false;
-		/** Assert that the disabled identity cannot sign in. */
-		expect(function deniedLogin() {
-			sessionCommand(state, "session.login", { userId: "user-mentor-1" });
-		}).toThrow();
+		/** Memastikan identitas nonaktif tidak dapat masuk. */
+		expect(
+			/** Menjalankan langkah deniedLogin sesuai tanggung jawab modul ini. */
+			function deniedLogin() {
+				sessionCommand(state, "session.login", { userId: "user-mentor-1" });
+			},
+		).toThrow();
 	});
 });

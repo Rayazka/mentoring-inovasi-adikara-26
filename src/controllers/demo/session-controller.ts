@@ -1,4 +1,4 @@
-// TODO: Replace fictional sessions with verified Google identities only when connected mode is enabled.
+// TODO: Jaga dokumentasi, pemisahan tanggung jawab dan pengujian modul ini saat perilakunya berubah.
 import type { DemoState } from "@/models/demo/types";
 import { requiredText } from "./context";
 
@@ -9,14 +9,14 @@ export type CommandHandler = (
 	payload: CommandPayload,
 ) => string;
 
-/** Validate a named string payload before it reaches a domain operation. */
+/** Memvalidasi nilai teks dari payload sebelum dipakai aturan domain. */
 export function textValue(payload: CommandPayload, name: string) {
 	const value = payload[name];
 	if (typeof value !== "string") throw new Error(`Nilai ${name} tidak valid.`);
 	return value;
 }
 
-/** Sign into a known fictional identity, sign out, or mark owned notifications as read. */
+/** Menangani masuk, keluar dan pembacaan notifikasi akun demo yang sah. */
 export function sessionCommand(
 	state: DemoState,
 	action: string,
@@ -24,15 +24,21 @@ export function sessionCommand(
 ) {
 	if (action === "session.login") {
 		const userId = requiredText(textValue(payload, "userId"), "Akun demo");
-		const user = state.users.find(function knownAccount(account) {
-			return account.id === userId;
-		});
+		const user = state.users.find(
+			/** Menjalankan langkah knownAccount sesuai tanggung jawab modul ini. */
+			function knownAccount(account) {
+				return account.id === userId;
+			},
+		);
 		if (!user) throw new Error("Akun demo tidak ditemukan.");
 		if (
 			user.role === "mentor" &&
-			!state.mentors.some(function activeMentor(mentor) {
-				return mentor.userId === user.id && mentor.active && !mentor.archived;
-			})
+			!state.mentors.some(
+				/** Menjalankan langkah activeMentor sesuai tanggung jawab modul ini. */
+				function activeMentor(mentor) {
+					return mentor.userId === user.id && mentor.active && !mentor.archived;
+				},
+			)
 		)
 			throw new Error("Akun mentor sudah dinonaktifkan.");
 		state.userId = userId;

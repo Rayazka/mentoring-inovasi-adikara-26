@@ -1,4 +1,4 @@
-// TODO: Keep reusable controls consistent with the approved design and accessible across all role views.
+// TODO: Jaga dokumentasi, pemisahan tanggung jawab dan pengujian modul ini saat perilakunya berubah.
 "use client";
 
 import Link from "next/link";
@@ -36,7 +36,7 @@ const iconPaths = {
 } as const;
 export type IconName = keyof typeof iconPaths;
 
-/** Render a consistent decorative stroke icon; its accompanying control supplies the accessible label. */
+/** Menampilkan ikon garis dekoratif; label aksesibel disediakan kontrol yang menyertainya. */
 export function Icon({ name }: { name: IconName }) {
 	return (
 		<svg
@@ -54,7 +54,7 @@ export function Icon({ name }: { name: IconName }) {
 	);
 }
 
-/** Present fictional accounts as circular initials without publishing withheld portrait assets. */
+/** Menampilkan inisial akun fiktif berbentuk lingkaran tanpa memublikasikan foto privat. */
 export function Avatar({
 	name,
 	size = "",
@@ -71,7 +71,7 @@ export function Avatar({
 	);
 }
 
-/** Share button appearance while retaining native form and disabled semantics. */
+/** Menyediakan tampilan tombol bersama sambil mempertahankan perilaku form dan kondisi nonaktif. */
 export function Button({
 	variant = "",
 	className = "",
@@ -89,7 +89,7 @@ export function Button({
 	);
 }
 
-/** Group a meaningful section with an accessible heading and optional contextual actions. */
+/** Mengelompokkan bagian halaman dengan judul dan tindakan yang relevan. */
 export function Panel({
 	title,
 	icon,
@@ -128,7 +128,7 @@ const statuses: Record<RequestStatus, { label: string; tone: string }> = {
 	completed: { label: "Selesai", tone: "success" },
 };
 
-/** Show status with readable text and a secondary visual marker, not color alone. */
+/** Menampilkan status melalui teks dan penanda visual selain warna. */
 export function Badge({
 	status,
 	label,
@@ -142,7 +142,7 @@ export function Badge({
 	return <span className={`badge ${value.tone}`}>{value.label}</span>;
 }
 
-/** Explain an empty section and keep its next action available instead of hiding the container. */
+/** Menjelaskan kondisi kosong sambil menyediakan tindakan berikutnya. */
 export function EmptyState({
 	title,
 	description,
@@ -166,7 +166,7 @@ export function EmptyState({
 	);
 }
 
-/** Render a compact disclosure of the local-only dummy data and authentication mode. */
+/** Menampilkan penjelasan ringkas bahwa data dan login hanya untuk demo lokal. */
 export function DemoBanner() {
 	return (
 		<div className="demo-banner">
@@ -176,7 +176,7 @@ export function DemoBanner() {
 	);
 }
 
-/** Render official resource destinations supplied by the owner without copying private artwork. */
+/** Menampilkan tautan resmi pemilik tanpa menyalin ilustrasi privat. */
 export function ResourcePanel({ links }: { links: ResourceLink[] }) {
 	return (
 		<section className="resource-panel" id="link-penting">
@@ -190,32 +190,38 @@ export function ResourcePanel({ links }: { links: ResourceLink[] }) {
 			</div>
 			<div className="resource-links">
 				{links
-					.filter(function activeLink(link) {
-						return link.active;
-					})
-					.map(function resourceItem(link) {
-						return (
-							<a
-								className="resource-link"
-								href={link.url}
-								target="_blank"
-								rel="noreferrer"
-								key={link.id}
-							>
-								<span className="row">
-									<Icon name="file" />
-									{link.title}
-								</span>
-								<Icon name="external" />
-							</a>
-						);
-					})}
+					.filter(
+						/** Menjalankan langkah activeLink sesuai tanggung jawab modul ini. */
+						function activeLink(link) {
+							return link.active;
+						},
+					)
+					.map(
+						/** Menjalankan langkah resourceItem sesuai tanggung jawab modul ini. */
+						function resourceItem(link) {
+							return (
+								<a
+									className="resource-link"
+									href={link.url}
+									target="_blank"
+									rel="noreferrer"
+									key={link.id}
+								>
+									<span className="row">
+										<Icon name="file" />
+										{link.title}
+									</span>
+									<Icon name="external" />
+								</a>
+							);
+						},
+					)}
 			</div>
 		</section>
 	);
 }
 
-/** Present a centered mentor summary with a circular avatar and a real profile route. */
+/** Menampilkan ringkasan mentor rata tengah dengan avatar lingkaran dan tautan profil. */
 export function MentorCard({ mentor }: { mentor: Mentor }) {
 	return (
 		<article className="mentor-card">
@@ -240,7 +246,7 @@ export function MentorCard({ mentor }: { mentor: Mentor }) {
 	);
 }
 
-/** Keep a native modal's open state synchronized and restore focus through browser dialog semantics. */
+/** Menyelaraskan kondisi dialog native dan menjaga pemulihan fokus browser. */
 export function Modal({
 	open,
 	title,
@@ -254,8 +260,9 @@ export function Modal({
 }) {
 	const ref = useRef<HTMLDialogElement>(null);
 	const headingId = useId();
-	/** Open or close the native modal only when its controlled visibility changes. */
+	/** Membuka atau menutup dialog hanya ketika kondisi tampilnya berubah. */
 	useEffect(
+		/** Menjalankan langkah synchronizeDialog sesuai tanggung jawab modul ini. */
 		function synchronizeDialog() {
 			const dialog = ref.current;
 			if (open && dialog && !dialog.open) dialog.showModal();
@@ -287,7 +294,7 @@ export function Modal({
 	);
 }
 
-/** Format timestamps as explicit WIB labels for history and operational summaries. */
+/** Memformat waktu dalam WIB untuk riwayat dan ringkasan operasional. */
 export function formatDate(value: string, withTime = false) {
 	return (
 		new Intl.DateTimeFormat("id-ID", {

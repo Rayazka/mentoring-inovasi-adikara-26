@@ -1,3 +1,4 @@
+<!-- TODO: Perbarui status implementasi dan panduan konfigurasi setelah setiap fase selesai. -->
 # ADIKARA Mentoring 2026
 
 Next.js App Router + TypeScript untuk halaman dan logika server; Supabase untuk PostgreSQL, Auth Google, dan penyimpanan privat.

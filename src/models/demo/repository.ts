@@ -1,4 +1,4 @@
-// TODO: Replace this demo-only repository with an authenticated persistence adapter before production.
+// TODO: Jaga dokumentasi, pemisahan tanggung jawab dan pengujian modul ini saat perilakunya berubah.
 import { createDemoSeed } from "./seed";
 import type { DemoState } from "./types";
 
@@ -6,59 +6,93 @@ const STORAGE_KEY = "adikara-demo-mvc-v1";
 let snapshot: DemoState | null = null;
 const listeners = new Set<() => void>();
 
-/** Notify subscribed controllers after a durable local state change. */
-function notifyListeners() { for (const listener of listeners) listener(); }
+/** Memberi tahu controller setelah perubahan lokal berhasil disimpan. */
+function notifyListeners() {
+	for (const listener of listeners) listener();
+}
 
-/** Return the stable client snapshot required by useSyncExternalStore. */
-export function getDemoSnapshot() { return snapshot; }
+/** Mengambil snapshot browser yang stabil untuk langganan perubahan React. */
+export function getDemoSnapshot() {
+	return snapshot;
+}
 
-/** Return an empty snapshot during server rendering to avoid leaking browser state. */
-export function getServerDemoSnapshot() { return null; }
+/** Mengembalikan snapshot kosong saat render server agar data browser tidak tercampur. */
+export function getServerDemoSnapshot() {
+	return null;
+}
 
-/** Subscribe a view/controller to model changes and return its cleanup callback. */
+/** Mendaftarkan pemantauan perubahan model dan menyediakan fungsi pembersihannya. */
 export function subscribeDemo(listener: () => void) {
-  listeners.add(listener);
-  /** Release this controller subscription when the component unmounts. */
-  return function unsubscribeDemo() { listeners.delete(listener); };
+	listeners.add(listener);
+	/** Melepas langganan controller ketika komponen tidak lagi digunakan. */
+	/** Melepas callback controller ketika langganannya dihentikan. */
+	function unsubscribeDemo() {
+		listeners.delete(listener);
+	}
+	return unsubscribeDemo;
 }
 
-/** Validate the persisted demo envelope before accepting browser data. */
+/** Memeriksa struktur data demo sebelum menerima isi penyimpanan browser. */
 function isDemoState(value: unknown): value is DemoState {
-  if (!value || typeof value !== "object") return false;
-  const data = value as Partial<DemoState>;
-  return data.version === 1 && typeof data.revision === "number" && Array.isArray(data.users) && Array.isArray(data.teams) && Array.isArray(data.mentors) && Array.isArray(data.requests) && Array.isArray(data.slots) && Array.isArray(data.works) && Array.isArray(data.documents) && Array.isArray(data.joins) && Array.isArray(data.notifications) && Array.isArray(data.audit) && Array.isArray(data.resources) && Array.isArray(data.feedback) && !!data.settings;
+	if (!value || typeof value !== "object") return false;
+	const data = value as Partial<DemoState>;
+	return (
+		data.version === 1 &&
+		typeof data.revision === "number" &&
+		Array.isArray(data.users) &&
+		Array.isArray(data.teams) &&
+		Array.isArray(data.mentors) &&
+		Array.isArray(data.requests) &&
+		Array.isArray(data.slots) &&
+		Array.isArray(data.works) &&
+		Array.isArray(data.documents) &&
+		Array.isArray(data.joins) &&
+		Array.isArray(data.notifications) &&
+		Array.isArray(data.audit) &&
+		Array.isArray(data.resources) &&
+		Array.isArray(data.feedback) &&
+		!!data.settings
+	);
 }
 
-/** Hydrate the repository once and show a recovery notice if saved demo data is invalid. */
+/** Memuat repository sekali dan menampilkan pemberitahuan jika data demo harus dipulihkan. */
 export function initializeDemo() {
-  if (snapshot || typeof window === "undefined") return;
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    const parsed: unknown = saved ? JSON.parse(saved) : createDemoSeed();
-    if (!isDemoState(parsed)) throw new Error("Format data demo berubah.");
-    snapshot = parsed;
-  } catch {
-    snapshot = createDemoSeed();
-    snapshot.recovery = "Data demo sebelumnya tidak dapat dibaca. Contoh awal dipulihkan; tidak ada data server yang diubah.";
-  }
-  notifyListeners();
+	if (snapshot || typeof window === "undefined") return;
+	try {
+		const saved = localStorage.getItem(STORAGE_KEY);
+		const parsed: unknown = saved ? JSON.parse(saved) : createDemoSeed();
+		if (!isDemoState(parsed)) throw new Error("Format data demo berubah.");
+		snapshot = parsed;
+	} catch {
+		snapshot = createDemoSeed();
+		snapshot.recovery =
+			"Data demo sebelumnya tidak dapat dibaca. Contoh awal dipulihkan; tidak ada data server yang diubah.";
+	}
+	notifyListeners();
 }
 
-/** Persist a successful command before publishing it so failed saves do not appear successful. */
+/** Menyimpan perubahan sebelum memperbarui tampilan agar kegagalan simpan tidak terlihat berhasil. */
 export function saveDemo(next: DemoState) {
-  const updated = { ...next, revision: next.revision + 1 };
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); }
-  catch { throw new Error("Penyimpanan browser penuh atau tidak tersedia. Perubahan belum disimpan."); }
-  snapshot = updated;
-  notifyListeners();
+	const updated = { ...next, revision: next.revision + 1 };
+	try {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+	} catch {
+		throw new Error(
+			"Penyimpanan browser penuh atau tidak tersedia. Perubahan belum disimpan.",
+		);
+	}
+	snapshot = updated;
+	notifyListeners();
 }
 
-/** Reset only this application's fictional workspace and leave unrelated browser data intact. */
-export function resetDemo() { saveDemo(createDemoSeed()); }
+/** Mengembalikan data contoh aplikasi tanpa menghapus data browser lain. */
+export function resetDemo() {
+	saveDemo(createDemoSeed());
+}
 
-/** Apply changes from another browser tab to the same local demo workspace. */
+/** Menyelaraskan perubahan workspace demo dari tab browser lain. */
 export function synchronizeDemo(event: StorageEvent) {
-  if (event.key !== STORAGE_KEY) return;
-  snapshot = null;
-  initializeDemo();
+	if (event.key !== STORAGE_KEY) return;
+	snapshot = null;
+	initializeDemo();
 }

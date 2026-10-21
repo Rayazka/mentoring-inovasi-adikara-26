@@ -1,4 +1,4 @@
-// TODO: Preserve the model/view boundary when replacing this local command adapter with server actions.
+// TODO: Jaga dokumentasi, pemisahan tanggung jawab dan pengujian modul ini saat perilakunya berubah.
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { createDemoSeed } from "@/models/demo/seed";
@@ -18,7 +18,7 @@ import {
 
 const handlers: Record<string, CommandHandler> = { session: sessionCommand };
 
-/** Register a single domain controller without embedding its business rules in React views. */
+/** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */
 export function registerDemoController(
 	domain: string,
 	handler: CommandHandler,
@@ -26,7 +26,7 @@ export function registerDemoController(
 	handlers[domain] = handler;
 }
 
-/** Execute one command against a private draft and persist only after its validation succeeds. */
+/** Menjalankan satu tindakan pada salinan data dan menyimpan hanya jika validasi berhasil. */
 export function executeDemoCommand(
 	action: string,
 	payload: CommandPayload = {},
@@ -45,7 +45,7 @@ export function executeDemoCommand(
 	return message;
 }
 
-/** Connect a route view to reactive model data and translate command errors into persistent feedback. */
+/** Menghubungkan view dengan model reaktif dan mengubah kegagalan tindakan menjadi pesan yang terbaca. */
 export function useDemoController() {
 	const state = useSyncExternalStore(
 		subscribeDemo,
@@ -56,16 +56,22 @@ export function useDemoController() {
 		message: string;
 		error: boolean;
 	} | null>(null);
-	/** Hydrate browser data and keep other tabs synchronized without server authentication calls. */
-	useEffect(function hydrateRepository() {
-		initializeDemo();
-		window.addEventListener("storage", synchronizeDemo);
-		/** Remove the cross-tab listener when this route controller unmounts. */
-		return function cleanupRepository() {
-			window.removeEventListener("storage", synchronizeDemo);
-		};
-	}, []);
-	/** Run a view-requested operation and report failures without partially updating the model. */
+	/** Memuat data browser dan menyelaraskan tab lain tanpa memanggil autentikasi server. */
+	useEffect(
+		/** Menjalankan langkah hydrateRepository sesuai tanggung jawab modul ini. */
+		function hydrateRepository() {
+			initializeDemo();
+			window.addEventListener("storage", synchronizeDemo);
+			/** Melepas pemantauan tab ketika controller halaman tidak lagi digunakan. */
+			/** Melepas listener penyimpanan saat komponen dilepas. */
+			function cleanupRepository() {
+				window.removeEventListener("storage", synchronizeDemo);
+			}
+			return cleanupRepository;
+		},
+		[],
+	);
+	/** Menjalankan permintaan view dan melaporkan kegagalan tanpa perubahan data sebagian. */
 	function dispatch(action: string, payload: CommandPayload = {}) {
 		try {
 			setFeedback({
@@ -82,13 +88,16 @@ export function useDemoController() {
 			return false;
 		}
 	}
-	/** Clear only presentation feedback after the user dismisses it. */
+	/** Menghapus pesan tampilan setelah ditutup pengguna. */
 	function dismissFeedback() {
 		setFeedback(null);
 	}
-	const actor = state?.users.find(function signedIn(user) {
-		return user.id === state.userId;
-	});
+	const actor = state?.users.find(
+		/** Menjalankan langkah signedIn sesuai tanggung jawab modul ini. */
+		function signedIn(user) {
+			return user.id === state.userId;
+		},
+	);
 	return { state, actor, dispatch, feedback, dismissFeedback };
 }
 

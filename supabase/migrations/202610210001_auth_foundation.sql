@@ -1,5 +1,5 @@
--- First migration only: identity and role authorization.
--- Team, requests, booking transactions, and storage policies follow separately.
+-- TODO: Tambahkan migrasi tim, jadwal dan pengajuan setelah fondasi identitas tervalidasi.
+-- Fondasi ini hanya menangani identitas dan otorisasi peran.
 begin;
 
 create type public.user_role as enum ('participant', 'mentor', 'admin');
@@ -14,7 +14,7 @@ create table public.profiles (
 
 alter table public.profiles enable row level security;
 
--- Remove default broad Supabase grants before exposing the table.
+-- Cabut hak akses umum sebelum tabel digunakan aplikasi.
 revoke all on table public.profiles from anon, authenticated;
 grant select on table public.profiles to authenticated;
 grant update (full_name, avatar_url) on table public.profiles to authenticated;
@@ -35,7 +35,7 @@ security definer
 set search_path = ''
 as $$
 begin
-  -- Role is deliberately independent of user-editable OAuth metadata.
+  -- Peran tidak diambil dari metadata OAuth yang dapat diubah pengguna.
   insert into public.profiles (id, full_name, avatar_url)
   values (
     new.id,
@@ -52,7 +52,7 @@ create trigger on_auth_user_created
 after insert on auth.users
 for each row execute function public.handle_new_user();
 
--- Backfill accounts created before applying this migration.
+-- Lengkapi profil akun yang dibuat sebelum migrasi diterapkan.
 insert into public.profiles (id, full_name, avatar_url)
 select id,
   coalesce(nullif(raw_user_meta_data ->> 'full_name', ''), 'Peserta ADIKARA'),
