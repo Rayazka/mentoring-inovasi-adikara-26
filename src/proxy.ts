@@ -2,9 +2,11 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseConfig, hasSupabaseConfig } from "@/lib/supabase/env";
+import { isDemoMode } from "@/models/demo/mode";
 
 /** Menyegarkan sesi server sebelum halaman privat diproses. */
 export async function proxy(request: NextRequest) {
+	if (isDemoMode()) return NextResponse.next({ request });
 	if (!hasSupabaseConfig()) return NextResponse.next({ request });
 
 	let response = NextResponse.next({ request });

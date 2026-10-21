@@ -1,0 +1,346 @@
+// TODO: Hubungkan setiap halaman fitur melalui registry tanpa memindahkan aturan bisnis ke view.
+"use client";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState, type ComponentType } from "react";
+import { roleHome } from "@/lib/auth/roles";
+import {
+	useDemoController,
+	type DemoController,
+} from "@/controllers/demo/use-demo-controller";
+import {
+	Avatar,
+	Button,
+	DemoBanner,
+	EmptyState,
+	Icon,
+	Modal,
+	Panel,
+	formatDate,
+} from "@/views/components/ui";
+import { activeNavigation, navigation } from "./navigation";
+
+export type DemoView = ComponentType<{
+	controller: DemoController;
+	pathname: string;
+}>;
+const views = new Map<string, DemoView>();
+/** Mendaftarkan tampilan fitur agar adapter route tetap tipis. */
+export function registerDemoView(prefix: string, view: DemoView) {
+	views.set(prefix, view);
+}
+
+/** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
+export function DemoApplication() {
+	const controller = useDemoController();
+	const { state, actor, dispatch, feedback, dismissFeedback } = controller;
+	const pathname = usePathname();
+	const router = useRouter();
+	const [collapsed, setCollapsed] = useState(false);
+	const [drawer, setDrawer] = useState(false);
+	const [notifications, setNotifications] = useState(false);
+	const [reset, setReset] = useState(false);
+	/** Mengarahkan sesi demo yang tidak sesuai menuju halaman yang dapat diakses. */
+	useEffect(
+		function guardDemoRoute() {
+			if (!state) return;
+			if (!actor) {
+				router.replace("/");
+				return;
+			}
+			const home = roleHome(actor.role);
+			if (pathname !== home && !pathname.startsWith(`${home}/`))
+				router.replace(home);
+		},
+		[state, actor, pathname, router],
+	);
+	/** Menutup drawer saat pengguna berpindah halaman. */
+	useEffect(
+		function closeDrawerOnNavigation() {
+			setDrawer(false);
+		},
+		[pathname],
+	);
+	/** Membuka atau menutup panel navigasi ringkas. */
+	function toggleCollapse() {
+		setCollapsed(!collapsed);
+	}
+	/** Menampilkan navigasi mobile dengan pengelolaan fokus dialog native. */
+	function openDrawer() {
+		setDrawer(true);
+	}
+	/** Menutup navigasi mobile. */
+	function closeDrawer() {
+		setDrawer(false);
+	}
+	/** Menampilkan notifikasi milik akun yang sedang aktif. */
+	function openNotifications() {
+		setNotifications(true);
+	}
+	/** Menutup daftar notifikasi. */
+	function closeNotifications() {
+		setNotifications(false);
+	}
+	/** Menandai semua notifikasi akun sebagai sudah dibaca. */
+	function markRead() {
+		dispatch("session.read-notifications");
+	}
+	/** Mengakhiri sesi lokal sebelum kembali ke halaman masuk. */
+	function logout() {
+		if (dispatch("session.logout")) router.replace("/");
+	}
+	/** Meminta konfirmasi sebelum data latihan dihapus. */
+	function openReset() {
+		setReset(true);
+	}
+	/** Membatalkan penghapusan data latihan. */
+	function closeReset() {
+		setReset(false);
+	}
+	/** Memulihkan data contoh serta mengakhiri sesi lokal. */
+	function resetData() {
+		if (dispatch("session.reset")) router.replace("/");
+	}
+	if (!state || !actor)
+		return (
+			<main className="loading-screen" role="status">
+				Memuat ruang mentoring…
+			</main>
+		);
+	const home = roleHome(actor.role);
+	if (pathname !== home && !pathname.startsWith(`${home}/`))
+		return (
+			<main className="loading-screen" role="status">
+				Mengalihkan halaman…
+			</main>
+		);
+	const active = activeNavigation(actor.role, pathname);
+	const inbox = state.notifications.filter(
+		/** Membatasi notifikasi pada pemilik sesi lokal. */
+		function ownedNotification(item) {
+			return item.userId === actor.id;
+		},
+	);
+	const unread = inbox.filter(
+		/** Menghitung pemberitahuan yang belum dibaca. */
+		function unreadNotification(item) {
+			return !item.read;
+		},
+	).length;
+	const match = [...views.entries()]
+		.sort(
+			/** Mengutamakan halaman detail dibandingkan halaman induk. */
+			function longestPrefix(a, b) {
+				return b[0].length - a[0].length;
+			},
+		)
+		.find(
+			/** Memilih tampilan terdaftar untuk route aktif. */
+			function matchingView([prefix]) {
+				return pathname === prefix || pathname.startsWith(`${prefix}/`);
+			},
+		);
+	const View = match?.[1];
+	/** Menyajikan menu yang sama pada sidebar desktop dan drawer mobile. */
+	function navigationLinks() {
+		return (
+			<nav aria-label="Menu utama" className="nav-list">
+				{navigation[actor!.role].map(
+					/** Menampilkan satu tautan dengan penanda halaman aktif dan label saat ringkas. */
+					function navigationLink(item) {
+						return (
+							<Link
+								key={item.href}
+								href={item.href}
+								className={`nav-item ${active.href === item.href ? "active" : ""}`}
+								aria-current={active.href === item.href ? "page" : undefined}
+								title={item.label}
+							>
+								<Icon name={item.icon} />
+								<span>{item.label}</span>
+							</Link>
+						);
+					},
+				)}
+			</nav>
+		);
+	}
+	return (
+		<div className="app-shell">
+			<a className="skip-link" href="#konten">
+				Lewati ke konten
+			</a>
+			<aside
+				className={`sidebar ${collapsed ? "mini" : ""}`}
+				aria-label="Navigasi desktop"
+			>
+				<Link href={home} className="brand-lockup" aria-label="ADIKARA Home">
+					<span className="brand-mark">A</span>
+					<span>
+						ADIKARA<small>MENTORING 2026</small>
+					</span>
+				</Link>
+				{navigationLinks()}
+				<div className="sidebar-bottom">
+					<button
+						className="nav-item"
+						type="button"
+						onClick={toggleCollapse}
+						aria-label={collapsed ? "Perluas sidebar" : "Ringkas sidebar"}
+						aria-expanded={!collapsed}
+					>
+						<Icon name="collapse" />
+						<span>Ringkas menu</span>
+					</button>
+					<button
+						className="nav-item"
+						type="button"
+						onClick={logout}
+						title="Keluar"
+					>
+						<Icon name="logout" />
+						<span>Keluar</span>
+					</button>
+					<div className="account">
+						<Avatar name={actor.name} size="small" />
+						<span>
+							{actor.name}
+							<small>
+								{actor.role === "participant"
+									? "Peserta"
+									: actor.role === "mentor"
+										? "Mentor"
+										: "Administrator"}
+							</small>
+						</span>
+					</div>
+				</div>
+			</aside>
+			<div className="app-main">
+				<header className="topbar">
+					<div className="row">
+						<button
+							className="icon-button mobile-menu"
+							type="button"
+							onClick={openDrawer}
+							aria-label="Buka menu"
+							aria-expanded={drawer}
+						>
+							<Icon name="menu" />
+						</button>
+						<strong>{active.label}</strong>
+					</div>
+					<div className="header-actions">
+						<span className="muted">24–25 Oktober 2026</span>
+						<button
+							type="button"
+							className="icon-button"
+							onClick={openNotifications}
+							aria-label={`Notifikasi, ${unread} belum dibaca`}
+						>
+							<Icon name="bell" />
+							{unread > 0 && <span>{unread}</span>}
+						</button>
+						<Avatar name={actor.name} size="small" />
+					</div>
+				</header>
+				<main className="workspace stack" id="konten">
+					<DemoBanner />
+					{state.recovery && (
+						<p className="notice warning" role="status">
+							{state.recovery}
+						</p>
+					)}
+					{feedback && (
+						<div
+							className={`notice ${feedback.error ? "danger" : "success"}`}
+							role={feedback.error ? "alert" : "status"}
+						>
+							<div className="row spread">
+								<span>{feedback.message}</span>
+								<button
+									className="icon-button"
+									type="button"
+									onClick={dismissFeedback}
+									aria-label="Tutup pesan"
+								>
+									<Icon name="close" />
+								</button>
+							</div>
+						</div>
+					)}
+					{View ? (
+						<View controller={controller} pathname={pathname} />
+					) : (
+						<Panel title={active.label}>
+							<EmptyState
+								title="Ruang mentoring siap digunakan"
+								description="Halaman fitur sedang dihubungkan ke alur demo. Gunakan menu untuk menjelajahi aplikasi."
+							/>
+						</Panel>
+					)}
+					<div className="footer-note row spread">
+						<span>ADIKARA 2026 · Ruang bertumbuh untuk inovasimu</span>
+						<button className="text-link" type="button" onClick={openReset}>
+							Reset data demo
+						</button>
+					</div>
+				</main>
+			</div>
+			<Modal open={drawer} title="Menu ADIKARA" onClose={closeDrawer}>
+				{navigationLinks()}
+				<Button variant="neutral" onClick={logout}>
+					Keluar
+				</Button>
+			</Modal>
+			<Modal
+				open={notifications}
+				title="Notifikasi"
+				onClose={closeNotifications}
+			>
+				<div className="stack">
+					{inbox.length ? (
+						inbox.map(
+							/** Menghubungkan pemberitahuan dengan halaman tindakan terkait. */
+							function notificationRow(item) {
+								return (
+									<Link
+										className="subtle-box"
+										key={item.id}
+										href={item.href}
+										onClick={closeNotifications}
+									>
+										<strong>{item.title}</strong>
+										<small>
+											{formatDate(item.at, true)} ·{" "}
+											{item.read ? "Sudah dibaca" : "Baru"}
+										</small>
+									</Link>
+								);
+							},
+						)
+					) : (
+						<p>Belum ada notifikasi.</p>
+					)}
+					<Button variant="secondary" onClick={markRead} disabled={!unread}>
+						Tandai semua dibaca
+					</Button>
+				</div>
+			</Modal>
+			<Modal open={reset} title="Reset seluruh data demo?" onClose={closeReset}>
+				<p>
+					Perubahan akun, tim, karya dan jadwal di browser ini akan diganti
+					dengan contoh awal.
+				</p>
+				<div className="actions">
+					<Button variant="neutral" onClick={closeReset}>
+						Batal
+					</Button>
+					<Button variant="danger" onClick={resetData}>
+						Reset demo
+					</Button>
+				</div>
+			</Modal>
+		</div>
+	);
+}

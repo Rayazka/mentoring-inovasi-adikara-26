@@ -1,4 +1,16 @@
 /* TODO: Selaraskan token dan tampilan responsif dengan referensi desain terbaru. */
+.skip-link {
+	position: fixed;
+	top: -100px;
+	left: 16px;
+	z-index: 100;
+	padding: 12px 20px;
+	background: white;
+	color: #a90009;
+}
+.skip-link:focus {
+	top: 16px;
+}
 :root {
 	--brand: #c9070f;
 	--brand-dark: #a90009;
