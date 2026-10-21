@@ -14,6 +14,7 @@ import {
 	Panel,
 } from "@/views/components/ui";
 import { registerDemoView } from "./registry";
+import { TeamReview } from "./team-review";
 
 /** Menyajikan tim aktif atau pencarian dan pembuatan tim untuk peserta yang belum bergabung. */
 export function TeamPage({ controller }: { controller: DemoController }) {
@@ -115,6 +116,7 @@ export function TeamPage({ controller }: { controller: DemoController }) {
 							</Link>
 						</div>
 					</Panel>
+					<TeamReview controller={controller} team={team} />
 				</div>
 			) : (
 				<div className="stack">
