@@ -25,12 +25,16 @@ export async function GET(
 	_request: Request,
 	{ params }: { params: Promise<{ asset: string }> },
 ) {
-	if (!isDemoMode()) return new Response(null, { status: 404 });
+	if (process.env.NODE_ENV !== "development" || !isDemoMode())
+		return new Response(null, { status: 404 });
 	const { asset } = await params;
 	const entry = assets[asset];
 	if (!entry) return new Response(null, { status: 404 });
 	try {
-		const data = await readFile(join(process.cwd(), entry.path));
+		// Aset privat hanya dibaca saat pengembangan dan tidak dimasukkan ke bundel produksi.
+		const data = await readFile(
+			join(/* turbopackIgnore: true */ process.cwd(), entry.path),
+		);
 		return new Response(new Uint8Array(data), {
 			headers: {
 				"Content-Type": entry.type,
