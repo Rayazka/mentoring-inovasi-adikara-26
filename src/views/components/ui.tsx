@@ -65,7 +65,7 @@ export function Avatar({
 	const parts = name.trim().split(/\s+/);
 	const initials = `${parts[0]?.[0] ?? "?"}${parts.length > 1 ? parts[parts.length - 1][0] : ""}`;
 	return (
-		<span className={`avatar ${size}`} aria-label={name}>
+		<span className={`avatar ${size}`} role="img" aria-label={name}>
 			{initials}
 		</span>
 	);
