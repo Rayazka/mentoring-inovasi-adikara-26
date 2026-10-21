@@ -83,6 +83,7 @@ export interface ChangeProposal {
 	authorId: string;
 }
 export interface MentoringRequest {
+	submissionKey?: string;
 	id: string;
 	teamId: string;
 	mentorId: string;
