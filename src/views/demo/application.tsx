@@ -182,6 +182,11 @@ export function DemoApplication() {
 						</button>
 						{page ? (
 							<div className="page-heading">
+								{"back" in page && (
+									<Link className="page-back" href="/peserta/mentor">
+										← Kembali ke katalog mentor
+									</Link>
+								)}
 								<h1>{page.title}</h1>
 								<p>{page.description}</p>
 							</div>

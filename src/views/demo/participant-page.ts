@@ -18,5 +18,11 @@ const pages: Record<string, { title: string; description: string }> = {
 };
 /** Memilih judul header untuk halaman peserta yang sudah disesuaikan dengan referensi. */
 export function participantPage(pathname: string) {
+	if (/^\/peserta\/mentor\/[^/]+$/.test(pathname))
+		return {
+			title: "Detail Mentor",
+			description: "Kenali mentor dan pilih waktu diskusi timmu.",
+			back: true,
+		};
 	return pages[pathname];
 }

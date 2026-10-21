@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useState, type ChangeEvent } from "react";
 import type { DemoController } from "@/controllers/demo/use-demo-controller";
 import type { Mentor } from "@/models/demo/types";
-import { teamForUser, workIsReady } from "@/models/demo/selectors";
-import { slotIsBooked } from "@/models/demo/slot-policy";
+import { mentorDetailData } from "@/controllers/demo/mentor-detail-controller";
+
 import {
 	Avatar,
+	Badge,
+	Icon,
 	EmptyState,
 	Button,
 	Panel,
@@ -193,183 +195,206 @@ function MentorDetail({
 	const { state, actor } = controller;
 	const [date, setDate] = useState(mentor.dates[0]);
 	const [slotId, setSlotId] = useState("");
-	/** Mengganti tanggal dan menghapus pilihan slot dari hari sebelumnya. */
-	function changeDate(event: ChangeEvent<HTMLSelectElement>) {
-		setDate(event.target.value);
-		setSlotId("");
-	}
+
 	if (!state || !actor) return null;
-	const team = teamForUser(state, actor.id);
-	const ready = team && workIsReady(state, team.id);
-	const leader = team?.leaderId === actor.id;
-	const slots = state.slots
-		.filter(
-			/** Memilih slot hari mentor yang sedang dilihat peserta. */
-			function displayedSlot(slot) {
-				return slot.mentorId === mentor.id && slot.date === date;
-			},
-		)
-		.sort(
-			/** Menata jam secara menaik untuk pemilihan yang mudah dipindai. */
-			function chronological(a, b) {
-				return a.start.localeCompare(b.start);
-			},
-		);
-	const selected = slots.find(
-		/** Memeriksa ulang pilihan jika jadwal berubah melalui tab lain. */
-		function selectedSlot(slot) {
-			return (
-				slot.id === slotId &&
-				slot.enabled &&
-				!slotIsBooked(state, slot.id) &&
-				new Date(`${slot.date}T${slot.start}:00+07:00`).getTime() > Date.now()
-			);
-		},
+	const { team, ready, restriction, slots, selected } = mentorDetailData(
+		state,
+		actor,
+		mentor,
+		date,
+		slotId,
 	);
 	return (
 		<>
-			<Link className="text-link" href="/peserta/mentor">
-				← Kembali ke katalog
-			</Link>
-			<div className="section-heading">
-				<div>
-					<span className="eyebrow">KENALI MENTORMU</span>
-					<h1>Profil Mentor</h1>
-				</div>
-			</div>
-			<div className="grid-2">
-				<div className="stack">
-					<article className="mentor-card">
-						<Avatar name={mentor.name} photo={mentor.photo} size="large" />
+			<Panel className="mentor-profile-reference">
+				<div className="mentor-profile-identity">
+					<Avatar name={mentor.name} photo={mentor.photo} size="large" />
+					<div>
 						<h2>{mentor.name}</h2>
-						<p>{mentor.title}</p>
-						<span className="tag">{mentor.expertise}</span>
-					</article>
-					<Panel title="Tentang mentor">
-						<p>{mentor.bio}</p>
-					</Panel>
-					<Panel title="Pengalaman & pencapaian">
+						<p>{mentor.title} · Aktif</p>
+						<p className="mentor-bio">{mentor.bio}</p>
+						<div className="row">
+							<Badge label={mentor.expertise} />
+							<span className="mentor-active">● Status aktif</span>
+						</div>
+					</div>
+				</div>
+				<div className="mentor-profile-information">
+					<section>
+						<h3>Prestasi</h3>
 						<ul>
 							{mentor.achievements.map(
-								/** Menampilkan pencapaian fiktif tanpa membaca data mentor privat. */
-								function achievement(value, index) {
-									return <li key={`${index}-${value}`}>{value}</li>;
+								/** Menampilkan prestasi dari profil tanpa mengambil fixture desain privat. */
+								function achievement(text, index) {
+									return (
+										<li key={`${index}-${text}`}>
+											<Icon name="mentor" />
+											{text}
+										</li>
+									);
 								},
 							)}
 						</ul>
-					</Panel>
-				</div>
-				<Panel title="Pilih jadwal mentoring" icon="calendar">
-					<div className="stack">
-						<label className="field">
-							Tanggal
-							<select value={date} onChange={changeDate}>
-								{mentor.dates.map(
-									/** Memastikan hari yang tidak tersedia tidak dapat dipilih melalui UI. */
-									function availableDay(day) {
-										return (
-											<option key={day} value={day}>
-												{formatDate(day)}
-											</option>
-										);
+					</section>
+					<section>
+						<h3>Ketersediaan</h3>
+						<p>
+							{mentor.dates
+								.map(
+									/** Merangkum hari yang memang diaktifkan pada profil mentor. */
+									function availableDate(day) {
+										return formatDate(day);
 									},
-								)}
-							</select>
-						</label>
-						<p className="helper">
-							Semua waktu WIB · sesi {state.settings.sessionMinutes} menit +
-							jeda {state.settings.bufferMinutes} menit. Pengajuan yang menunggu
-							belum mengunci slot.
+								)
+								.join(" dan ")}
 						</p>
-						{slots.length ? (
-							<div className="slots">
-								{slots.map(
-									/** Menampilkan slot tersedia, terbooking, dinonaktifkan atau lewat dengan label teks. */
-									function slotChoice(slot) {
-										const booked = slotIsBooked(state, slot.id);
-										const past =
-											new Date(`${date}T${slot.start}:00+07:00`).getTime() <=
-											Date.now();
-										const disabled = booked || past || !slot.enabled;
-										/** Menyimpan pilihan jadwal lokal sebelum peserta meninjau pengajuan. */
-										function selectSlot() {
-											setSlotId(slot.id);
-										}
-										return (
-											<button
-												key={slot.id}
-												type="button"
-												className={`slot ${slot.id === selected?.id ? "selected" : ""} ${disabled ? "booked" : ""}`}
-												disabled={disabled}
-												aria-pressed={slot.id === selected?.id}
-												onClick={selectSlot}
-											>
-												<strong>
-													{slot.start}–{slot.end}
-												</strong>
-												<small>
-													{booked
-														? "Terbooking"
-														: past
-															? "Sudah lewat"
-															: !slot.enabled
-																? "Nonaktif"
-																: slot.id === selected?.id
-																	? "Dipilih"
-																	: "Tersedia"}
-												</small>
-											</button>
-										);
-									},
-								)}
-							</div>
-						) : (
-							<EmptyState
-								title="Belum ada slot pada hari ini"
-								description="Coba hari lain atau pilih mentor lain."
-								icon="calendar"
-							/>
+						<p>
+							Jam operasional {state.settings.start}–{state.settings.end} WIB
+						</p>
+						<p>Slot aktual ditampilkan di bawah.</p>
+					</section>
+				</div>
+			</Panel>
+			<Panel
+				title="Pilih jadwal mentoring"
+				className="mentor-schedule-reference"
+				actions={
+					<Badge
+						label={
+							slots.some(
+								/** Menentukan apakah hari terpilih masih mempunyai slot tersedia. */
+								function availableSlot(slot) {
+									return !slot.disabled;
+								},
+							)
+								? "Slot tersedia"
+								: "Tidak ada slot tersedia"
+						}
+						tone="success"
+					/>
+				}
+			>
+				<div className="stack">
+					<div className="expertise-filters">
+						{state.settings.dates.map(
+							/** Menampilkan pilihan hari sekaligus menjelaskan hari yang tidak dilayani mentor. */
+							function dayButton(day) {
+								/** Mengganti hari dan menghapus pilihan dari tanggal sebelumnya. */
+								function selectDay() {
+									setDate(day);
+									setSlotId("");
+								}
+								return (
+									<button
+										key={day}
+										type="button"
+										className={`button ${date === day ? "" : "secondary"}`}
+										aria-pressed={date === day}
+										disabled={!mentor.dates.includes(day)}
+										onClick={selectDay}
+									>
+										{formatDate(day)}
+										{!mentor.dates.includes(day) ? " · Tidak tersedia" : ""}
+									</button>
+								);
+							},
 						)}
-						{!team ? (
-							<div className="notice warning">
-								<p>
-									Buat atau bergabung dengan tim untuk mengajukan mentoring.
-								</p>
-								<Link className="button secondary" href="/peserta/tim">
-									Ke Tim Saya
-								</Link>
-							</div>
-						) : !ready ? (
-							<div className="notice warning">
-								<p>
-									Lengkapi judul dan deskripsi topik karya tim terlebih dahulu.
-								</p>
-								<Link
-									className="button secondary"
-									href="/peserta/karya#judul-topik"
-								>
-									Isi Identitas Karya
-								</Link>
-							</div>
-						) : !leader ? (
-							<p className="notice">
-								Kamu dapat menjelajahi jadwal. Pengajuan dikirim oleh ketua tim.
-							</p>
-						) : selected ? (
+					</div>
+					<p>
+						Waktu sesi dalam WIB · {state.settings.sessionMinutes} menit + jeda{" "}
+						{state.settings.bufferMinutes} menit
+					</p>
+					{slots.length ? (
+						<div className="mentor-slot-grid">
+							{slots.map(
+								/** Menampilkan keadaan slot dengan label agar tidak bergantung pada warna. */
+								function slotButton(slot) {
+									/** Menyimpan pilihan sementara yang belum mengunci jadwal. */
+									function selectSlot() {
+										setSlotId(slot.id);
+									}
+									return (
+										<button
+											key={slot.id}
+											type="button"
+											disabled={slot.disabled}
+											aria-pressed={slot.id === selected?.id}
+											className={`mentor-slot ${slot.id === selected?.id ? "is-selected" : ""}`}
+											onClick={selectSlot}
+										>
+											<strong>{slot.start.replace(":", ".")}</strong>
+											<small>
+												{slot.id === selected?.id ? "Dipilih" : slot.label}
+											</small>
+										</button>
+									);
+								},
+							)}
+						</div>
+					) : (
+						<EmptyState
+							title="Belum ada slot pada hari ini"
+							description="Coba tanggal lain atau pilih mentor lain."
+							icon="calendar"
+						/>
+					)}
+					<p className="notice">
+						Slot dipilih belum menjadi pemesanan. Jadwal dikonfirmasi setelah
+						mentor menyetujui.
+					</p>
+					<div className="mentor-selection">
+						<div>
+							<small>Slot terpilih</small>
+							<strong>
+								{selected
+									? `${formatDate(date)} · ${selected.start}–${selected.end} WIB`
+									: "Belum ada slot dipilih"}
+							</strong>
+						</div>
+						<div>
+							<small>Mentor</small>
+							<strong>{mentor.name}</strong>
+						</div>
+						<div>
+							<small>Identitas Karya</small>
+							<Link href="/peserta/karya">Lihat karya tim</Link>
+						</div>
+					</div>
+					<div className="actions">
+						{selected && !restriction ? (
 							<Link
 								className="button"
 								href={`/peserta/pengajuan/baru?mentor=${encodeURIComponent(mentor.id)}&slot=${encodeURIComponent(selected.id)}`}
 							>
-								Tinjau pengajuan
+								Lanjut ke Pengajuan
 							</Link>
 						) : (
-							<p className="notice">
-								Pilih slot tersedia untuk melanjutkan pengajuan.
-							</p>
+							<Button disabled>Lanjut ke Pengajuan</Button>
 						)}
+						<Link href="/peserta/pengajuan" className="button neutral">
+							Lihat pengajuan aktif
+						</Link>
 					</div>
-				</Panel>
-			</div>
+					{restriction ? (
+						<p className="helper">
+							{restriction}{" "}
+							{!team ? (
+								<Link href="/peserta/tim" className="text-link">
+									Ke Tim Saya
+								</Link>
+							) : !ready ? (
+								<Link href="/peserta/karya#judul-topik" className="text-link">
+									Isi Identitas Karya
+								</Link>
+							) : null}
+						</p>
+					) : !selected ? (
+						<p className="helper">
+							Pilih slot tersedia untuk melanjutkan pengajuan.
+						</p>
+					) : null}
+				</div>
+			</Panel>
 		</>
 	);
 }
