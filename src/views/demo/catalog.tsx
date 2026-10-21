@@ -8,9 +8,8 @@ import { teamForUser, workIsReady } from "@/models/demo/selectors";
 import { slotIsBooked } from "@/models/demo/slot-policy";
 import {
 	Avatar,
-	Badge,
 	EmptyState,
-	MentorCard,
+	Button,
 	Panel,
 	formatDate,
 } from "@/views/components/ui";
@@ -28,13 +27,15 @@ export function MentorCatalog({
 	const [search, setSearch] = useState("");
 	const [expertise, setExpertise] = useState("");
 	const [date, setDate] = useState("");
+	/** Mengembalikan seluruh filter katalog ke keadaan awal. */
+	function resetFilters() {
+		setSearch("");
+		setExpertise("");
+		setDate("");
+	}
 	/** Menyaring katalog berdasarkan nama mentor. */
 	function changeSearch(event: ChangeEvent<HTMLInputElement>) {
 		setSearch(event.target.value);
-	}
-	/** Mengubah bidang yang ingin didiskusikan peserta. */
-	function changeExpertise(event: ChangeEvent<HTMLSelectElement>) {
-		setExpertise(event.target.value);
 	}
 	/** Mengubah hari mentoring yang dipakai untuk menyaring profil tersedia. */
 	function changeDate(event: ChangeEvent<HTMLSelectElement>) {
@@ -79,42 +80,24 @@ export function MentorCatalog({
 	);
 	return (
 		<>
-			<div className="section-heading">
-				<div>
-					<span className="eyebrow">TEMUKAN ARAH BERSAMA</span>
-					<h1>Cari Mentor</h1>
-					<p>Pilih mentor sesuai bidang karya dan kebutuhan diskusi timmu.</p>
-				</div>
-				<Badge label={`${mentors.length} mentor tersedia`} />
-			</div>
-			<Panel>
-				<div className="filters">
+			<Panel className="catalog-filters">
+				<div className="catalog-search-row">
 					<label className="field">
-						Nama mentor
+						Cari nama mentor
 						<input
 							type="search"
 							value={search}
 							onChange={changeSearch}
-							placeholder="Cari nama mentor"
+							placeholder="Cari nama mentor…"
 						/>
 					</label>
 					<label className="field">
-						Bidang
-						<select value={expertise} onChange={changeExpertise}>
-							<option value="">Semua bidang</option>
-							<option>UI/UX</option>
-							<option>Softdev</option>
-							<option>IoT</option>
-							<option>Gamedev</option>
-						</select>
-					</label>
-					<label className="field">
-						Tanggal
+						Tanggal mentoring
 						<select value={date} onChange={changeDate}>
 							<option value="">Semua tanggal</option>
 							{state.settings.dates.map(
-								/** Menampilkan pilihan tanggal kegiatan dalam WIB. */
-								function dayOption(day) {
+								/** Menampilkan tanggal kegiatan untuk filter katalog. */
+								function dateOption(day) {
 									return (
 										<option key={day} value={day}>
 											{formatDate(day)}
@@ -124,14 +107,65 @@ export function MentorCatalog({
 							)}
 						</select>
 					</label>
+					<Button variant="secondary" onClick={resetFilters}>
+						Hapus Filter
+					</Button>
 				</div>
+				<fieldset className="expertise-filters" aria-label="Bidang keahlian">
+					{["", "UI/UX", "Softdev", "IoT", "Gamedev"].map(
+						/** Menampilkan filter bidang berbentuk tombol dengan penanda aktif. */
+						function expertiseFilter(field) {
+							/** Menerapkan bidang yang dipilih sambil mempertahankan pencarian dan tanggal. */
+							function selectExpertise() {
+								setExpertise(field);
+							}
+							return (
+								<button
+									type="button"
+									key={field}
+									className={`button ${expertise === field ? "" : "secondary"}`}
+									aria-pressed={expertise === field}
+									onClick={selectExpertise}
+								>
+									{field || "Semua Mentor"}
+								</button>
+							);
+						},
+					)}
+				</fieldset>
 			</Panel>
+			<div className="catalog-result row spread wrap">
+				<h2>{mentors.length} mentor</h2>
+				<p>Jadwal aktual mengikuti ketersediaan masing-masing mentor.</p>
+			</div>
 			{mentors.length ? (
-				<div className="grid-3">
+				<div className="catalog-grid">
 					{mentors.map(
 						/** Menampilkan kartu mentor rata tengah dengan foto atau avatar lingkaran. */
 						function mentorCard(mentor) {
-							return <MentorCard key={mentor.id} mentor={mentor} />;
+							return (
+								<article className="catalog-card" key={mentor.id}>
+									<Avatar
+										name={mentor.name}
+										size="large"
+										photo={mentor.photo}
+									/>
+									<h2>{mentor.name}</h2>
+									<div className="tags">
+										<span className="tag">{mentor.expertise}</span>
+										{mentor.dates.length === 1 && (
+											<span className="tag">Hanya 24 Oktober</span>
+										)}
+									</div>
+									<p>{mentor.achievements.join(" · ") || mentor.title}</p>
+									<Link
+										href={`/peserta/mentor/${mentor.id}`}
+										className="button secondary"
+									>
+										Lihat Profil
+									</Link>
+								</article>
+							);
 						},
 					)}
 				</div>
