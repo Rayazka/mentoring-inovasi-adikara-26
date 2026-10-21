@@ -196,7 +196,7 @@ function RequestDetail({
 }) {
 	const { state, actor } = controller;
 	if (!state || !actor) return null;
-	let request;
+	let request: ReturnType<typeof requestForActor>;
 	try {
 		request = requestForActor(state, requestId);
 	} catch {
