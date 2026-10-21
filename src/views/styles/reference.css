@@ -281,7 +281,7 @@
 	margin: 4px 0;
 	font-size: 14px;
 }
-.home-member-list small {
+.participant-home .home-member-list small {
 	color: #666;
 }
 .home-attention {
@@ -296,7 +296,7 @@
 	color: #666;
 	font-size: 13px;
 }
-.home-materials .icon {
+.participant-home .home-materials .icon {
 	width: 16px;
 	height: 16px;
 }
@@ -417,7 +417,7 @@
 	border-radius: 0;
 	padding: 24px 20px;
 }
-.navigation-drawer .official-brand {
+.dialog.navigation-drawer .official-brand {
 	margin-bottom: 28px;
 }
 .navigation-drawer .nav-list {
