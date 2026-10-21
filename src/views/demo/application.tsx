@@ -2,12 +2,9 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, type ComponentType } from "react";
+import { useEffect, useState } from "react";
 import { roleHome } from "@/lib/auth/roles";
-import {
-	useDemoController,
-	type DemoController,
-} from "@/controllers/demo/use-demo-controller";
+import { useDemoController } from "@/controllers/demo/use-demo-controller";
 import {
 	Avatar,
 	Button,
@@ -19,16 +16,8 @@ import {
 	formatDate,
 } from "@/views/components/ui";
 import { activeNavigation, navigation } from "./navigation";
-
-export type DemoView = ComponentType<{
-	controller: DemoController;
-	pathname: string;
-}>;
-const views = new Map<string, DemoView>();
-/** Mendaftarkan tampilan fitur agar adapter route tetap tipis. */
-export function registerDemoView(prefix: string, view: DemoView) {
-	views.set(prefix, view);
-}
+import { demoViews } from "./registry";
+import "./team";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {
@@ -127,7 +116,7 @@ export function DemoApplication() {
 			return !item.read;
 		},
 	).length;
-	const match = [...views.entries()]
+	const match = [...demoViews.entries()]
 		.sort(
 			/** Mengutamakan halaman detail dibandingkan halaman induk. */
 			function longestPrefix(a, b) {
