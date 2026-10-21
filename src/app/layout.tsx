@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "@/views/styles/globals.css";
 import "@/views/styles/reference.css";
 import "@/views/styles/sidebar.css";
+import "@/views/styles/participant-pages.css";
 
 export const metadata: Metadata = {
 	title: "Mentoring ADIKARA 2026",

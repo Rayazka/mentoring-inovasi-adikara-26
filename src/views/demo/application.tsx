@@ -17,6 +17,7 @@ import {
 } from "@/views/components/ui";
 import { activeNavigation } from "./navigation";
 import { SidebarContent } from "./sidebar";
+import { participantPage } from "./participant-page";
 import { demoViews } from "./registry";
 import "./team";
 import "./work";
@@ -118,6 +119,8 @@ export function DemoApplication() {
 			</main>
 		);
 	const active = activeNavigation(actor.role, pathname);
+	const page =
+		actor.role === "participant" ? participantPage(pathname) : undefined;
 	const isParticipantHome = actor.role === "participant" && pathname === home;
 	const homeData = isParticipantHome ? participantHomeData(state, actor) : null;
 	const inbox = state.notifications.filter(
@@ -148,7 +151,7 @@ export function DemoApplication() {
 	const View = match?.[1];
 	return (
 		<div
-			className={`app-shell ${actor.role === "participant" ? "participant-shell" : ""} ${isParticipantHome ? "home-shell" : ""}`}
+			className={`app-shell ${actor.role === "participant" ? "participant-shell" : ""} ${isParticipantHome ? "home-shell" : ""} ${page ? "reference-page" : ""}`}
 		>
 			<a className="skip-link" href="#konten">
 				Lewati ke konten
@@ -177,7 +180,12 @@ export function DemoApplication() {
 						>
 							<Icon name="menu" />
 						</button>
-						{homeData ? (
+						{page ? (
+							<div className="page-heading">
+								<h1>{page.title}</h1>
+								<p>{page.description}</p>
+							</div>
+						) : homeData ? (
 							<>
 								<div className="home-desktop-greeting">
 									<h1>Halo, {actor.name.split(" ")[0]}.</h1>
@@ -198,12 +206,12 @@ export function DemoApplication() {
 						</span>
 						<button
 							type="button"
-							className={`icon-button ${isParticipantHome ? "home-notifications" : ""}`}
+							className={`icon-button ${isParticipantHome || page ? "home-notifications" : ""}`}
 							onClick={openNotifications}
 							aria-label={`Notifikasi, ${unread} belum dibaca`}
 						>
 							<Icon name="bell" />
-							{isParticipantHome && (
+							{(isParticipantHome || page) && (
 								<span className="notification-label">Notifikasi</span>
 							)}
 							{unread > 0 && <span>{unread}</span>}
@@ -212,7 +220,7 @@ export function DemoApplication() {
 					</div>
 				</header>
 				<main className="workspace stack" id="konten">
-					{!isParticipantHome && <DemoBanner />}
+					{!isParticipantHome && !page && <DemoBanner />}
 					{state.recovery && (
 						<p className="notice warning" role="status">
 							{state.recovery}
@@ -252,7 +260,7 @@ export function DemoApplication() {
 							Reset data demo
 						</button>
 					</div>
-					{isParticipantHome && (
+					{(isParticipantHome || page) && (
 						<div className="home-demo-disclosure">
 							<DemoBanner />
 						</div>

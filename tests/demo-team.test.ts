@@ -3,6 +3,31 @@ import { expect, it } from "vitest";
 import { createDemoSeed } from "../src/models/demo/seed";
 import { teamCommand } from "../src/controllers/demo/team-controller";
 
+/** Memastikan perubahan nama hanya dilakukan ketua dan tidak menimpa identitas tim lain. */
+it("melindungi perubahan nama tim dari anggota dan nama duplikat", function renameGuard() {
+	const state = createDemoSeed();
+	state.userId = "rafi";
+	/** Mencoba mengganti nama sebagai anggota biasa. */
+	function renameAsMember() {
+		teamCommand(state, "team.rename", { teamId: "team-1", name: "Baru" });
+	}
+	expect(renameAsMember).toThrow("ketua");
+	state.userId = "alya";
+	/** Mencoba memakai nama tim lain yang sudah tersimpan. */
+	function duplicateName() {
+		teamCommand(state, "team.rename", {
+			teamId: "team-1",
+			name: state.teams[1].name,
+		});
+	}
+	expect(duplicateName).toThrow("sudah digunakan");
+	teamCommand(state, "team.rename", {
+		teamId: "team-1",
+		name: "Nusa Berkarya",
+	});
+	expect(state.teams[0].name).toBe("Nusa Berkarya");
+});
+
 /** Membuktikan retry pembuatan tidak menciptakan dua tim untuk pengguna yang sama. */
 it("mencegah dua tim aktif bagi pembuat yang sama", function createOnce() {
 	const state = createDemoSeed();

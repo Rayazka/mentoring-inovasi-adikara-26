@@ -1,21 +1,18 @@
 // TODO: Pertahankan data pencarian publik terpisah dari identitas karya tim yang bersifat privat.
 "use client";
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import Link from "next/link";
 import type { DemoController } from "@/controllers/demo/use-demo-controller";
 import { actorTeam } from "@/controllers/demo/context";
 import {
-	Avatar,
 	Badge,
+	Icon,
 	Button,
 	EmptyState,
-	Icon,
 	Modal,
 	Panel,
 } from "@/views/components/ui";
 import { registerDemoView } from "./registry";
-import { TeamReview } from "./team-review";
-import { TeamMembership } from "./team-membership";
+import { TeamSummary } from "./team-summary";
 
 /** Menyajikan tim aktif atau pencarian dan pembuatan tim untuk peserta yang belum bergabung. */
 export function TeamPage({ controller }: { controller: DemoController }) {
@@ -69,57 +66,7 @@ export function TeamPage({ controller }: { controller: DemoController }) {
 				</div>
 			</div>
 			{team ? (
-				<div className="stack">
-					<Panel
-						title={team.name}
-						icon="team"
-						actions={
-							<Badge
-								label={`${team.memberIds.length}/3 anggota`}
-								tone="success"
-							/>
-						}
-					>
-						<div className="stack">
-							<span className="tag">{team.category}</span>
-							<p>{team.description}</p>
-							<div className="stack compact">
-								{team.memberIds.map(
-									/** Menampilkan anggota tim yang sama tanpa mengungkap kontak pribadi. */
-									function teamMember(id) {
-										const user = state.users.find(
-											/** Mengambil nama anggota dari fixture akun yang dikenal. */
-											function memberAccount(item) {
-												return item.id === id;
-											},
-										);
-										return (
-											<div className="member-row" key={id}>
-												<div className="row">
-													<Avatar name={user?.name ?? "Anggota"} />
-													<div>
-														<strong>{user?.name}</strong>
-														<small>
-															{id === actor.id ? "Kamu" : "Anggota tim"}
-														</small>
-													</div>
-												</div>
-												<Badge
-													label={id === team.leaderId ? "Ketua" : "Anggota"}
-												/>
-											</div>
-										);
-									},
-								)}
-							</div>
-							<Link href="/peserta/karya" className="button secondary">
-								Lengkapi Identitas Karya <Icon name="arrow" />
-							</Link>
-						</div>
-					</Panel>
-					<TeamReview controller={controller} team={team} />
-					<TeamMembership controller={controller} team={team} />
-				</div>
+				<TeamSummary controller={controller} team={team} />
 			) : (
 				<div className="stack">
 					<Panel>

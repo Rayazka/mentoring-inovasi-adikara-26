@@ -119,7 +119,7 @@ function reviewJoin(state: DemoState, payload: CommandPayload) {
 			return item.id === joinId;
 		},
 	);
-	if (!join || join.status !== "pending")
+	if (join?.status !== "pending")
 		throw new Error("Permintaan sudah diproses atau tidak ditemukan.");
 	const team = requireLeader(state, join.teamId);
 	const accepted = payload.accept === true;
@@ -224,6 +224,29 @@ function leaveTeam(state: DemoState) {
 	return "Kamu sudah keluar dari tim.";
 }
 
+/** Mengganti nama tim setelah memeriksa pemilik tindakan dan keunikan nama. */
+function renameTeam(state: DemoState, payload: CommandPayload) {
+	participant(state);
+	const team = requireLeader(state, textValue(payload, "teamId"));
+	const name = requiredText(textValue(payload, "name"), "Nama tim", 80);
+	if (
+		state.teams.some(
+			/** Memeriksa benturan nama dengan tim lain tanpa membedakan kapital. */
+			function duplicateName(item) {
+				return (
+					item.id !== team.id &&
+					item.name.toLocaleLowerCase("id-ID") ===
+						name.toLocaleLowerCase("id-ID")
+				);
+			},
+		)
+	)
+		throw new Error("Nama tim sudah digunakan.");
+	team.name = name;
+	audit(state, "Nama tim diperbarui", team.id, name);
+	return "Nama tim berhasil diperbarui.";
+}
+
 /** Mengarahkan tindakan tim melalui invariant model yang berlaku pada seluruh view demo. */
 export function teamCommand(
 	state: DemoState,
@@ -231,6 +254,8 @@ export function teamCommand(
 	payload: CommandPayload,
 ) {
 	switch (action) {
+		case "team.rename":
+			return renameTeam(state, payload);
 		case "team.create":
 			return createTeam(state, payload);
 		case "team.join":
