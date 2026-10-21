@@ -3,6 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { createDemoSeed } from "@/models/demo/seed";
 import { teamCommand } from "./team-controller";
+import { workCommand } from "./work-controller";
 import {
 	getDemoSnapshot,
 	getServerDemoSnapshot,
@@ -20,6 +21,7 @@ import {
 const handlers: Record<string, CommandHandler> = {
 	session: sessionCommand,
 	team: teamCommand,
+	work: workCommand,
 };
 
 /** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */

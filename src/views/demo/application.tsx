@@ -18,6 +18,7 @@ import {
 import { activeNavigation, navigation } from "./navigation";
 import { demoViews } from "./registry";
 import "./team";
+import "./work";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {
