@@ -13,6 +13,7 @@ import { requestCommand } from "./request-controller";
 import { reviewCommand } from "./review-controller";
 import { revisionCommand } from "./revision-controller";
 import { rescheduleCommand } from "./reschedule-controller";
+import { cancellationCommand } from "./cancellation-controller";
 import {
 	getDemoSnapshot,
 	getServerDemoSnapshot,
@@ -40,6 +41,7 @@ const handlers: Record<string, CommandHandler> = {
 	review: reviewCommand,
 	revision: revisionCommand,
 	reschedule: rescheduleCommand,
+	cancellation: cancellationCommand,
 };
 
 /** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */
