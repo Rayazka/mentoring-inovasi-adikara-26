@@ -25,6 +25,7 @@ import "./mentor-profile";
 import "./catalog";
 import "./request-submit";
 import "./requests";
+import "./review";
 
 /** Menyajikan shell aplikasi lokal dengan pemeriksaan peran dan navigasi aksesibel. */
 export function DemoApplication() {

@@ -10,6 +10,7 @@ import { mentorCommand } from "./mentor-controller";
 import { scheduleCommand } from "./schedule-controller";
 import { profileCommand } from "./profile-controller";
 import { requestCommand } from "./request-controller";
+import { reviewCommand } from "./review-controller";
 import {
 	getDemoSnapshot,
 	getServerDemoSnapshot,
@@ -34,6 +35,7 @@ const handlers: Record<string, CommandHandler> = {
 	schedule: scheduleCommand,
 	profile: profileCommand,
 	request: requestCommand,
+	review: reviewCommand,
 };
 
 /** Mendaftarkan controller domain tanpa memasukkan aturan bisnis ke dalam view. */
