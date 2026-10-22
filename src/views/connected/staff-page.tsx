@@ -271,7 +271,12 @@ export function StaffPage({ data }: { data: StaffPageData }) {
 														Buka Google Drive
 													</a>
 												) : (
-													<small>File tersimpan di penyimpanan privat.</small>
+													<a
+														className="text-link"
+														href={`/api/documents/${item.id}/download`}
+													>
+														Unduh file
+													</a>
 												)}
 											</div>
 										);
