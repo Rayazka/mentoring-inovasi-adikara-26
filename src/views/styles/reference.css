@@ -1,7 +1,7 @@
 /* TODO: Validasi perubahan visual terhadap frame Home V2 dan LOGIN, bukan tata letak perkiraan. */
 @font-face {
 	font-family: "Google Sans";
-	src: url("/api/demo-assets/font") format("woff2");
+	src: url("/fonts/adikara.woff2") format("woff2");
 	font-style: normal;
 	font-weight: 400 700;
 	font-display: swap;
@@ -60,7 +60,7 @@
 	left: 0;
 	right: 0;
 	height: 240px;
-	background: url("/api/demo-assets/pattern") center top / 720px auto;
+	background: url("/brand/pattern.png") center top / 720px auto;
 	opacity: 0.055;
 	pointer-events: none;
 	mask-image: linear-gradient(#000 60%, transparent);
@@ -319,8 +319,7 @@
 	grid-template-columns: 1fr 1fr;
 	gap: 50px;
 	align-items: center;
-	background:
-		#c9070f url("/api/demo-assets/resource") center / 100% 100% no-repeat;
+	background: #c9070f url("/brand/resource.webp") center / 100% 100% no-repeat;
 }
 .participant-home .resource-panel .eyebrow {
 	display: none;

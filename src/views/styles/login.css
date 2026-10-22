@@ -99,8 +99,8 @@
 	z-index: -2;
 	opacity: 0.065;
 	background-image:
-		url("/api/demo-assets/login-pattern"),
-		url("/api/demo-assets/login-pattern"), url("/api/demo-assets/login-pattern");
+		url("/brand/login-pattern.png"), url("/brand/login-pattern.png"),
+		url("/brand/login-pattern.png");
 	background-repeat: no-repeat;
 	background-size: 620px 520px;
 	background-position:
@@ -125,8 +125,7 @@
 	height: 387.875px;
 	left: -302.748px;
 	top: 0;
-	background:
-		url("/api/demo-assets/login-ornament") center / 100% 100% no-repeat;
+	background: url("/brand/login-ornament.svg") center / 100% 100% no-repeat;
 }
 .login-ornament-left {
 	left: 0;
@@ -194,7 +193,7 @@
 	height: 756px;
 	transform-origin: top left;
 	background:
-		url("/api/demo-assets/login-blur-ornament") center / 100% 100% no-repeat;
+		url("/brand/login-blur-ornament.svg") center / 100% 100% no-repeat;
 	opacity: 0.2;
 }
 .login-form-ornament.left {
@@ -213,8 +212,7 @@
 	top: 36px;
 	opacity: 0.025;
 	filter: blur(2px);
-	background:
-		url("/api/demo-assets/login-pattern") center / 100% 100% no-repeat;
+	background: url("/brand/login-pattern.png") center / 100% 100% no-repeat;
 	z-index: -1;
 	pointer-events: none;
 }
@@ -319,7 +317,7 @@
 	min-height: 308px;
 	border-radius: 24px;
 	align-items: center;
-	background: #c9070f url("/api/demo-assets/resource") center / cover no-repeat;
+	background: #c9070f url("/brand/resource.webp") center / cover no-repeat;
 }
 .login-resources .resource-panel .eyebrow {
 	display: none;
@@ -381,8 +379,8 @@
 	inset: 0;
 	z-index: -1;
 	background:
-		url("/api/demo-assets/login-footer-pattern") 360px -181.547px / 720px
-		729.295px repeat-x;
+		url("/brand/login-footer-pattern.png") 360px -181.547px / 720px 729.295px
+		repeat-x;
 	opacity: 0.11;
 	pointer-events: none;
 }
@@ -545,7 +543,7 @@
 		opacity: 0.55;
 	}
 	.login-hero-pattern {
-		background-image: url("/api/demo-assets/login-pattern");
+		background-image: url("/brand/login-pattern.png");
 		background-position: 50% -13px;
 	}
 	.login-introduction-copy {

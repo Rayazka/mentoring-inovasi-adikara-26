@@ -55,7 +55,7 @@ export function Icon({ name }: { name: IconName }) {
 	);
 }
 
-/** Menampilkan inisial akun fiktif berbentuk lingkaran tanpa memublikasikan foto privat. */
+/** Menampilkan foto atau inisial akun berbentuk lingkaran dengan label aksesibel. */
 export function Avatar({
 	name,
 	size = "",
@@ -75,7 +75,7 @@ export function Avatar({
 					alt=""
 					width={112}
 					height={112}
-					unoptimized
+					unoptimized={!photo.startsWith("/mentors/")}
 					style={{
 						width: "100%",
 						height: "100%",

@@ -1,10 +1,10 @@
-// TODO: Pertahankan fallback teks saat aset resmi belum tersedia pada checkout publik.
+// TODO: Pertahankan fallback teks ketika aset brand publik gagal dimuat.
 "use client";
 import Image from "next/image";
 import { publicAssets } from "@/models/public-assets";
 import { useState } from "react";
 
-/** Menggunakan logo resmi lokal tanpa menggambar ulang atau memublikasikan berkas brand. */
+/** Menampilkan logo resmi yang diizinkan pemilik tanpa menggambar ulang identitas brand. */
 export function Brand({
 	compact = false,
 	source = "logo",
