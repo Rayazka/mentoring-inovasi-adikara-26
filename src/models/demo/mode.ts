@@ -1,5 +1,5 @@
-// TODO: Hapus mode demo hanya setelah integrasi autentikasi dan database siap diuji.
-/** Menjaga seluruh alur demo terpisah dari layanan produksi secara bawaan. */
+// TODO: Pertahankan demo sebagai pilihan eksplisit agar deployment tidak memakai fixtures tanpa sengaja.
+/** Mengaktifkan demo hanya jika environment secara eksplisit memilih data lokal. */
 export function isDemoMode() {
-	return process.env.NEXT_PUBLIC_APP_MODE !== "connected";
+	return process.env.NEXT_PUBLIC_APP_MODE === "demo";
 }
