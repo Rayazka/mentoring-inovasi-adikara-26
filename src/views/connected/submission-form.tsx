@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { submitParticipantRequest } from "@/controllers/connected/submission-actions";
+import { resubmitParticipantRequest } from "@/controllers/connected/revision-actions";
 import type { TeamDocument } from "@/models/connected/document";
 
 /** Mengirim pilihan bahan yang sudah ditinjau tanpa meminta peserta mengetik ulang topik karya. */
@@ -10,15 +11,20 @@ export function SubmissionForm({
 	slotId,
 	submissionKey,
 	documents,
+	requestId,
 }: {
 	slotId: string;
 	submissionKey: string;
 	documents: TeamDocument[];
+	requestId?: string;
 }) {
 	const [key] = useState(submissionKey);
-	const [state, action, pending] = useActionState(submitParticipantRequest, {
-		error: null,
-	});
+	const [state, action, pending] = useActionState(
+		requestId ? resubmitParticipantRequest : submitParticipantRequest,
+		{
+			error: null,
+		},
+	);
 	const [selected, setSelected] = useState(
 		documents.map(
 			/** Memilih bahan yang telah siap sebagai nilai awal review. */
@@ -29,6 +35,7 @@ export function SubmissionForm({
 	);
 	return (
 		<form action={action} className="stack">
+			{requestId && <input type="hidden" name="request" value={requestId} />}
 			<input type="hidden" name="slot" value={slotId} />
 			<input type="hidden" name="key" value={key} />
 			<fieldset
@@ -76,7 +83,11 @@ export function SubmissionForm({
 					</p>
 				)}
 				<button type="submit" className="button">
-					{pending ? "Mengirim pengajuan…" : "Kirim pengajuan"}
+					{pending
+						? "Mengirim pengajuan…"
+						: requestId
+							? "Kirim ulang revisi"
+							: "Kirim pengajuan"}
 				</button>
 			</fieldset>
 			{state.error && (

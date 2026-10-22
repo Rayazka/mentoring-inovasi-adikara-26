@@ -4,6 +4,7 @@ import type { loadParticipantRequest } from "@/controllers/connected/participant
 import { relationValue, formatWib } from "@/models/connected/operations";
 import { Panel, EmptyState } from "@/views/components/ui";
 import { ParticipantRequestCard } from "./participant-requests";
+import { RequestRevision } from "./request-revision";
 
 /** Menampilkan bahan saat pengajuan dan jejak keputusan yang benar-benar tercatat. */
 export function ConnectedRequestDetail({
@@ -35,6 +36,14 @@ export function ConnectedRequestDetail({
 				← Kembali ke pengajuan
 			</Link>
 			<ParticipantRequestCard request={data.request} />
+			{data.revision && (
+				<RequestRevision
+					requestId={data.request.id}
+					originalSlot={data.request.slot_id}
+					kind={data.request.revision_kind}
+					data={data.revision}
+				/>
+			)}
 			<div className="team-columns">
 				<Panel title="Identitas karya saat pengajuan">
 					<h3>{data.request.title_snapshot}</h3>

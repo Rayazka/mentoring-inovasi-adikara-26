@@ -4,6 +4,7 @@ import { z } from "zod";
 import { requireSession } from "@/lib/auth/session";
 import { readParticipantTeam } from "@/models/connected/team-repository";
 import { parseParticipantRequestFilters } from "@/models/connected/request";
+import { loadRequestRevision } from "./request-revision";
 import {
 	readTeamRequestCounts,
 	readParticipantRequests,
@@ -37,15 +38,19 @@ export async function loadParticipantRequest(id: string) {
 		if (!team) return { kind: "not-found" as const };
 		const request = await readParticipantRequest(supabase, team.id, id);
 		if (!request) return { kind: "not-found" as const };
-		const [documents, events] = await Promise.all([
+		const [documents, events, revision] = await Promise.all([
 			readRequestDocumentSnapshots(supabase, id),
 			readRequestEvents(supabase, id),
+			request.status === "revision_requested" && team.leader_id === user.id
+				? loadRequestRevision(supabase, team.id, request.mentor_id)
+				: null,
 		]);
 		return {
 			kind: "ready" as const,
 			request,
 			documents,
 			events,
+			revision,
 			leader: team.leader_id === user.id,
 		};
 	} catch {

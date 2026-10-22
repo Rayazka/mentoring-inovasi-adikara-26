@@ -6,6 +6,7 @@ const mocks = vi.hoisted(
 		return {
 			session: vi.fn(),
 			team: vi.fn(),
+			request: vi.fn(),
 			rpc: vi.fn(),
 			revalidate: vi.fn(),
 		};
@@ -36,7 +37,48 @@ vi.mock(
 	},
 );
 import { submitParticipantRequest } from "../src/controllers/connected/submission-actions";
+vi.mock(
+	"@/models/connected/request-repository",
+	/** Memeriksa revisi berdasarkan pengajuan milik tim aktif. */ function requests() {
+		return { readParticipantRequest: mocks.request };
+	},
+);
+import { resubmitParticipantRequest } from "../src/controllers/connected/revision-actions";
 const id = "11111111-1111-4111-8111-111111111111";
+/** Mengirim ulang ke baris yang sama agar snapshot dan event diperbarui oleh database. */
+it("mengirim ulang revisi tanpa membuat request baru", async function resubmit() {
+	mocks.request.mockResolvedValue({ id, status: "revision_requested" });
+	const input = form();
+	input.set("request", id);
+	expect(
+		(await resubmitParticipantRequest({ error: null }, input)).requestId,
+	).toBe(id);
+	expect(mocks.rpc).toHaveBeenCalledWith("resubmit_request", {
+		p_request: id,
+		p_slot: id,
+		p_documents: [id],
+	});
+});
+/** Mengembalikan status terkirim saat respons pengiriman ulang sebelumnya terputus. */
+it("tidak menggandakan pengiriman ulang yang sudah pending", async function alreadyPending() {
+	mocks.request.mockResolvedValue({ id, status: "pending" });
+	const input = form();
+	input.set("request", id);
+	expect(
+		(await resubmitParticipantRequest({ error: null }, input)).requestId,
+	).toBe(id);
+	expect(mocks.rpc).not.toHaveBeenCalled();
+});
+/** Tidak menerima pengajuan tim lain meskipun UUID valid. */
+it("menolak kirim ulang lintas tim", async function foreignRevision() {
+	mocks.request.mockResolvedValue(null);
+	const input = form();
+	input.set("request", id);
+	expect(
+		(await resubmitParticipantRequest({ error: null }, input)).error,
+	).toBeTruthy();
+	expect(mocks.rpc).not.toHaveBeenCalled();
+});
 /** Menyiapkan ketua tim dan respons RPC idempoten. */
 beforeEach(function reset() {
 	vi.clearAllMocks();
