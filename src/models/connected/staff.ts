@@ -29,11 +29,29 @@ export function staffDisplayName(profile: StaffProfile) {
 
 /** Mengembalikan menu yang tersedia bagi peran sesi tanpa memberi otorisasi mutasi. */
 export function staffNavigation(role: StaffRole): StaffNavigationItem[] {
+	const base = role === "admin" ? "/admin" : "/mentor";
 	return [
 		{
-			href: role === "admin" ? "/admin" : "/mentor",
+			href: base,
 			label: role === "admin" ? "Ringkasan" : "Beranda",
 			icon: "home",
 		},
+		{ href: `${base}/mentor`, label: "Daftar Mentor", icon: "mentor" },
+		{ href: `${base}/jadwal`, label: "Jadwal Mentoring", icon: "calendar" },
+		{
+			href: `${base}/${role === "admin" ? "operasional" : "pengajuan"}`,
+			label: role === "admin" ? "Operasional" : "Pengajuan Mentoring",
+			icon: "request",
+		},
+		{ href: `${base}/tim`, label: "Tim & Identitas Karya", icon: "team" },
+		...(role === "admin"
+			? [
+					{
+						href: "/admin/audit",
+						label: "Riwayat Aktivitas",
+						icon: "file" as const,
+					},
+				]
+			: []),
 	];
 }

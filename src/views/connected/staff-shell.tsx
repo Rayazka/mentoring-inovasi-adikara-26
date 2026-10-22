@@ -1,6 +1,6 @@
 // TODO: Pertahankan akses keyboard drawer dan pemisahan sesi nyata dari data demo.
 "use client";
-import { useState, useTransition, type ReactNode } from "react";
+import { useState, useTransition, useEffect, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
 import { SidebarContent } from "@/views/demo/sidebar";
@@ -39,6 +39,13 @@ export function StaffShell({
 		name,
 		role: admin ? ("admin" as const) : ("mentor" as const),
 	};
+	/** Menutup drawer setelah navigasi agar konten halaman baru tidak tertutup dialog. */
+	useEffect(
+		function closeAfterNavigation() {
+			setDrawer(false);
+		},
+		[pathname],
+	);
 	const accountLabel = admin ? "Administrator" : "Mentor general · akses baca";
 	/** Membuka atau menutup sidebar ringkas desktop. */
 	function toggle() {
