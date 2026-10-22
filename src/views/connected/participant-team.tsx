@@ -8,6 +8,7 @@ import { teamCategories, type TeamPageData } from "@/models/connected/team";
 import { Avatar, Badge, EmptyState, Panel } from "@/views/components/ui";
 import { MutationForm } from "./mutation-form";
 import { IncomingTeamRequests } from "./team-requests";
+import { TeamMembershipActions } from "./team-membership";
 
 /** Menyajikan struktur Tim Saya yang disepakati menggunakan data Supabase dan proyeksi pencarian aman. */
 export function ConnectedTeamPage({ data }: { data: TeamPageData }) {
@@ -127,6 +128,13 @@ export function ConnectedTeamPage({ data }: { data: TeamPageData }) {
 									</p>
 								</Panel>
 							</div>
+							{data.tab === "members" && (
+								<TeamMembershipActions
+									team={team}
+									members={data.members}
+									userId={data.userId}
+								/>
+							)}
 						</>
 					)}
 				</>

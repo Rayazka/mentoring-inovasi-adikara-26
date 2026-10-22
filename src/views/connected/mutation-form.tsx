@@ -9,6 +9,7 @@ export interface FormField {
 	type?: "text" | "textarea" | "select" | "hidden" | "url";
 	value?: string;
 	options?: readonly string[];
+	optionLabels?: Record<string, string>;
 	required?: boolean;
 	maxLength?: number;
 }
@@ -74,7 +75,11 @@ export function MutationForm({
 										{item.options?.map(
 											/** Menampilkan opsi yang sudah ditentukan oleh model atau halaman. */
 											function option(text) {
-												return <option key={text}>{text}</option>;
+												return (
+													<option key={text} value={text}>
+														{item.optionLabels?.[text] ?? text}
+													</option>
+												);
 											},
 										)}
 									</select>

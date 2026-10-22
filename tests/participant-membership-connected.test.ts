@@ -37,6 +37,7 @@ vi.mock(
 	},
 );
 import { reviewParticipantJoin } from "../src/controllers/connected/team-actions";
+import { changeParticipantMembership } from "../src/controllers/connected/team-membership-actions";
 
 /** Menyiapkan pemohon milik tim ketua yang sedang login. */
 beforeEach(function reset() {
@@ -110,5 +111,51 @@ it("menampilkan kegagalan kapasitas database", async function capacityConflict()
 	expect((await reviewParticipantJoin({ error: null }, decision())).error).toBe(
 		"Tim penuh.",
 	);
+	expect(mocks.revalidate).not.toHaveBeenCalled();
+});
+
+/** Memastikan keluar hanya menargetkan diri sendiri dan tim dari sesi server. */
+it("keluar tim melalui transaksi dengan pengganti", async function leaveOwnTeam() {
+	const form = new FormData();
+	form.set("operation", "leave");
+	form.set("confirmation", "KONFIRMASI");
+	form.set("successor", "11111111-1111-4111-8111-111111111111");
+	form.set("user", "victim");
+	form.set("team", "foreign");
+	expect(
+		(await changeParticipantMembership({ error: null }, form)).error,
+	).toBeNull();
+	expect(mocks.rpc).toHaveBeenCalledWith("leave_team", {
+		p_team: "team",
+		p_successor: "11111111-1111-4111-8111-111111111111",
+	});
+});
+/** Mencegah perubahan kepemimpinan oleh anggota biasa. */
+it("menolak alih ketua oleh nonketua", async function transferDenied() {
+	mocks.team.mockResolvedValue({ id: "team", leader_id: "other" });
+	const form = new FormData();
+	form.set("operation", "transfer");
+	form.set("confirmation", "KONFIRMASI");
+	form.set("successor", "11111111-1111-4111-8111-111111111111");
+	expect(
+		(await changeParticipantMembership({ error: null }, form)).error,
+	).toContain("Hanya ketua");
+	expect(mocks.rpc).not.toHaveBeenCalled();
+});
+/** Membiarkan database memblokir pengarsipan tim terakhir yang masih mempunyai pengajuan aktif. */
+it("mempertahankan keanggotaan saat keluar gagal", async function failedLeave() {
+	mocks.rpc.mockResolvedValue({
+		error: {
+			code: "P0001",
+			message:
+				"Tuntaskan atau batalkan pengajuan aktif sebelum mengarsipkan tim terakhir.",
+		},
+	});
+	const form = new FormData();
+	form.set("operation", "leave");
+	form.set("confirmation", "KONFIRMASI");
+	expect(
+		(await changeParticipantMembership({ error: null }, form)).error,
+	).toContain("pengajuan aktif");
 	expect(mocks.revalidate).not.toHaveBeenCalled();
 });
