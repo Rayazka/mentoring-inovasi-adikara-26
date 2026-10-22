@@ -52,7 +52,7 @@ export function DemoLogin() {
 		<LoginLayout
 			dateLabel={dateLabel}
 			onLogin={openLogin}
-			showPrivateIcon
+			showIcon
 			authentication={
 				<>
 					<button

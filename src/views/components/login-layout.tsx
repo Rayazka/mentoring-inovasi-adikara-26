@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { publicAssets } from "@/models/public-assets";
 import { Brand } from "@/views/components/brand";
 import { Button, Icon } from "@/views/components/ui";
 import "@/views/styles/login.css";
@@ -21,14 +22,14 @@ export function LoginLayout({
 	authentication,
 	resources,
 	children,
-	showPrivateIcon = false,
+	showIcon = false,
 }: {
 	dateLabel: string;
 	onLogin: () => void;
 	authentication: ReactNode;
 	resources: ReactNode;
 	children?: ReactNode;
-	showPrivateIcon?: boolean;
+	showIcon?: boolean;
 }) {
 	const [menuOpen, setMenuOpen] = useState(false);
 	/** Membuka atau menutup navigasi pada layar kecil. */
@@ -127,9 +128,9 @@ export function LoginLayout({
 					</div>
 					<div className="login-form-pattern" aria-hidden="true" />
 					<div className="login-form-card">
-						{showPrivateIcon && (
+						{showIcon && (
 							<Image
-								src="/api/demo-assets/login-icon"
+								src={publicAssets["login-icon"]}
 								alt=""
 								className="login-card-icon"
 								width={44}

@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Muhammad Fauzi Ramadhan",
+    "expertise": "UI/UX",
+    "achievements": [
+      "2nd Place National Euformatika-24 (UI/UX Design)",
+      "3rd Place National ITASE 6.0 (UX Design)"
+    ],
+    "availability_note": "",
+    "photo_url": "/mentors/muhammad-fauzi-ramadhan.jpg"
+  },
+  {
+    "name": "Ivan Mahadika Yanuarizqi",
+    "expertise": "UI/UX",
+    "achievements": [
+      "Asisten Lab bidang UI/UX di Motion Laboratory"
+    ],
+    "availability_note": "",
+    "photo_url": "/mentors/ivan-mahadika-yanuarizqi.jpeg"
+  },
+  {
+    "name": "Muhammad Emirsyah Makarim",
+    "expertise": "Softdev",
+    "achievements": [
+      "1st Winner Digdaya Hackathon Profesional Category 2025 by Bank Indonesia",
+      "1st Winner Agenthon by Build Club & RISTEK UI 2025",
+      "Asia Representative in Microsoft Imagine Cup 2024"
+    ],
+    "availability_note": "Hanya ambil jadwal tanggal 24 saja",
+    "photo_url": "/mentors/muhammad-emirsyah-makarim.jpg"
+  },
+  {
+    "name": "Muhammad Karov Ardava Barus",
+    "expertise": "Softdev",
+    "achievements": [
+      "Chief Executives (CEO) of Nera (From BNI Ventures Spark Arc 2026).",
+      "Grand Finalist & Indonesia Representative, Amsterdam HackaStone 2026",
+      "10+ Tech & Innovation Competition Winners"
+    ],
+    "availability_note": "",
+    "photo_url": "/mentors/muhammad-karov-ardava-barus.png"
+  },
+  {
+    "name": "Nabiel Muhammad Irfani",
+    "expertise": "IoT",
+    "achievements": [
+      "Silver Medalist Gemastik XVIII 2025 ICT Business Development",
+      "Secured Funding PKM-KC 2026 & Pimnas 39",
+      "Juara 2 Adikara divisi inovasi sub divisi IoT"
+    ],
+    "availability_note": "",
+    "photo_url": "/mentors/nabiel-muhammad-irfani.jpg"
+  },
+  {
+    "name": "Fanan Agfian Mozart",
+    "expertise": "UI/UX",
+    "achievements": [
+      "Juara 1 UI/UX Competition IOFEST 2025",
+      "Juara 1 Smart Innovator Competition 2025",
+      "Juara 2 Adikara Entrepreneurship 2025"
+    ],
+    "availability_note": "",
+    "photo_url": "/mentors/fanan-agfian-mozart.jpg"
+  },
+  {
+    "name": "Delkano Marzuki Berutu",
+    "expertise": "Gamedev",
+    "achievements": [
+      "Best Game Framework at GAC",
+      "1st Place in Alibaba Cloud Hackathon"
+    ],
+    "availability_note": "",
+    "photo_url": "/mentors/delkano-marzuki-berutu.png"
+  },
+  {
+    "name": "Nauval Yushriya Athalla",
+    "expertise": "Softdev",
+    "achievements": [
+      "1st Place - Adikara 2025, Innovation Division",
+      "2nd Place - Innovillage 2025"
+    ],
+    "availability_note": "",
+    "photo_url": "/mentors/nauval-yusriya-athalla.jpg"
+  },
+  {
+    "name": "Wildan Syukri Niam",
+    "expertise": "Softdev",
+    "achievements": [],
+    "availability_note": null,
+    "photo_url": null
+  }
+]
