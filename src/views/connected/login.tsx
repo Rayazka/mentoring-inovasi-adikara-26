@@ -70,11 +70,13 @@ function StaffLogin({ configured }: { configured: boolean }) {
 /** Menampilkan login nyata tanpa memuat akun atau penyimpanan fixtures. */
 export function ConnectedLogin({
 	configured,
+	googleConfigured,
 	error,
 	resources,
 	dateLabel,
 }: {
 	configured: boolean;
+	googleConfigured: boolean;
 	error?: string;
 	resources: ResourceLink[];
 	dateLabel: string;
@@ -94,12 +96,15 @@ export function ConnectedLogin({
 			authentication={
 				<div ref={section}>
 					<form action={signInWithGoogle}>
-						<GoogleButton configured={configured} />
+						<GoogleButton configured={googleConfigured} />
 					</form>
 					<p className="login-method-note">
 						Peserta masuk menggunakan akun Google.
 					</p>
 					{!configured && <p role="alert">Konfigurasi login belum tersedia.</p>}
+					{configured && !googleConfigured && !error && (
+						<p role="alert">Login Google belum tersedia. Hubungi admin.</p>
+					)}
 					{error && (
 						<p className="notice danger" role="alert">
 							{error}

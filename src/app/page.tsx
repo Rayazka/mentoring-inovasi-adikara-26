@@ -1,5 +1,5 @@
 // TODO: Perbarui informasi publik melalui pengaturan acara tanpa memakai fixtures produksi.
-import { hasSupabaseConfig } from "@/lib/supabase/env";
+import { hasSupabaseConfig, hasAppUrl } from "@/lib/supabase/env";
 import { getPublicLoginData } from "@/controllers/auth/public-login";
 import { isDemoMode } from "@/models/demo/mode";
 import { DemoLogin } from "@/views/demo/login";
@@ -20,6 +20,8 @@ export default async function Page({
 	const errors: Record<string, string> = {
 		failed: "Login belum berhasil atau dibatalkan. Silakan coba lagi.",
 		unconfigured: "Konfigurasi login belum tersedia.",
+		"google-config":
+			"Login Google belum dikonfigurasi pada deployment ini. Hubungi admin.",
 		inactive: "Akun tidak aktif atau tidak memiliki akses. Hubungi admin.",
 		profile: "Profil belum tersedia. Hubungi admin.",
 		staff: "Login staf belum berhasil. Periksa kredensial dan akses akun.",
@@ -27,6 +29,7 @@ export default async function Page({
 	return (
 		<ConnectedLogin
 			configured={configured}
+			googleConfigured={configured && hasAppUrl()}
 			error={auth ? errors[auth] : undefined}
 			resources={resources}
 			dateLabel={dateLabel}

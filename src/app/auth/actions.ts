@@ -2,24 +2,13 @@
 "use server";
 
 import { authenticateStaff } from "@/controllers/auth/staff-login";
+import { beginGoogleLogin } from "@/controllers/auth/google-login";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { hasSupabaseConfig, getAppUrl } from "@/lib/supabase/env";
 
 /** Memulai autentikasi Google melalui layanan Supabase. */
 export async function signInWithGoogle() {
-	if (!hasSupabaseConfig()) redirect("/?auth=unconfigured");
-	const appUrl = getAppUrl();
-	const supabase = await createClient();
-	const { data, error } = await supabase.auth.signInWithOAuth({
-		provider: "google",
-		options: {
-			redirectTo: new URL("/auth/callback", appUrl).toString(),
-			scopes: "openid email profile",
-		},
-	});
-	if (error || !data.url) redirect("/?auth=failed");
-	redirect(data.url);
+	redirect(await beginGoogleLogin());
 }
 
 /** Mengakhiri sesi Supabase dan kembali ke halaman publik. */

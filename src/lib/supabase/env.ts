@@ -3,15 +3,19 @@ import { z } from "zod";
 
 /** Menolak alamat REST dan skema selain HTTPS untuk project hosted. */
 function isRootHttpsUrl(value: string) {
-	const url = new URL(value);
-	return (
-		url.protocol === "https:" &&
-		url.pathname === "/" &&
-		!url.search &&
-		!url.hash &&
-		!url.username &&
-		!url.password
-	);
+	try {
+		const url = new URL(value);
+		return (
+			url.protocol === "https:" &&
+			url.pathname === "/" &&
+			!url.search &&
+			!url.hash &&
+			!url.username &&
+			!url.password
+		);
+	} catch {
+		return false;
+	}
 }
 
 const publicConfig = z.object({
@@ -60,4 +64,14 @@ export function getAppUrl() {
 		);
 	}
 	return url.origin;
+}
+
+/** Memeriksa origin OAuth tanpa melempar error pada halaman atau adapter callback. */
+export function hasAppUrl() {
+	try {
+		getAppUrl();
+		return true;
+	} catch {
+		return false;
+	}
 }

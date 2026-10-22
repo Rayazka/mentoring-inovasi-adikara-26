@@ -20,6 +20,14 @@ describe("konfigurasi autentikasi", function authenticationConfiguration() {
 		);
 		expect(hasSupabaseConfig()).toBe(false);
 	});
+	/** Menjaga safeParse tetap mengembalikan false ketika URL deployment tidak dapat diparse. */
+	it("menolak URL invalid tanpa exception server", function malformedProjectUrl() {
+		vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "sb_publishable_contoh");
+		for (const value of ["", "invalid-url", "/rest/v1/"]) {
+			vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", value);
+			expect(hasSupabaseConfig()).toBe(false);
+		}
+	});
 	/** Memastikan callback hanya dibangun dari origin deployment yang dikonfigurasi. */
 	it("membatasi origin aplikasi", function restrictApplicationOrigin() {
 		for (const value of [

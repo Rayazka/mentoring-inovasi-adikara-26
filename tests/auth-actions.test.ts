@@ -3,7 +3,14 @@ import { afterEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(
 	/** Menyiapkan operasi sesi tanpa menghubungi layanan eksternal. */
 	function setup() {
-		return { signOut: vi.fn(), staff: vi.fn() };
+		return { signOut: vi.fn(), staff: vi.fn(), google: vi.fn() };
+	},
+);
+vi.mock(
+	"@/controllers/auth/google-login",
+	/** Mengisolasi redirect action dari komunikasi provider OAuth. */
+	function mockGoogle() {
+		return { beginGoogleLogin: mocks.google };
 	},
 );
 vi.mock(
@@ -39,7 +46,11 @@ vi.mock(
 		};
 	},
 );
-import { signOut, signInStaff } from "../src/app/auth/actions";
+import {
+	signOut,
+	signInStaff,
+	signInWithGoogle,
+} from "../src/app/auth/actions";
 /** Membersihkan respons mock agar setiap skenario mandiri. */
 afterEach(function clear() {
 	vi.clearAllMocks();
@@ -69,5 +80,13 @@ it("mengarah ke dashboard terverifikasi", async function safeStaffDestination() 
 	form.set("next", "https://evil.example");
 	await expect(signInStaff({ error: null }, form)).rejects.toThrow(
 		"REDIRECT:/dashboard",
+	);
+});
+
+/** Meneruskan kegagalan konfigurasi sebagai redirect, bukan exception konfigurasi server. */
+it("mengembalikan error Google ke halaman login", async function googleConfigurationRedirect() {
+	mocks.google.mockResolvedValue("/?auth=google-config");
+	await expect(signInWithGoogle()).rejects.toThrow(
+		"REDIRECT:/?auth=google-config",
 	);
 });
