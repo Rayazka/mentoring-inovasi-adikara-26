@@ -1,4 +1,15 @@
 /* TODO: Pertahankan ukuran halaman peserta berdasarkan ekspor referensi dan perilaku responsifnya. */
+@media (max-width: 760px) {
+	.team-members .member-row {
+		display: grid;
+		grid-template-columns: 44px minmax(0, 1fr);
+		align-items: start;
+	}
+	.team-members .member-row > .badge {
+		grid-column: 2;
+		justify-self: start;
+	}
+}
 .reference-page .button:disabled {
 	background: #d5d5d5;
 	border-color: #d5d5d5;
