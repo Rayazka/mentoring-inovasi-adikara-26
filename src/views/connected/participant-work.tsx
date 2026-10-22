@@ -4,6 +4,7 @@ import type { loadParticipantWork } from "@/controllers/connected/participant-wo
 import { isConnectedWorkReady } from "@/models/connected/work";
 import { Badge, EmptyState, Panel } from "@/views/components/ui";
 import { ConnectedWorkForm } from "./work-form";
+import { WorkDocuments } from "./work-documents";
 
 /** Menyajikan ringkasan dan form karya sesuai struktur desain menggunakan data tim aktif. */
 export function ConnectedWorkPage({
@@ -40,7 +41,10 @@ export function ConnectedWorkPage({
 				<a className="is-active" href="#informasi-karya">
 					Informasi Karya
 				</a>
-				<a href="#dokumen-pendukung">Dokumen Pendukung</a>
+				<a href="#dokumen-pendukung">
+					Dokumen Pendukung{" "}
+					<span className="count">{data.documents.length}</span>
+				</a>
 			</nav>
 			<section className="crimson-summary" aria-label="Ringkasan karya">
 				<div className="row spread wrap">
@@ -64,14 +68,11 @@ export function ConnectedWorkPage({
 				</p>
 			</section>
 			<ConnectedWorkForm key={data.team.id} work={data.work} />
-			<div className="work-documents" id="dokumen-pendukung">
-				<Panel title="Dokumen Pendukung">
-					<p>
-						Siapkan proposal atau folder Google Drive yang membantu mentor
-						memahami karya tim.
-					</p>
-				</Panel>
-			</div>
+			<WorkDocuments
+				documents={data.documents}
+				userId={data.userId}
+				leaderId={data.team.leader_id}
+			/>
 		</>
 	);
 }
