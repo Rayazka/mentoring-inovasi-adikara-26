@@ -100,11 +100,13 @@
 	opacity: 0.065;
 	background-image:
 		url("/api/demo-assets/login-pattern"),
-		url("/api/demo-assets/login-pattern"),
-		url("/api/demo-assets/login-pattern");
+		url("/api/demo-assets/login-pattern"), url("/api/demo-assets/login-pattern");
 	background-repeat: no-repeat;
 	background-size: 620px 520px;
-	background-position: -214px -13px, 410px -10px, 1043px -23px;
+	background-position:
+		-214px -13px,
+		410px -10px,
+		1043px -23px;
 }
 .login-ornament {
 	position: absolute;
@@ -379,8 +381,8 @@
 	inset: 0;
 	z-index: -1;
 	background:
-		url("/api/demo-assets/login-footer-pattern") 360px -181.547px / 720px 729.295px
-		repeat-x;
+		url("/api/demo-assets/login-footer-pattern") 360px -181.547px / 720px
+		729.295px repeat-x;
 	opacity: 0.11;
 	pointer-events: none;
 }
@@ -716,4 +718,25 @@
 		padding: 20px 24px;
 		font-size: 12px;
 	}
+}
+
+/* Menjaga form staf tetap sekunder dan dapat digunakan pada layar kecil. */
+.staff-login {
+	margin-top: 16px;
+	text-align: left;
+}
+.staff-login summary {
+	cursor: pointer;
+	font-size: 14px;
+}
+.staff-login form {
+	margin-top: 16px;
+}
+.staff-login input {
+	width: 100%;
+	box-sizing: border-box;
+}
+.login-provider-button:disabled {
+	opacity: 0.6;
+	cursor: wait;
 }

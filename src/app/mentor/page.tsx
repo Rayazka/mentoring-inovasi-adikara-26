@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 /** Menampilkan halaman awal mentor yang berhak. */
 export default async function MentorPage() {
 	if (isDemoMode()) return <DemoApplication />;
-	const { profile } = await requireSession(["mentor"]);
+	const { profile } = await requireSession(["mentor_general"]);
 	return (
 		<main>
 			<h1>Home Mentor</h1>

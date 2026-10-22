@@ -1,6 +1,7 @@
 // TODO: Pelihara dokumentasi dan pengujian saat modul ini berubah.
 "use server";
 
+import { authenticateStaff } from "@/controllers/auth/staff-login";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasSupabaseConfig, getAppUrl } from "@/lib/supabase/env";
@@ -27,4 +28,14 @@ export async function signOut() {
 	const { error } = await supabase.auth.signOut();
 	if (error) throw new Error("Tidak dapat keluar. Silakan coba lagi.");
 	redirect("/");
+}
+
+/** Memproses form staf dan meneruskan routing pada guard profil server. */
+export async function signInStaff(
+	_previous: { error: string | null },
+	form: FormData,
+): Promise<{ error: string | null }> {
+	const result = await authenticateStaff(form);
+	if (result.error) return result;
+	redirect("/dashboard");
 }

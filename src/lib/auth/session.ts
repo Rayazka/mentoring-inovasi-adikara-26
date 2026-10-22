@@ -3,7 +3,12 @@ import "server-only";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasSupabaseConfig } from "@/lib/supabase/env";
-import { isUserRole, roleHome, type UserRole } from "./roles";
+import {
+	isUserRole,
+	roleHome,
+	canAccessConnectedApp,
+	type UserRole,
+} from "./roles";
 
 /** Memvalidasi sesi dan membatasi akses menurut peran di server. */
 export async function requireSession(allowedRoles?: readonly UserRole[]) {
@@ -17,15 +22,14 @@ export async function requireSession(allowedRoles?: readonly UserRole[]) {
 
 	const { data: profile, error } = await supabase
 		.from("profiles")
-		.select("id, full_name, avatar_url, role")
+		.select("id, full_name, avatar_url, role, is_active")
 		.eq("id", user.id)
 		.single();
 
 	if (error || !profile || !isUserRole(profile.role)) {
-		throw new Error(
-			"Profil pengguna belum siap. Periksa migrasi database dan trigger profil.",
-		);
+		redirect("/?auth=profile");
 	}
+	if (!canAccessConnectedApp(profile)) redirect("/?auth=inactive");
 	if (allowedRoles && !allowedRoles.includes(profile.role))
 		redirect(roleHome(profile.role));
 	return { supabase, user, profile };

@@ -7,7 +7,7 @@ import { DemoApplication } from "@/views/demo/application";
 /** Menyajikan halaman fitur mentor tanpa mencampur aturan domain dengan adapter route. */
 export default async function FeaturePage() {
 	if (!isDemoMode()) {
-		await requireSession(["mentor"]);
+		await requireSession(["mentor_general"]);
 		notFound();
 	}
 	return <DemoApplication />;
