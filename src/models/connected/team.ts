@@ -32,6 +32,7 @@ export interface JoinRequest {
 	note: string;
 	status: "pending" | "accepted" | "rejected";
 	created_at: string;
+	applicant_name?: string;
 }
 export interface TeamMember {
 	user_id: string;
@@ -43,6 +44,8 @@ export interface TeamPageData {
 	team: ParticipantTeam | null;
 	members: TeamMember[];
 	requests: JoinRequest[];
+	incoming: JoinRequest[];
+	tab: "summary" | "members" | "requests";
 	publicTeams: PublicTeam[];
 	query: string;
 	error: boolean;

@@ -8,9 +8,9 @@ import { ConnectedTeamPage } from "@/views/connected/participant-team";
 export default async function TeamPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ q?: string }>;
+	searchParams: Promise<{ q?: string; tab?: string }>;
 }) {
 	if (isDemoMode()) return <DemoApplication />;
-	const { q } = await searchParams;
-	return <ConnectedTeamPage data={await loadParticipantTeam(q)} />;
+	const { q, tab } = await searchParams;
+	return <ConnectedTeamPage data={await loadParticipantTeam(q, tab)} />;
 }

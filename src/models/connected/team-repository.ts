@@ -105,3 +105,48 @@ export async function searchPublicTeams(client: SupabaseClient, query: string) {
 		await client.rpc("search_teams", { p_query: query }),
 	);
 }
+
+/** Membaca calon anggota hanya untuk ketua yang sudah diverifikasi controller dan RLS. */
+export async function readIncomingJoins(
+	client: SupabaseClient,
+	teamId: string,
+) {
+	const joins = checked<JoinRequest[]>(
+		await client
+			.from("team_join_requests")
+			.select("id,team_id,user_id,note,status,created_at")
+			.eq("team_id", teamId)
+			.eq("status", "pending")
+			.order("created_at"),
+	);
+	if (!joins.length) return [];
+	const profiles = checked<{ id: string; full_name: string }[]>(
+		await client
+			.from("profiles")
+			.select("id,full_name")
+			.in(
+				"id",
+				joins.map(
+					/** Membatasi proyeksi profil pada pemohon yang sedang menunggu keputusan. */
+					function applicantId(join) {
+						return join.user_id;
+					},
+				),
+			),
+	);
+	return joins.map(
+		/** Menggabungkan nama pemohon tanpa menyertakan kontak pribadi. */
+		function applicant(join) {
+			const profile = profiles.find(
+				/** Mencocokkan nama akun pemohon. */
+				function match(item) {
+					return item.id === join.user_id;
+				},
+			);
+			return {
+				...join,
+				applicant_name: profile?.full_name ?? "Peserta ADIKARA",
+			};
+		},
+	);
+}

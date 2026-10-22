@@ -1,4 +1,4 @@
-// TODO: Lengkapi pengelolaan anggota pada issue berikutnya tanpa mengubah struktur ringkasan qZHSE.
+// TODO: Pertahankan ringkasan qZHSE dan hitungan tab sesuai transaksi anggota terbaru.
 import Link from "next/link";
 import {
 	createParticipantTeam,
@@ -7,6 +7,7 @@ import {
 import { teamCategories, type TeamPageData } from "@/models/connected/team";
 import { Avatar, Badge, EmptyState, Panel } from "@/views/components/ui";
 import { MutationForm } from "./mutation-form";
+import { IncomingTeamRequests } from "./team-requests";
 
 /** Menyajikan struktur Tim Saya yang disepakati menggunakan data Supabase dan proyeksi pencarian aman. */
 export function ConnectedTeamPage({ data }: { data: TeamPageData }) {
@@ -36,73 +37,98 @@ export function ConnectedTeamPage({ data }: { data: TeamPageData }) {
 			{team ? (
 				<>
 					<nav className="local-navigation" aria-label="Bagian Tim Saya">
-						<a className="is-active" href="#ringkasan-tim">
+						<Link
+							className={data.tab === "summary" ? "is-active" : ""}
+							href="?tab=summary"
+						>
 							Ringkasan Tim
-						</a>
-						<a href="#anggota-tim">
+						</Link>
+						<Link
+							className={data.tab === "members" ? "is-active" : ""}
+							href="?tab=members"
+						>
 							Anggota <span className="count">{data.members.length}</span>
-						</a>
+						</Link>
+						{team.leader_id === data.userId && (
+							<Link
+								href="?tab=requests"
+								className={data.tab === "requests" ? "is-active" : ""}
+							>
+								Permintaan Bergabung{" "}
+								<span className="count">{data.incoming.length}</span>
+							</Link>
+						)}
 					</nav>
-					<section
-						className="crimson-summary"
-						id="ringkasan-tim"
-						aria-label="Profil tim"
-					>
-						<div className="row spread wrap">
-							<div>
-								<h2>{team.name}</h2>
-								<p>Inovasi · {team.category}</p>
+					{data.tab === "requests" ? (
+						<IncomingTeamRequests
+							requests={data.incoming}
+							full={data.members.length >= 3}
+						/>
+					) : (
+						<>
+							<section
+								className="crimson-summary"
+								id="ringkasan-tim"
+								aria-label="Profil tim"
+							>
+								<div className="row spread wrap">
+									<div>
+										<h2>{team.name}</h2>
+										<p>Inovasi · {team.category}</p>
+									</div>
+									<Badge
+										label={
+											team.leader_id === data.userId
+												? "Kamu ketua tim"
+												: "Kamu anggota tim"
+										}
+									/>
+								</div>
+								<p>{team.description}</p>
+								<strong>{data.members.length} dari 3 anggota</strong>
+							</section>
+							<div className="team-columns">
+								<Panel title="Anggota Tim">
+									<div className="team-members" id="anggota-tim">
+										{data.members.map(
+											/** Menampilkan anggota aktif tanpa membocorkan kontak pribadi. */
+											function member(item) {
+												return (
+													<div className="member-row" key={item.user_id}>
+														<Avatar name={item.full_name} />
+														<div className="member-copy">
+															<strong>
+																{item.full_name}
+																{item.user_id === data.userId ? " · kamu" : ""}
+															</strong>
+															<small>
+																{item.user_id === team.leader_id
+																	? "Mengelola tim dan pengajuan mentoring"
+																	: "Anggota tim"}
+															</small>
+														</div>
+														{item.user_id === team.leader_id && (
+															<Badge label="Ketua tim" />
+														)}
+													</div>
+												);
+											},
+										)}
+									</div>
+								</Panel>
+								<Panel title="Langkah Selanjutnya">
+									<p>
+										Siapkan judul, deskripsi, dan bahan karya bersama tim untuk
+										pengajuan mentoring.
+									</p>
+									<p className="muted">
+										Pastikan seluruh anggota memahami topik yang akan
+										didiskusikan.
+									</p>
+								</Panel>
 							</div>
-							<Badge
-								label={
-									team.leader_id === data.userId
-										? "Kamu ketua tim"
-										: "Kamu anggota tim"
-								}
-							/>
-						</div>
-						<p>{team.description}</p>
-						<strong>{data.members.length} dari 3 anggota</strong>
-					</section>
-					<div className="team-columns">
-						<Panel title="Anggota Tim">
-							<div className="team-members" id="anggota-tim">
-								{data.members.map(
-									/** Menampilkan anggota aktif tanpa membocorkan kontak pribadi. */
-									function member(item) {
-										return (
-											<div className="member-row" key={item.user_id}>
-												<Avatar name={item.full_name} />
-												<div className="member-copy">
-													<strong>
-														{item.full_name}
-														{item.user_id === data.userId ? " · kamu" : ""}
-													</strong>
-													<small>
-														{item.user_id === team.leader_id
-															? "Mengelola tim dan pengajuan mentoring"
-															: "Anggota tim"}
-													</small>
-												</div>
-												{item.user_id === team.leader_id && (
-													<Badge label="Ketua tim" />
-												)}
-											</div>
-										);
-									},
-								)}
-							</div>
-						</Panel>
-						<Panel title="Langkah Selanjutnya">
-							<p>
-								Siapkan judul, deskripsi, dan bahan karya bersama tim untuk
-								pengajuan mentoring.
-							</p>
-							<p className="muted">
-								Pastikan seluruh anggota memahami topik yang akan didiskusikan.
-							</p>
-						</Panel>
-					</div>
+						</>
+					)}
 				</>
 			) : (
 				<div className="stack">
