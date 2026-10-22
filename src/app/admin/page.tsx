@@ -2,7 +2,8 @@
 import { requireSession } from "@/lib/auth/session";
 import { isDemoMode } from "@/models/demo/mode";
 import { DemoApplication } from "@/views/demo/application";
-import { signOut } from "@/app/auth/actions";
+import { Panel } from "@/views/components/ui";
+import { staffDisplayName } from "@/models/connected/staff";
 
 export const dynamic = "force-dynamic";
 
@@ -11,12 +12,10 @@ export default async function AdminPage() {
 	if (isDemoMode()) return <DemoApplication />;
 	const { profile } = await requireSession(["admin"]);
 	return (
-		<main>
-			<h1>Home Admin</h1>
-			<p>Halo, {profile.full_name}.</p>
-			<form action={signOut}>
-				<button type="submit">Keluar</button>
-			</form>
-		</main>
+		<Panel
+			title={`Halo, ${staffDisplayName({ full_name: profile.full_name, role: "admin" })}.`}
+		>
+			<p>Selamat datang di ruang mentoring ADIKARA 2026.</p>
+		</Panel>
 	);
 }

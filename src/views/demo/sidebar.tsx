@@ -4,7 +4,11 @@ import type { DemoUser } from "@/models/demo/types";
 import { roleHome } from "@/lib/auth/roles";
 import { Brand } from "@/views/components/brand";
 import { Avatar, Icon, type IconName } from "@/views/components/ui";
-import { activeNavigation, navigation } from "./navigation";
+import {
+	activeNavigation,
+	navigation,
+	type NavigationItem,
+} from "./navigation";
 
 const sidebarPaths: Partial<Record<IconName, string>> = {
 	home: "m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z",
@@ -45,15 +49,29 @@ export function SidebarContent({
 	mobile = false,
 	onToggle,
 	onLogout,
+	items,
+	accountLabel = "Akun demo",
+	areaLabel,
 }: {
-	actor: DemoUser;
+	actor: Pick<DemoUser, "name" | "role">;
 	pathname: string;
 	collapsed?: boolean;
 	mobile?: boolean;
 	onToggle: () => void;
 	onLogout: () => void;
+	items?: NavigationItem[];
+	accountLabel?: string;
+	areaLabel?: string;
 }) {
-	const active = activeNavigation(actor.role, pathname);
+	const menu = items ?? navigation[actor.role];
+	const active = items
+		? ([...items].reverse().find(
+				/** Memilih menu terhubung paling spesifik tanpa menambah hak akses. */
+				function activeItem(item) {
+					return pathname === item.href || pathname.startsWith(`${item.href}/`);
+				},
+			) ?? items[0])
+		: activeNavigation(actor.role, pathname);
 	const area =
 		actor.role === "participant"
 			? "Area Peserta"
@@ -109,17 +127,17 @@ export function SidebarContent({
 						)}
 					</button>
 				</div>
-				<p className="sidebar-area">{area}</p>
+				<p className="sidebar-area">{areaLabel ?? area}</p>
 				<nav className="sidebar-navigation" aria-label="Menu utama">
-					{navigation[actor.role].map(
+					{menu.map(
 						/** Menandai menu induk aktif sekaligus mempertahankan nama aksesibel dalam mode ringkas. */
 						function navigationLink(item) {
 							return (
 								<Link
 									key={item.href}
 									href={item.href}
-									className={`sidebar-link ${active.href === item.href ? "is-active" : ""}`}
-									aria-current={active.href === item.href ? "page" : undefined}
+									className={`sidebar-link ${active?.href === item.href ? "is-active" : ""}`}
+									aria-current={active?.href === item.href ? "page" : undefined}
 									aria-label={item.label}
 									title={collapsed ? item.label : undefined}
 								>
@@ -134,12 +152,12 @@ export function SidebarContent({
 			<div className="sidebar-account-section">
 				<div
 					className="sidebar-account"
-					title={collapsed ? `${actor.name} · Akun demo` : undefined}
+					title={collapsed ? `${actor.name} · ${accountLabel}` : undefined}
 				>
 					<Avatar name={actor.name} size="small" />
 					<div className="sidebar-account-copy">
 						<strong>{actor.name}</strong>
-						<span>Akun demo</span>
+						<span>{accountLabel}</span>
 					</div>
 				</div>
 				<button

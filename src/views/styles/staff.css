@@ -1,0 +1,32 @@
+/* TODO: Cocokkan perubahan grid staf dengan frame RyujH dan SLLdc pada semua breakpoint. */
+.staff-shell {
+	background: #fafafa;
+	min-height: 100dvh;
+}
+.staff-shell .workspace {
+	padding: 32px 40px 40px;
+	gap: 24px;
+}
+.staff-shell .topbar {
+	background: white;
+}
+.staff-shell .topbar h1 {
+	font-size: 26px;
+}
+.staff-shell .topbar p {
+	font-size: 13px;
+}
+.staff-shell .topbar .header-actions {
+	flex-wrap: wrap;
+}
+@media (max-width: 800px) {
+	.staff-shell .workspace {
+		padding: 24px 18px;
+	}
+	.staff-shell .topbar .header-actions .badge {
+		display: none;
+	}
+	.staff-shell .topbar h1 {
+		font-size: 22px;
+	}
+}
