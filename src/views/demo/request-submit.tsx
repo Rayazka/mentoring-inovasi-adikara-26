@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import type { DemoController } from "@/controllers/demo/use-demo-controller";
 import { teamForUser, workIsReady } from "@/models/demo/selectors";
-import { Button, EmptyState, Panel, formatDate } from "@/views/components/ui";
+import { Button, EmptyState, Panel } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { registerDemoView } from "./registry";
 
 /** Meninjau mentor, slot dan snapshot karya tanpa meminta peserta mengetik ulang topik. */

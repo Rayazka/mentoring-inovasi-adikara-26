@@ -13,8 +13,8 @@ import {
 	EmptyState,
 	Button,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { registerDemoView } from "./registry";
 
 /** Menyajikan katalog atau profil mentor sesuai route tanpa menghalangi peserta yang belum punya tim. */

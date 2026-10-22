@@ -6,7 +6,8 @@ import type { DemoController } from "@/controllers/demo/use-demo-controller";
 import type { MentoringRequest } from "@/models/demo/types";
 import { teamForUser } from "@/models/demo/selectors";
 import { slotIsBooked } from "@/models/demo/slot-policy";
-import { Button, Panel, formatDate } from "@/views/components/ui";
+import { Button, Panel } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { registerRequestAction } from "./registry";
 
 /** Menyajikan perbaikan karya dan pemilihan jadwal ulang sesuai jenis revisi untuk ketua tim. */

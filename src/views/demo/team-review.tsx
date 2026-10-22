@@ -9,8 +9,8 @@ import {
 	Button,
 	EmptyState,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 
 /** Menampilkan anggota tim dan daftar permintaan yang hanya dapat ditinjau ketua. */
 export function TeamReview({

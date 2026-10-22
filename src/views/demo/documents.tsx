@@ -12,8 +12,8 @@ import {
 	EmptyState,
 	Modal,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 
 /** Menampilkan berkas tim dengan unggah lokal, status gagal, coba ulang, unduh dan konfirmasi penghapusan. */
 export function DocumentsPanel({

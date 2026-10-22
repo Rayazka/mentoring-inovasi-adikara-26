@@ -3,7 +3,8 @@
 import { useActionState, useEffect, useState, type ChangeEvent } from "react";
 import { saveParticipantWork } from "@/controllers/connected/work-actions";
 import type { WorkRecord } from "@/models/connected/work";
-import { Badge, Panel, formatDate } from "@/views/components/ui";
+import { Badge, Panel } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 
 /** Memakai struktur form identitas karya yang disepakati dengan penyimpanan server, bukan data demo. */
 export function ConnectedWorkForm({ work }: { work: WorkRecord | null }) {

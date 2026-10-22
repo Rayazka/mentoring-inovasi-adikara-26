@@ -2,7 +2,8 @@
 import Link from "next/link";
 import type { loadParticipantCatalog } from "@/controllers/connected/participant-mentor";
 import { teamCategories } from "@/models/connected/team";
-import { Avatar, EmptyState, Panel, formatDate } from "@/views/components/ui";
+import { Avatar, EmptyState, Panel } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 
 /** Menampilkan katalog produksi dengan struktur kartu dan filter dari tampilan peserta yang disepakati. */
 export function ConnectedMentorCatalog({

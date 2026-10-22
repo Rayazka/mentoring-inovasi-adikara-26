@@ -5,7 +5,8 @@ import type { DemoController } from "@/controllers/demo/use-demo-controller";
 import type { MentoringRequest } from "@/models/demo/types";
 import { teamForUser } from "@/models/demo/selectors";
 import { slotIsBooked } from "@/models/demo/slot-policy";
-import { Button, Modal, Panel, formatDate } from "@/views/components/ui";
+import { Button, Modal, Panel } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { registerRequestAction } from "./registry";
 
 /** Menampilkan perbandingan jadwal dan kesepakatan dua pihak untuk sesi yang sudah disetujui. */

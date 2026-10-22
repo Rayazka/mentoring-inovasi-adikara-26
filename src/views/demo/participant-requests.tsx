@@ -12,8 +12,8 @@ import {
 	EmptyState,
 	Icon,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { CancellationActions } from "./cancellation";
 
 /** Menyajikan kartu pengajuan peserta dengan mentor, bahan diskusi dan tindakan sesuai status. */

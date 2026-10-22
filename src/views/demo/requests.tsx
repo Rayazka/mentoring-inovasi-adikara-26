@@ -10,8 +10,8 @@ import {
 	EmptyState,
 	Icon,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { ParticipantRequests } from "./participant-requests";
 import { DocumentsPanel } from "./documents";
 import { DrivePanel } from "./drive";

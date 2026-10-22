@@ -9,8 +9,8 @@ import {
 	Button,
 	EmptyState,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { registerDemoView } from "./registry";
 import { DocumentsPanel } from "./documents";
 import { DrivePanel } from "./drive";

@@ -13,8 +13,8 @@ import {
 	Icon,
 	Modal,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { activeNavigation } from "./navigation";
 import { SidebarContent } from "./sidebar";
 import { participantPage } from "./participant-page";

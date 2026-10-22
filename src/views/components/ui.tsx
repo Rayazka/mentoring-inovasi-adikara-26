@@ -11,6 +11,7 @@ import {
 	type ReactNode,
 } from "react";
 import type { Mentor, RequestStatus, ResourceLink } from "@/models/demo/types";
+import { formatDate } from "@/lib/format/date";
 
 const iconPaths = {
 	home: "m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z",
@@ -333,20 +334,5 @@ export function Modal({
 			</div>
 			{children}
 		</dialog>
-	);
-}
-
-/** Memformat waktu dalam WIB untuk riwayat dan ringkasan operasional. */
-export function formatDate(value: string, withTime = false) {
-	return (
-		new Intl.DateTimeFormat("id-ID", {
-			timeZone: "Asia/Jakarta",
-			day: "numeric",
-			month: "short",
-			year: "numeric",
-			...(withTime ? { hour: "2-digit", minute: "2-digit" } : {}),
-		}).format(
-			new Date(value.includes("T") ? value : `${value}T12:00:00+07:00`),
-		) + (withTime ? " WIB" : "")
 	);
 }

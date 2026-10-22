@@ -12,8 +12,8 @@ import {
 	Badge,
 	EmptyState,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 
 /** Menampilkan profil dan pemilihan slot aktual tanpa menganggap pilihan sementara sebagai booking. */
 export function ConnectedMentorDetail({

@@ -8,8 +8,8 @@ import {
 	MentorCard,
 	Panel,
 	ResourcePanel,
-	formatDate,
 } from "./ui";
+import { formatDate } from "@/lib/format/date";
 
 /** Menampilkan Home V2 yang sama untuk data produksi dan demo tanpa mengakses penyimpanan. */
 export function ParticipantHomeView({

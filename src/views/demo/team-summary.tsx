@@ -12,8 +12,8 @@ import {
 	Icon,
 	Modal,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { TeamMembership } from "./team-membership";
 
 /** Menyajikan ringkasan, anggota dan permintaan tim melalui navigasi lokal yang berfungsi. */

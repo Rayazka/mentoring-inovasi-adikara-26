@@ -10,8 +10,8 @@ import {
 	EmptyState,
 	Modal,
 	Panel,
-	formatDate,
 } from "@/views/components/ui";
+import { formatDate } from "@/lib/format/date";
 import { registerDemoView } from "./registry";
 
 /** Menyajikan editor jam default serta pembentukan dan penyuntingan slot per mentor. */
