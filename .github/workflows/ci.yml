@@ -1,0 +1,42 @@
+# TODO: Tambahkan job staging, migrasi terurut dan smoke login setelah secret lingkungan uji tersedia.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  verify:
+    name: Lint, tipe, unit test dan build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Ambil kode
+        uses: actions/checkout@v4
+      - name: Pasang Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Pasang dependensi dari lockfile
+        run: npm ci
+      - name: Periksa lint
+        run: npm run lint
+      - name: Periksa tipe
+        run: npm run typecheck
+      - name: Jalankan unit test
+        run: npm test
+      - name: Build produksi
+        run: npm run build
