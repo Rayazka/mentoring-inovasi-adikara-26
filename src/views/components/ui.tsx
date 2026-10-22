@@ -255,7 +255,14 @@ export function ResourcePanel({ links }: { links: ResourceLink[] }) {
 }
 
 /** Menampilkan ringkasan mentor rata tengah dengan avatar lingkaran dan tautan profil. */
-export function MentorCard({ mentor }: { mentor: Mentor }) {
+export function MentorCard({
+	mentor,
+}: {
+	mentor: Pick<
+		Mentor,
+		"id" | "name" | "photo" | "title" | "expertise" | "dates"
+	>;
+}) {
 	return (
 		<article className="mentor-card">
 			<Avatar name={mentor.name} size="large" photo={mentor.photo} />
@@ -266,7 +273,7 @@ export function MentorCard({ mentor }: { mentor: Mentor }) {
 			<div className="tags">
 				<span className="tag">{mentor.expertise}</span>
 				{mentor.dates.length === 1 && (
-					<span className="tag">Hanya 24 Oktober</span>
+					<span className="tag">Hanya {formatDate(mentor.dates[0])}</span>
 				)}
 			</div>
 			<Link

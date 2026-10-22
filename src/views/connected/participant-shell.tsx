@@ -2,6 +2,8 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { participantPage } from "@/views/demo/participant-page";
 import { signOut } from "@/app/auth/actions";
 import { SidebarContent } from "@/views/demo/sidebar";
 import { navigation, activeNavigation } from "@/views/demo/navigation";
@@ -19,6 +21,8 @@ export function ParticipantShell({
 	const [collapsed, setCollapsed] = useState(false);
 	const [drawer, setDrawer] = useState(false);
 	const active = activeNavigation("participant", pathname);
+	const home = pathname === "/peserta";
+	const page = participantPage(pathname);
 	/** Menutup drawer setelah peserta berpindah halaman. */
 	useEffect(
 		function closeAfterNavigation() {
@@ -52,7 +56,9 @@ export function ParticipantShell({
 		onLogout: logout,
 	};
 	return (
-		<div className="app-shell participant-shell reference-page">
+		<div
+			className={`app-shell participant-shell ${home ? "home-shell" : "reference-page"}`}
+		>
 			<a href="#konten" className="skip-link">
 				Lewati ke konten
 			</a>
@@ -77,10 +83,25 @@ export function ParticipantShell({
 						>
 							<Icon name="menu" />
 						</button>
-						<div>
-							<h1>{active.label}</h1>
-							<p className="muted">Ruang Mentoring ADIKARA 2026</p>
-						</div>
+						{home ? (
+							<>
+								<div className="home-desktop-greeting">
+									<h1>Halo, {name.split(" ")[0]}.</h1>
+									<p>Home · Kelola tim, karya, dan jadwal mentoringmu.</p>
+								</div>
+								<strong className="home-mobile-title">Home</strong>
+							</>
+						) : (
+							<div className="page-heading">
+								{page && "back" in page && (
+									<Link className="page-back" href="/peserta/mentor">
+										← Kembali ke katalog mentor
+									</Link>
+								)}
+								<h1>{page?.title ?? active.label}</h1>
+								<p>{page?.description ?? "Ruang Mentoring ADIKARA 2026"}</p>
+							</div>
+						)}
 					</div>
 					<Avatar name={name} size="small" />
 				</header>
