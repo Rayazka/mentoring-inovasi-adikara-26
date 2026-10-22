@@ -95,9 +95,6 @@ export function StaffDashboard({
 							: "Lihat jadwal, pengajuan, dan identitas karya seluruh tim."}
 					</p>
 				</div>
-				<span className="badge">
-					{admin ? "Administrator" : "Mentor general · akses baca"}
-				</span>
 			</div>
 			<p className="staff-data-context">
 				Data Supabase · Hitungan seluruh periode · Diperbarui{" "}

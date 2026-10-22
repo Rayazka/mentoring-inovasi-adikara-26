@@ -39,6 +39,7 @@ export function StaffShell({
 		name,
 		role: admin ? ("admin" as const) : ("mentor" as const),
 	};
+	const accountLabel = admin ? "Administrator" : "Mentor general · akses baca";
 	/** Menutup drawer setelah navigasi agar konten halaman baru tidak tertutup dialog. */
 	useEffect(
 		function closeAfterNavigation() {
@@ -46,7 +47,6 @@ export function StaffShell({
 		},
 		[pathname],
 	);
-	const accountLabel = admin ? "Administrator" : "Mentor general · akses baca";
 	/** Membuka atau menutup sidebar ringkas desktop. */
 	function toggle() {
 		setCollapsed(!collapsed);
@@ -115,7 +115,6 @@ export function StaffShell({
 						</div>
 					</div>
 					<div className="header-actions">
-						<span className="badge">{accountLabel}</span>
 						<Avatar name={name} size="small" />
 					</div>
 				</header>
