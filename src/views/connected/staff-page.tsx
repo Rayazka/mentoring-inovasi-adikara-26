@@ -1,5 +1,6 @@
 // TODO: Pertahankan daftar terhubung dan kondisi kosong tanpa menggantinya dengan fixtures.
 import Link from "next/link";
+import { AdminReview } from "./admin-review";
 import { Avatar, Badge, EmptyState, Panel } from "@/views/components/ui";
 import type { StaffPageData } from "@/controllers/connected/staff-page";
 import {
@@ -206,6 +207,11 @@ export function StaffPage({ data }: { data: StaffPageData }) {
 				<Link className="text-link" href={`${base}/${requestPath}`}>
 					← Kembali ke pengajuan
 				</Link>
+				{data.role === "admin" &&
+					(item.status === "pending" ||
+						item.status === "revision_requested") && (
+						<AdminReview requestId={item.id} />
+					)}
 				<div className="staff-dashboard-grid">
 					<Panel
 						title={`${item.code} · ${relationValue(item.team)?.name ?? "Tim"}`}
