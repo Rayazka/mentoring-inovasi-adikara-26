@@ -1,10 +1,13 @@
-// TODO: Pelihara dokumentasi dan pengujian saat modul ini berubah.
-import { signInWithGoogle } from "./auth/actions";
+// TODO: Perbarui informasi publik melalui pengaturan acara tanpa memakai fixtures produksi.
 import { hasSupabaseConfig } from "@/lib/supabase/env";
+import { getPublicLoginData } from "@/controllers/auth/public-login";
 import { isDemoMode } from "@/models/demo/mode";
 import { DemoLogin } from "@/views/demo/login";
+import { ConnectedLogin } from "@/views/connected/login";
 
-// Halaman autentikasi dasar sebelum tampilan demo menggantikannya.
+export const dynamic = "force-dynamic";
+
+/** Memilih adapter login demo atau Supabase dan membaca informasi publik acara. */
 export default async function Page({
 	searchParams,
 }: {
@@ -13,21 +16,20 @@ export default async function Page({
 	if (isDemoMode()) return <DemoLogin />;
 	const { auth } = await searchParams;
 	const configured = hasSupabaseConfig();
+	const { resources, dateLabel } = await getPublicLoginData(configured);
+	const errors: Record<string, string> = {
+		failed: "Login belum berhasil atau dibatalkan. Silakan coba lagi.",
+		unconfigured: "Konfigurasi login belum tersedia.",
+		inactive: "Akun tidak aktif atau tidak memiliki akses. Hubungi admin.",
+		profile: "Profil belum tersedia. Hubungi admin.",
+		staff: "Login staf belum berhasil. Periksa kredensial dan akses akun.",
+	};
 	return (
-		<main>
-			<h1>Mentoring ADIKARA 2026</h1>
-			<p>24–25 Oktober 2026 · 18.30–22.00 WIB</p>
-			<p>Kembangkan karyamu bersama mentor di bidangnya.</p>
-			{!configured || auth === "unconfigured" ? (
-				<p role="status">Pendaftaran sesi melalui aplikasi belum tersedia.</p>
-			) : (
-				<form action={signInWithGoogle}>
-					<button type="submit">Masuk dengan Google</button>
-				</form>
-			)}
-			{auth === "failed" && (
-				<p role="alert">Login belum berhasil. Silakan coba lagi.</p>
-			)}
-		</main>
+		<ConnectedLogin
+			configured={configured}
+			error={auth ? errors[auth] : undefined}
+			resources={resources}
+			dateLabel={dateLabel}
+		/>
 	);
 }

@@ -3,13 +3,12 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { hasSupabaseConfig } from "@/lib/supabase/env";
+import { hasSupabaseConfig, getAppUrl } from "@/lib/supabase/env";
 
 /** Memulai autentikasi Google melalui layanan Supabase. */
 export async function signInWithGoogle() {
 	if (!hasSupabaseConfig()) redirect("/?auth=unconfigured");
-	const appUrl = process.env.APP_URL;
-	if (!appUrl) throw new Error("APP_URL belum dikonfigurasi.");
+	const appUrl = getAppUrl();
 	const supabase = await createClient();
 	const { data, error } = await supabase.auth.signInWithOAuth({
 		provider: "google",
