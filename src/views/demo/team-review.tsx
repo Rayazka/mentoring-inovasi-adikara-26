@@ -41,7 +41,7 @@ export function TeamReview({
 	return (
 		<Panel title="Kelola anggota" icon="team">
 			<div className="stack">
-				<div className="tabs" aria-label="Bagian pengelolaan tim">
+				<div className="tabs">
 					<button
 						type="button"
 						className={`tab ${tab === "anggota" ? "active" : ""}`}
