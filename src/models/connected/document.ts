@@ -49,6 +49,38 @@ export interface UploadGrant {
 	token: string;
 }
 
+export const driveInput = z.object({
+	document: z.union([z.uuid(), z.literal("")]).default(""),
+	title: z.string().trim().min(1).max(150),
+	url: z
+		.url()
+		.refine(
+			/** Membatasi tautan pada Google Drive dan Google Docs melalui HTTPS tanpa kredensial. */
+			function googleDriveOnly(value) {
+				try {
+					const url = new URL(value);
+					return (
+						url.protocol === "https:" &&
+						["drive.google.com", "docs.google.com"].includes(url.hostname) &&
+						!url.username &&
+						!url.password &&
+						!url.port &&
+						url.pathname !== "/" &&
+						!/\s/.test(value)
+					);
+				} catch {
+					return false;
+				}
+			},
+		)
+		.transform(
+			/** Menormalkan hostname URL sebelum dibandingkan dengan constraint database. */
+			function normalizedDriveUrl(value) {
+				return new URL(value).toString();
+			},
+		),
+});
+
 /** Memeriksa penanda format dasar selain MIME yang dilaporkan browser. */
 export function hasFileSignature(bytes: Uint8Array, mime: string) {
 	if (mime === "application/pdf")

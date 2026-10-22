@@ -4,6 +4,7 @@ import { deleteParticipantDocument } from "@/controllers/connected/document-acti
 import { Badge, EmptyState, Panel } from "@/views/components/ui";
 import { DocumentUpload } from "./document-upload";
 import { MutationForm } from "./mutation-form";
+import { DriveForm } from "./drive-form";
 
 /** Menampilkan bahan tim serta unggah dan hapus berizin pada halaman Identitas Karya. */
 export function WorkDocuments({
@@ -23,6 +24,12 @@ export function WorkDocuments({
 					<details className="upload-disclosure">
 						<summary className="button secondary">Tambah file</summary>
 						<DocumentUpload />
+					</details>
+					<details className="upload-disclosure">
+						<summary className="button secondary">
+							Tambah link Google Drive
+						</summary>
+						<DriveForm />
 					</details>
 					{documents.length ? (
 						documents.map(
@@ -73,31 +80,39 @@ export function WorkDocuments({
 												)
 											))}
 										{(item.uploaded_by === userId || userId === leaderId) && (
-											<details>
-												<summary>Hapus bahan</summary>
-												<p>
-													Akses bahan akan dicabut. Riwayat pengajuan tetap
-													dipertahankan.
-												</p>
-												<MutationForm
-													action={deleteParticipantDocument}
-													submit="Konfirmasi hapus"
-													fields={[
-														{
-															name: "document",
-															label: "Dokumen",
-															type: "hidden",
-															value: item.id,
-														},
-														{
-															name: "confirmation",
-															label: "Ketik HAPUS",
-															required: true,
-															maxLength: 5,
-														},
-													]}
-												/>
-											</details>
+											<>
+												{item.kind === "drive" && (
+													<details>
+														<summary>Edit link Google Drive</summary>
+														<DriveForm document={item} />
+													</details>
+												)}
+												<details>
+													<summary>Hapus bahan</summary>
+													<p>
+														Akses bahan akan dicabut. Riwayat pengajuan tetap
+														dipertahankan.
+													</p>
+													<MutationForm
+														action={deleteParticipantDocument}
+														submit="Konfirmasi hapus"
+														fields={[
+															{
+																name: "document",
+																label: "Dokumen",
+																type: "hidden",
+																value: item.id,
+															},
+															{
+																name: "confirmation",
+																label: "Ketik HAPUS",
+																required: true,
+																maxLength: 5,
+															},
+														]}
+													/>
+												</details>
+											</>
 										)}
 									</article>
 								);
