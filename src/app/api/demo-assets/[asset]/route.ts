@@ -1,7 +1,6 @@
 // TODO: Konfigurasikan distribusi aset resmi hanya setelah pemilik mengizinkan publikasinya.
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { isDemoMode } from "@/models/demo/mode";
 
 export const runtime = "nodejs";
 const assets: Record<string, { path: string; type: string }> = {
@@ -52,7 +51,7 @@ export async function GET(
 	_request: Request,
 	{ params }: { params: Promise<{ asset: string }> },
 ) {
-	if (process.env.NODE_ENV !== "development" || !isDemoMode())
+	if (process.env.NODE_ENV !== "development")
 		return new Response(null, { status: 404 });
 	const { asset } = await params;
 	const entry = assets[asset];

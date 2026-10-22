@@ -87,6 +87,7 @@ export function ConnectedLogin({
 	}
 	return (
 		<LoginLayout
+			showPrivateIcon={process.env.NODE_ENV === "development"}
 			dateLabel={dateLabel}
 			onLogin={focusLogin}
 			resources={<ResourcePanel links={resources} />}
