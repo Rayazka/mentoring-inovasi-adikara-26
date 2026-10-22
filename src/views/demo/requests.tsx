@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, type ChangeEvent } from "react";
 import type { DemoController } from "@/controllers/demo/use-demo-controller";
 import { requestForActor } from "@/models/demo/request-policy";
-import { teamForUser } from "@/models/demo/selectors";
 import { mentorForUser } from "@/models/demo/mentor-policy";
 import {
 	Badge,
@@ -13,6 +12,7 @@ import {
 	Panel,
 	formatDate,
 } from "@/views/components/ui";
+import { ParticipantRequests } from "./participant-requests";
 import { DocumentsPanel } from "./documents";
 import { DrivePanel } from "./drive";
 import { registerDemoView, requestActionViews } from "./registry";
@@ -52,14 +52,14 @@ export function RequestsPage({
 				base={base}
 			/>
 		);
-	const team = teamForUser(state, actor.id);
+	if (actor.role === "participant")
+		return <ParticipantRequests controller={controller} />;
 	const mentor = mentorForUser(state, actor.id);
 	const requests = state.requests.filter(
 		/** Membatasi daftar berdasarkan tim peserta, mentor terkait atau peran operasional admin. */
 		function visibleRequest(request) {
 			const visible =
 				actor.role === "admin" ||
-				(actor.role === "participant" && request.teamId === team?.id) ||
 				(actor.role === "mentor" && request.mentorId === mentor?.id);
 			return (
 				visible &&
@@ -81,11 +81,6 @@ export function RequestsPage({
 						tempat.
 					</p>
 				</div>
-				{actor.role === "participant" && (
-					<Link className="button" href="/peserta/mentor">
-						Cari mentor
-					</Link>
-				)}
 			</div>
 			<Panel>
 				<div className="filters">
@@ -161,23 +156,10 @@ export function RequestsPage({
 			) : (
 				<Panel>
 					<EmptyState
-						title={
-							actor.role === "participant" && !team
-								? "Bergabunglah dengan tim terlebih dahulu"
-								: "Belum ada pengajuan yang sesuai"
-						}
+						title="Belum ada pengajuan yang sesuai"
 						description="Pengajuan yang menjadi tanggung jawabmu akan muncul di sini. Coba ubah filter bila diperlukan."
 						icon="request"
-					>
-						{actor.role === "participant" && (
-							<Link
-								className="button"
-								href={team ? "/peserta/mentor" : "/peserta/tim"}
-							>
-								{team ? "Cari mentor" : "Ke Tim Saya"}
-							</Link>
-						)}
-					</EmptyState>
+					/>
 				</Panel>
 			)}
 		</>

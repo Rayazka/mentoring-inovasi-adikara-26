@@ -15,6 +15,11 @@ const pages: Record<string, { title: string; description: string }> = {
 		description:
 			"Temukan keahlian yang sesuai dengan tantangan dan arah karya timmu.",
 	},
+	"/peserta/pengajuan": {
+		title: "Pengajuan Mentoring",
+		description:
+			"Pantau status pengajuan mentoring timmu dan lanjutkan sesi yang sudah dijadwalkan.",
+	},
 };
 /** Memilih judul header untuk halaman peserta yang sudah disesuaikan dengan referensi. */
 export function participantPage(pathname: string) {

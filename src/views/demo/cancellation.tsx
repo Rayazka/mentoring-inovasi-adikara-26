@@ -11,9 +11,11 @@ import { registerRequestAction } from "./registry";
 export function CancellationActions({
 	controller,
 	request,
+	compact = false,
 }: {
 	controller: DemoController;
 	request: MentoringRequest;
+	compact?: boolean;
 }) {
 	const { state, actor, dispatch } = controller;
 	const [open, setOpen] = useState(false);
@@ -49,18 +51,24 @@ export function CancellationActions({
 	if (!admin && !leader) return null;
 	return (
 		<>
-			<Panel title={admin ? "Pembatalan darurat" : "Batalkan pengajuan"}>
-				<p>
-					{admin
-						? "Gunakan untuk keadaan darurat. Alasan dan identitas admin dicatat pada audit."
-						: request.status === "approved"
-							? "Aturan demo: sesi terkonfirmasi dapat dibatalkan paling lambat 24 jam sebelum mulai. Hubungi admin untuk keadaan darurat."
-							: "Pengajuan yang belum disetujui dapat dibatalkan oleh ketua tim."}
-				</p>
-				<Button variant="danger" onClick={confirm}>
-					Batalkan {request.status === "approved" ? "sesi" : "pengajuan"}
+			{compact ? (
+				<Button variant="neutral" onClick={confirm}>
+					Batalkan Pengajuan
 				</Button>
-			</Panel>
+			) : (
+				<Panel title={admin ? "Pembatalan darurat" : "Batalkan pengajuan"}>
+					<p>
+						{admin
+							? "Gunakan untuk keadaan darurat. Alasan dan identitas admin dicatat pada audit."
+							: request.status === "approved"
+								? "Aturan demo: sesi terkonfirmasi dapat dibatalkan paling lambat 24 jam sebelum mulai. Hubungi admin untuk keadaan darurat."
+								: "Pengajuan yang belum disetujui dapat dibatalkan oleh ketua tim."}
+					</p>
+					<Button variant="danger" onClick={confirm}>
+						Batalkan {request.status === "approved" ? "sesi" : "pengajuan"}
+					</Button>
+				</Panel>
+			)}
 			<Modal open={open} title="Konfirmasi pembatalan" onClose={close}>
 				<form onSubmit={cancel} className="stack">
 					<p>
